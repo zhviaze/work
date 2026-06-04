@@ -1,0 +1,1266 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>東京都ステーブルコイン補助金 申請準備会議ダッシュボード</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome for professional icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts Inter & Noto Sans JP -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+JP:wght@300;400;500;700&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#f0f7ff',
+                            100: '#e0effe',
+                            500: '#0284c7',
+                            600: '#0369a1',
+                            700: '#075985',
+                            900: '#0c4a6e',
+                        },
+                        accent: {
+                            500: '#10b981',
+                            600: '#059669',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'Noto Sans JP', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .tab-active {
+            border-bottom: 2px solid #0284c7;
+            color: #0284c7;
+            font-weight: 600;
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+        /* A4 styling for official documents */
+        .a4-page {
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans min-h-screen">
+
+    <!-- Custom Dialog / Toast System -->
+    <div id="toast-notification" class="fixed bottom-5 right-5 z-50 transform translate-y-10 opacity-0 transition-all duration-300 pointer-events-none">
+        <div class="bg-slate-900 text-white px-4 py-3 rounded-xl shadow-2xl border border-slate-700 flex items-center gap-3">
+            <span id="toast-icon-wrapper" class="bg-cyan-500/20 p-1.5 rounded-lg text-cyan-400">
+                <i class="fa-solid fa-circle-info"></i>
+            </span>
+            <div>
+                <p id="toast-message" class="text-sm font-semibold">通知メッセージ</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- HEADER -->
+    <header class="bg-gradient-to-r from-brand-900 via-brand-800 to-indigo-950 text-white shadow-md sticky top-0 z-40">
+        <div class="max-w-7xl mx-auto px-4 py-3 flex flex-col md:flex-row justify-between items-center gap-4">
+            <div class="flex items-center space-x-3">
+                <div class="bg-white/10 p-2 rounded-lg">
+                    <i class="fa-solid fa-coins text-2xl text-cyan-300"></i>
+                </div>
+                <div>
+                    <span class="text-xs uppercase tracking-wider text-cyan-200 font-semibold flex items-center gap-1.5">
+                        ForBetter合同会社 推進PMOダッシュボード
+                    </span>
+                    <h1 class="text-lg md:text-xl font-bold">東京都ステーブルコイン補助金 申請準備キックオフ</h1>
+                </div>
+            </div>
+            <div class="flex items-center space-x-3">
+                <span class="bg-cyan-500/20 text-cyan-200 text-xs px-3 py-1.5 rounded-full border border-cyan-400/30 flex items-center gap-1.5">
+                    <i class="fa-solid fa-calendar-day"></i> 準備会議ファシリテーション用
+                </span>
+                <span class="bg-emerald-500/20 text-emerald-200 text-xs px-3 py-1.5 rounded-full border border-emerald-400/30">
+                    申請締切: 2026年6月30日(火)
+                </span>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto px-4 py-6">
+        <!-- EXECUTIVE SUMMARY BANNER -->
+        <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-6 mb-6">
+            <div class="flex flex-col md:flex-row justify-between gap-6">
+                <div>
+                    <h2 class="text-lg font-bold text-slate-900 flex items-center gap-2 mb-2">
+                        <i class="fa-solid fa-bullseye text-brand-500"></i>
+                        キックオフ合意目標
+                    </h2>
+                    <p class="text-slate-600 text-sm leading-relaxed">
+                        本補助金（最大4,000万円・2/3補助）の獲得に向け、申請主体である<strong>HIT社</strong>のビジネス戦略（自社決済端末へのデフォルト搭載＋将来のSC決済ソリューション単体提供による汎用化）を最大限にアピールする計画を練り上げます。
+                        本日の準備会議では、アライアンス4社間（HIT、ForBetter、PlatON、CFS）における基本要件の充足確認、スケジュール、役割分担、および事業計画書骨子の方向性について全会一致での合意形成を目指します。
+                    </p>
+                </div>
+                <div class="bg-brand-50 border border-brand-100 rounded-lg p-4 min-w-[280px] shrink-0">
+                    <div class="text-xs text-brand-700 font-semibold uppercase mb-1">【申請アライアンス】</div>
+                    <div class="grid grid-cols-2 gap-2 text-xs text-slate-700">
+                        <div>申請主体 (HIT):</div><div class="font-bold text-slate-900">自社端末＆APP開発</div>
+                        <div>PMO推進 (ForBetter):</div><div class="font-bold text-slate-900">進行調整・ドキュメンテーション</div>
+                        <div>基盤開発 (PlatON):</div><div class="font-bold text-slate-900">SCインフラ・セキュリティ</div>
+                        <div>PoC (CFS):</div><div class="font-bold text-slate-900">アクワイアラー・加盟店調整</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB NAVIGATION -->
+        <div class="flex border-b border-slate-200 mb-6 overflow-x-auto bg-white rounded-t-xl px-4 pt-2 shadow-sm">
+            <button onclick="switchTab('tab-agenda')" id="btn-tab-agenda" class="tab-active py-3 px-4 text-sm font-medium flex items-center gap-2 focus:outline-none shrink-0 border-b-2 border-transparent">
+                <i class="fa-solid fa-list-check"></i> アジェンダ & メモ
+            </button>
+            <button onclick="switchTab('tab-checklist')" id="btn-tab-checklist" class="py-3 px-4 text-sm font-medium text-slate-500 hover:text-brand-500 hover:border-brand-500 flex items-center gap-2 focus:outline-none shrink-0 border-b-2 border-transparent">
+                <i class="fa-solid fa-clipboard-check"></i> 要件チェック
+            </button>
+            <button onclick="switchTab('tab-alliance')" id="btn-tab-alliance" class="py-3 px-4 text-sm font-medium text-slate-500 hover:text-brand-500 hover:border-brand-500 flex items-center gap-2 focus:outline-none shrink-0 border-b-2 border-transparent">
+                <i class="fa-solid fa-users-gear"></i> 体制 & 役割分担
+            </button>
+            <button onclick="switchTab('tab-schedule')" id="btn-tab-schedule" class="py-3 px-4 text-sm font-medium text-slate-500 hover:text-brand-500 hover:border-brand-500 flex items-center gap-2 focus:outline-none shrink-0 border-b-2 border-transparent">
+                <i class="fa-solid fa-calendar-days"></i> 全体スケジュール
+            </button>
+            <button onclick="switchTab('tab-outline')" id="btn-tab-outline" class="py-3 px-4 text-sm font-medium text-slate-500 hover:text-brand-500 hover:border-brand-500 flex items-center gap-2 focus:outline-none shrink-0 border-b-2 border-transparent">
+                <i class="fa-solid fa-file-invoice"></i> 事業計画書 骨子案
+            </button>
+            <button onclick="switchTab('tab-estimates')" id="btn-tab-estimates" class="py-3 px-4 text-sm font-medium text-slate-500 hover:text-brand-500 hover:border-brand-500 flex items-center gap-2 focus:outline-none shrink-0 border-b-2 border-transparent">
+                <i class="fa-solid fa-file-invoice-dollar text-emerald-600"></i> 経費明細 & 見積案
+            </button>
+            <button onclick="switchTab('tab-tasks')" id="btn-tab-tasks" class="py-3 px-4 text-sm font-medium text-slate-500 hover:text-brand-500 hover:border-brand-500 flex items-center gap-2 focus:outline-none shrink-0 border-b-2 border-transparent">
+                <i class="fa-solid fa-folder-open"></i> 提出書類マトリクス
+            </button>
+            <button onclick="switchTab('tab-budget')" id="btn-tab-budget" class="py-3 px-4 text-sm font-medium text-slate-500 hover:text-brand-500 hover:border-brand-500 flex items-center gap-2 focus:outline-none shrink-0 border-b-2 border-transparent">
+                <i class="fa-solid fa-calculator"></i> 予算配分 & シミュレーター
+            </button>
+        </div>
+
+        <!-- TAB 1: AGENDA & NOTES -->
+        <div id="tab-agenda" class="tab-content block">
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <!-- Agenda list -->
+                <div class="lg:col-span-2 bg-white rounded-xl shadow-sm border border-slate-200 p-6">
+                    <h3 class="text-lg font-bold text-slate-900 mb-4 flex items-center gap-2 border-b pb-2">
+                        <i class="fa-solid fa-clock-rotate-left text-brand-500"></i>
+                        キックオフ進行アジェンダ（60分想定）
+                    </h3>
+                    
+                    <div class="space-y-4">
+                        <div class="flex gap-4 p-3 hover:bg-slate-50 rounded-lg transition-colors border-l-4 border-cyan-500">
+                            <span class="text-brand-600 font-mono font-bold shrink-0 w-16">00-05m</span>
+                            <div>
+                                <h4 class="font-bold text-slate-800">1. イントロダクションと本補助金の狙い</h4>
+                                <p class="text-xs text-slate-500 mt-1">最大4,000万円（補助率2/3）を活かしたアライアンス構築と、HIT社の端末展開ビジョンの擦り合わせ。</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex gap-4 p-3 hover:bg-slate-50 rounded-lg transition-colors border-l-4 border-cyan-500">
+                            <span class="text-brand-600 font-mono font-bold shrink-0 w-16">05-20m</span>
+                            <div>
+                                <h4 class="font-bold text-slate-800">2. 基本要件のスピードチェック（HIT社の前提条件確認）</h4>
+                                <p class="text-xs text-slate-500 mt-1">都内登記、GbizIDプライム、税金支払、検証フィールドが都内であるかの重要要件を確認。</p>
+                            </div>
+                        </div>
+
+                        <div class="flex gap-4 p-3 hover:bg-slate-50 rounded-lg transition-colors border-l-4 border-cyan-500">
+                            <span class="text-brand-600 font-mono font-bold shrink-0 w-16">20-35m</span>
+                            <div>
+                                <h4 class="font-bold text-slate-800">3. 体制図の確認とスケジュールの合意</h4>
+                                <p class="text-xs text-slate-500 mt-1">4社間（HIT、ForBetter、PlatON、CFS）の役割マトリクスと、6月30日（火）のデッドラインに向けたロードマップ承認。</p>
+                            </div>
+                        </div>
+
+                        <div class="flex gap-4 p-3 hover:bg-slate-50 rounded-lg transition-colors border-l-4 border-cyan-500">
+                            <span class="text-brand-600 font-mono font-bold shrink-0 w-16">35-50m</span>
+                            <div>
+                                <h4 class="font-bold text-slate-800">4. 計画書骨子および予算見積りの目線合わせ</h4>
+                                <p class="text-xs text-slate-500 mt-1">「計画書骨子」のドラフト構想、およびPlatON社からの開発費を含む概算予算枠・経費明細の確認。</p>
+                            </div>
+                        </div>
+
+                        <div class="flex gap-4 p-3 hover:bg-slate-50 rounded-lg transition-colors border-l-4 border-cyan-500">
+                            <span class="text-brand-600 font-mono font-bold shrink-0 w-16">50-60m</span>
+                            <div>
+                                <h4 class="font-bold text-slate-800">5. 次回へのアクションプラン・宿題決定</h4>
+                                <p class="text-xs text-slate-500 mt-1">見積り着手時期、MOU（共同事業者合意書）締結スケジュール、電子申請の担当アサイン。</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Interactive Meeting Memo -->
+                <div class="bg-slate-900 text-slate-100 rounded-xl p-6 shadow-sm flex flex-col justify-between">
+                    <div>
+                        <div class="flex justify-between items-center mb-4 border-b border-slate-700 pb-2">
+                            <h3 class="text-md font-bold flex items-center gap-2">
+                                <i class="fa-solid fa-keyboard text-cyan-400"></i>
+                                会議中リアルタイムメモ
+                            </h3>
+                            <button onclick="triggerClearMemo()" class="text-xs text-slate-400 hover:text-rose-400 font-medium transition">
+                                <i class="fa-solid fa-trash-can"></i> クリア
+                            </button>
+                        </div>
+                        <p class="text-xs text-slate-400 mb-3 leading-relaxed">
+                            明日の会議中に決まった決定事項や宿題、未決事項などを自由にタイピング・追加してください。データはブラウザに一時保存されます。
+                        </p>
+                        <textarea id="realtime-memo" class="w-full h-80 bg-slate-800 text-slate-100 rounded-lg p-3 text-sm focus:outline-none focus:ring-2 focus:ring-cyan-500 border border-slate-700 font-mono placeholder-slate-500 custom-scrollbar" placeholder="・HIT社：都内支店登記（渋谷）の書類を取り寄せ。&#10;・GbizIDプライムはHIT管理部門で保有を確認。&#10;・PlatON社：スマートコントラクト監査レポートを別添。&#10;・CFS社：提携店舗候補（都内飲食・小売など10店舗）を来週までに指定。"></textarea>
+                    </div>
+                    <div class="mt-4 pt-3 border-t border-slate-850 flex justify-between items-center">
+                        <span class="text-xs text-slate-500">文字数: <span id="memo-char-count" class="font-mono">0</span> 文字</span>
+                        <button onclick="copyMemo()" class="bg-slate-800 hover:bg-slate-750 text-white text-xs px-3 py-2 rounded-lg border border-slate-700 transition-all flex items-center gap-1.5">
+                            <i class="fa-solid fa-copy"></i> コピーする
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 2: PRE-REQUISITE CHECKLIST -->
+        <div id="tab-checklist" class="tab-content hidden">
+            <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-6">
+                <div class="flex justify-between items-center mb-4 border-b pb-2">
+                    <h3 class="text-lg font-bold text-slate-900 flex items-center gap-2">
+                        <i class="fa-solid fa-clipboard-check text-brand-500"></i>
+                        東京都ステーブルコイン補助金 申請資格 & 必須要件チェック
+                    </h3>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="space-y-4">
+                        <h4 class="font-bold text-brand-700 text-sm border-l-4 border-brand-500 pl-2">事業者要件（HIT社前提条件）</h4>
+                        
+                        <div class="flex items-start gap-3 p-3 bg-slate-50 rounded-lg border border-slate-200">
+                            <input type="checkbox" id="chk-tokyo-office" class="w-5 h-5 mt-0.5 accent-brand-500 rounded cursor-pointer" checked>
+                            <label for="chk-tokyo-office" class="text-sm cursor-pointer">
+                                <span class="font-bold text-slate-800 block">都内に本店または支店登記があるか？</span>
+                                <span class="text-xs text-slate-500">HIT社は都内に実体登記が必要です。支店登記でも可ですが登記簿謄本の提出が必要。</span>
+                            </label>
+                        </div>
+
+                        <div class="flex items-start gap-3 p-3 bg-slate-50 rounded-lg border border-slate-200">
+                            <input type="checkbox" id="chk-gbiz" class="w-5 h-5 mt-0.5 accent-brand-500 rounded cursor-pointer">
+                            <label for="chk-gbiz" class="text-sm cursor-pointer">
+                                <span class="font-bold text-slate-800 block">GbizIDプライムアカウントを所持しているか？</span>
+                                <span class="text-xs text-slate-500">電子申請「jGrants」の利用に必須。未所持の場合、即時申請手続き（郵送等）に入ってください。</span>
+                            </label>
+                        </div>
+
+                        <div class="flex items-start gap-3 p-3 bg-slate-50 rounded-lg border border-slate-200">
+                            <input type="checkbox" id="chk-tax" class="w-5 h-5 mt-0.5 accent-brand-500 rounded cursor-pointer">
+                            <label for="chk-tax" class="text-sm cursor-pointer">
+                                <span class="font-bold text-slate-800 block">都税の滞納がないか？</span>
+                                <span class="text-xs text-slate-500">都税（法人都民税、法人事業税等）の未納がない証明原本の提出が必要です。</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="space-y-4">
+                        <h4 class="font-bold text-accent-600 text-sm border-l-4 border-accent-500 pl-2">事業（ステーブルコイン）要件</h4>
+
+                        <div class="flex items-start gap-3 p-3 bg-slate-50 rounded-lg border border-slate-200">
+                            <input type="checkbox" id="chk-sc-jpy" class="w-5 h-5 mt-0.5 accent-brand-500 rounded cursor-pointer" checked>
+                            <label for="chk-sc-jpy" class="text-sm cursor-pointer">
+                                <span class="font-bold text-slate-800 block">「実発行された国内の日本円建てSC」との連携か？</span>
+                                <span class="text-xs text-slate-500">自社でSCを新発行することは本スキーム対象外。すでに流通している信頼ある日本円SCとの接続が条件。</span>
+                            </label>
+                        </div>
+
+                        <div class="flex items-start gap-3 p-3 bg-slate-50 rounded-lg border border-slate-200">
+                            <input type="checkbox" id="chk-tokyo-area" class="w-5 h-5 mt-0.5 accent-brand-500 rounded cursor-pointer" checked>
+                            <label for="chk-tokyo-area" class="text-sm cursor-pointer">
+                                <span class="font-bold text-slate-800 block">実装または検証を行う地域に「東京都内」を含むか？</span>
+                                <span class="text-xs text-slate-500">CFS社が用意する実証店舗（PoC加盟店）として、必ず都内店舗の参加が必要です。</span>
+                            </label>
+                        </div>
+
+                        <div class="flex items-start gap-3 p-3 bg-slate-50 rounded-lg border border-slate-200">
+                            <input type="checkbox" id="chk-timeline" class="w-5 h-5 mt-0.5 accent-brand-500 rounded cursor-pointer" checked>
+                            <label for="chk-timeline" class="text-sm cursor-pointer">
+                                <span class="font-bold text-slate-800 block">2027年3月31日までに検証・精算完了可能か？</span>
+                                <span class="text-xs text-slate-500">東京都の会計年度に合わせて事業計画を期間内に納める必要があります。</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Guidance alert card -->
+                <div class="bg-amber-50 border border-amber-200 text-amber-900 rounded-lg p-4 mt-6 flex gap-3">
+                    <i class="fa-solid fa-triangle-exclamation text-amber-500 text-lg mt-1 shrink-0"></i>
+                    <div>
+                        <span class="font-bold block">【重要】登記情報の不整合・未取得への対策</span>
+                        <p class="text-xs text-amber-800 mt-1">
+                            HIT社がGbizIDプライムを未取得の場合、手配に最大2週間要する場合があります。未取得の兆候があれば、すぐに「暫定的に紙提出」を行う郵送準備をForBetter社にて主動する必要があります。
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 3: ALLIANCE & TEAM ROLES -->
+        <div id="tab-alliance" class="tab-content hidden">
+            <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-6">
+                <div class="mb-6">
+                    <h3 class="text-lg font-bold text-slate-900 flex items-center gap-2">
+                        <i class="fa-solid fa-users-gear text-brand-500"></i>
+                        4社体制アライアンス体制図
+                    </h3>
+                    <p class="text-xs text-slate-500 mt-1">
+                        東京都に対して「高い技術力」「確実な実証実験フィールド」「盤石なPMO体制」を兼ね備えたプロフェッショナルコンソーシアムであることを示します。
+                    </p>
+                </div>
+
+                <!-- Visually Stylized Org Map -->
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-6 relative mb-8">
+                    <!-- HIT Box -->
+                    <div class="bg-blue-50 border-2 border-blue-500 rounded-xl p-5 relative">
+                        <div class="absolute -top-3 left-4 bg-blue-500 text-white text-xs px-2 py-0.5 rounded-full font-bold">申請主体 / 開発営業</div>
+                        <div class="flex items-center gap-3 mb-3 mt-1">
+                            <span class="bg-blue-500 text-white p-2 rounded-lg text-sm"><i class="fa-solid fa-laptop-code"></i></span>
+                            <h4 class="font-bold text-slate-900">HIT株式会社</h4>
+                        </div>
+                        <ul class="text-xs space-y-1.5 text-slate-600 list-disc pl-4">
+                            <li><strong>端末調達 & システム構成</strong></li>
+                            <li><strong>端末アプリ(APP)の開発・テスト</strong></li>
+                            <li>アクワイアラー向けセールス</li>
+                            <li>自社法律顧問連携、規制確認</li>
+                        </ul>
+                    </div>
+
+                    <!-- ForBetter Box -->
+                    <div class="bg-purple-50 border-2 border-purple-500 rounded-xl p-5 relative">
+                        <div class="absolute -top-3 left-4 bg-purple-500 text-white text-xs px-2 py-0.5 rounded-full font-bold">PMO推進 / ファシリテーター</div>
+                        <div class="flex items-center gap-3 mb-3 mt-1">
+                            <span class="bg-purple-500 text-white p-2 rounded-lg text-sm"><i class="fa-solid fa-compass-drafting"></i></span>
+                            <h4 class="font-bold text-slate-900">ForBetter合同会社</h4>
+                        </div>
+                        <ul class="text-xs space-y-1.5 text-slate-600 list-disc pl-4">
+                            <li><strong>PMO：全体の推進・課題管理</strong></li>
+                            <li>都側提出資料の統合、推敲</li>
+                            <li>アクワイアラーと加盟店の利害調整</li>
+                            <li>審査・面接ピッチ資料の構成作成</li>
+                        </ul>
+                    </div>
+
+                    <!-- PlatON Box -->
+                    <div class="bg-cyan-50 border-2 border-cyan-500 rounded-xl p-5 relative">
+                        <div class="absolute -top-3 left-4 bg-cyan-500 text-white text-xs px-2 py-0.5 rounded-full font-bold">基盤開発 / インフラ</div>
+                        <div class="flex items-center gap-3 mb-3 mt-1">
+                            <span class="bg-cyan-500 text-white p-2 rounded-lg text-sm"><i class="fa-solid fa-server"></i></span>
+                            <h4 class="font-bold text-slate-900">PlatON</h4>
+                        </div>
+                        <ul class="text-xs space-y-1.5 text-slate-600 list-disc pl-4">
+                            <li><strong>SCプラットフォームの実装提供</strong></li>
+                            <li>セキュリティ対策、暗号鍵管理</li>
+                            <li>システム構成図の設計・提供</li>
+                            <li>マネロン防止(AML/CFT)対策の記述</li>
+                        </ul>
+                    </div>
+
+                    <!-- CFS Box -->
+                    <div class="bg-emerald-50 border-2 border-emerald-500 rounded-xl p-5 relative">
+                        <div class="absolute -top-3 left-4 bg-emerald-500 text-white text-xs px-2 py-0.5 rounded-full font-bold">PoCアクワイアラー / 店舗調整</div>
+                        <div class="flex items-center gap-3 mb-3 mt-1">
+                            <span class="bg-emerald-500 text-white p-2 rounded-lg text-sm"><i class="fa-solid fa-store"></i></span>
+                            <h4 class="font-bold text-slate-900">CFS株式会社</h4>
+                        </div>
+                        <ul class="text-xs space-y-1.5 text-slate-600 list-disc pl-4">
+                            <li><strong>PoCアクワイアラー役割の担い手</strong></li>
+                            <li>都内実証実験用「加盟店」の調整</li>
+                            <li>実証テスト現場での端末フィードバック</li>
+                            <li>トランザクション検証データの収集協力</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Strategic Positioning Info -->
+                <div class="bg-slate-50 rounded-xl p-5 border border-slate-200">
+                    <h4 class="text-sm font-bold text-slate-800 mb-2 flex items-center gap-2">
+                        <i class="fa-solid fa-chess-knight text-brand-500"></i>
+                        【社会的アピールポイント】既存PSP・アクワイアラーを巻き込む将来展開
+                    </h4>
+                    <p class="text-xs text-slate-600 leading-relaxed">
+                        本補助金の採択に最も重要なのは「一過性の実証実験で終わらせない自立持続性」です。HIT社が提供する決済端末にステーブルコイン(SC)決済を<strong>「デフォルト標準モジュール（部品）」</strong>として組込むことで、他社のアクワイアラー（CFS社など）やPSP（決済代理店）が、API接続等の最小限の開発だけで素早くSC決済を自店顧客に提供できるようになります。将来的にソリューションを単体で外販していく道筋をアピールします。
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 4: SCHEDULE (ToDo removed) -->
+        <div id="tab-schedule" class="tab-content hidden">
+            <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-6">
+                <h3 class="text-lg font-bold text-slate-900 mb-6 flex items-center gap-2 border-b pb-2">
+                    <i class="fa-solid fa-calendar-days text-brand-500"></i>
+                    全体マイルストーンスケジュール（2026年）
+                </h3>
+
+                <!-- Visual Timeline vertical (Wide layout) -->
+                <div class="space-y-8 relative before:absolute before:inset-0 before:left-4 before:h-full before:w-0.5 before:bg-slate-200 pl-4">
+                    <div class="flex gap-6 relative">
+                        <span class="w-9 h-9 bg-brand-500 text-white rounded-full flex items-center justify-center font-bold text-sm shrink-0 z-10 shadow-sm"><i class="fa-solid fa-calendar-day"></i></span>
+                        <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 w-full">
+                            <span class="bg-brand-100 text-brand-800 text-xs px-2.5 py-1 rounded-full font-bold font-mono">6/5 キックオフ</span>
+                            <h4 class="font-bold text-slate-900 text-base mt-2">申請準備会議（本日）</h4>
+                            <p class="text-sm text-slate-600 mt-1">本推進PMOダッシュボードを用い、体制・役割・提出資料・経費配分などのアライアンス間全会一致の合意を形成します。</p>
+                        </div>
+                    </div>
+
+                    <div class="flex gap-6 relative">
+                        <span class="w-9 h-9 bg-brand-500 text-white rounded-full flex items-center justify-center font-bold text-sm shrink-0 z-10 shadow-sm"><i class="fa-solid fa-file-signature"></i></span>
+                        <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 w-full">
+                            <span class="bg-cyan-100 text-cyan-800 text-xs px-2.5 py-1 rounded-full font-bold font-mono">6/6 - 6/15</span>
+                            <h4 class="font-bold text-slate-900 text-base mt-2">第1次事業計画・経費明細見積ドラフトの集約</h4>
+                            <p class="text-sm text-slate-600 mt-1">PlatONがSCインフラ開発および安全認証監査の見積を作成。CFS社にて都内の実証（PoC）候補店舗（約10店）を選定。HIT社が本店登記簿謄本と都税納税証明書を調達します。</p>
+                        </div>
+                    </div>
+
+                    <div class="flex gap-6 relative">
+                        <span class="w-9 h-9 bg-brand-500 text-white rounded-full flex items-center justify-center font-bold text-sm shrink-0 z-10 shadow-sm"><i class="fa-solid fa-gavel"></i></span>
+                        <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 w-full">
+                            <span class="bg-amber-100 text-amber-800 text-xs px-2.5 py-1 rounded-full font-bold font-mono">6/16 - 6/23</span>
+                            <h4 class="font-bold text-slate-900 text-base mt-2">リーガル検証 & 共同事業者間MOU調印</h4>
+                            <p class="text-sm text-slate-600 mt-1">改正資金決済法などの規制遵守性をHIT社法律顧問弁護士と公式に検証。4社協働推進に向けた基本協定（MOU）を調印します。</p>
+                        </div>
+                    </div>
+
+                    <div class="flex gap-6 relative">
+                        <span class="w-9 h-9 bg-emerald-500 text-white rounded-full flex items-center justify-center font-bold text-sm shrink-0 z-10 shadow-sm"><i class="fa-solid fa-cloud-arrow-up"></i></span>
+                        <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 w-full">
+                            <span class="bg-emerald-100 text-emerald-800 text-xs px-2.5 py-1 rounded-full font-bold font-mono">6/24 - 6/30</span>
+                            <h4 class="font-bold text-slate-900 text-base mt-2">jGrantsによる東京都電子申請完了（申請デッドライン：6/30）</h4>
+                            <p class="text-sm text-slate-600 mt-1">ForBetter社PMOが全ての添付書類・明細を最終統合。HIT社が電子政府申請システム「jGrants」より本申請を実行・完了させます。</p>
+                        </div>
+                    </div>
+
+                    <div class="flex gap-6 relative">
+                        <span class="w-9 h-9 bg-slate-400 text-white rounded-full flex items-center justify-center font-bold text-sm shrink-0 z-10 shadow-sm"><i class="fa-solid fa-user-group"></i></span>
+                        <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 w-full">
+                            <span class="bg-slate-100 text-slate-800 text-xs px-2.5 py-1 rounded-full font-bold font-mono">7月 - 8月</span>
+                            <h4 class="font-bold text-slate-900 text-base mt-2">東京都審査官によるオンライン面接審査（ピッチ）</h4>
+                            <p class="text-sm text-slate-600 mt-1">一次の書面審査通過後、A4・3枚の概要説明資料を用いた、東京都側の有識者・審査員に対する面接審査（ピッチ）へと進みます。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 5: PROPOSAL OUTLINE (Note area removed) -->
+        <div id="tab-outline" class="tab-content hidden">
+            <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-6">
+                <div class="mb-6 border-b pb-4">
+                    <h3 class="text-lg font-bold text-slate-900 flex items-center gap-2">
+                        <i class="fa-solid fa-file-invoice text-brand-500"></i>
+                        事業計画書（別紙1） 構成骨子（東京都公式ガイドライン準拠）
+                    </h3>
+                    <p class="text-xs text-slate-500 mt-1">
+                        東京都産業労働局の公募要領に基づき、審査基準における「社会的意義」「先進性」「安全性」を高精度で満たす章立て骨子です。
+                    </p>
+                </div>
+
+                <div class="space-y-4">
+                    <!-- Collapsible Outline item 1 -->
+                    <div class="border border-slate-200 rounded-lg overflow-hidden bg-slate-50">
+                        <div class="p-4 font-bold text-slate-800 text-sm bg-slate-100 flex justify-between items-center cursor-pointer font-sans" onclick="toggleDetails('outline-1')">
+                            <span>第1章: 事業の背景、目的及び社会的意義（加盟店と利用者の課題解決）</span>
+                            <i class="fa-solid fa-chevron-down text-slate-500 text-sm" id="icon-outline-1"></i>
+                        </div>
+                        <div id="outline-1" class="p-6 text-sm text-slate-600 space-y-3 bg-white leading-relaxed">
+                            <p class="font-bold text-slate-900">【記載方針と合意内容】</p>
+                            <p class="border-l-4 border-slate-300 pl-3">・既存の決済仲介サービス（クレジットカード・既存QR等）における「3%〜5%という高額な加盟店手数料」および「数週間以上に及ぶ売上入金サイクル」が中小加盟店の資金繰りを圧迫している実態を示す。</p>
+                            <p class="border-l-4 border-slate-300 pl-3">・東京都が目指すスマート東京構想と金融イノベーションの軸において、「日本円ステーブルコイン（国内SC）」による画期的な決済手数料削減（1%以下）と、分散型台帳（スマートコントラクト）を用いたリアルタイム決済（即時入金）の優位性をアピールする。</p>
+                        </div>
+                    </div>
+
+                    <!-- Collapsible Outline item 2 -->
+                    <div class="border border-slate-200 rounded-lg overflow-hidden bg-slate-50">
+                        <div class="p-4 font-bold text-slate-800 text-sm bg-slate-100 flex justify-between items-center cursor-pointer font-sans" onclick="toggleDetails('outline-2')">
+                            <span>第2章: 先進性、独自性（自社決済端末によるSC決済デファクト化）</span>
+                            <i class="fa-solid fa-chevron-down text-slate-500 text-sm" id="icon-outline-2"></i>
+                        </div>
+                        <div id="outline-2" class="p-6 text-sm text-slate-600 space-y-3 bg-white leading-relaxed">
+                            <p class="font-bold text-slate-900">【記載方針と合意内容】</p>
+                            <p class="border-l-4 border-slate-300 pl-3">・<strong>HIT社のコア競争力</strong>：一過性の検証で終わる実証実験ではなく、自社が調達・出荷する「新型マルチ決済端末のOS/ファームウェア部分に、ステーブルコイン決済モジュール（SDK）を標準搭載」して展開する戦略を記述。</p>
+                            <p class="border-l-4 border-slate-300 pl-3">・他社アクワイアラー（CFS社など）や既存決済中継事業者（PSP）は、追加のハードウエア導入コストを一切伴わずにSC決済インフラを即座に利用可能となる、プラットフォーム（中立的ミドルウェア）モデルの先進性を説く。</p>
+                        </div>
+                    </div>
+
+                    <!-- Collapsible Outline item 3 -->
+                    <div class="border border-slate-200 rounded-lg overflow-hidden bg-slate-50">
+                        <div class="p-4 font-bold text-slate-800 text-sm bg-slate-100 flex justify-between items-center cursor-pointer font-sans" onclick="toggleDetails('outline-3')">
+                            <span>第3章: 実装方法及び実証検証（都内ターゲット店舗のPoC計画）</span>
+                            <i class="fa-solid fa-chevron-down text-slate-500 text-sm" id="icon-outline-3"></i>
+                        </div>
+                        <div id="outline-3" class="p-6 text-sm text-slate-600 space-y-3 bg-white leading-relaxed">
+                            <p class="font-bold text-slate-900">【記載方針と合意内容】</p>
+                            <p class="border-l-4 border-slate-300 pl-3">・CFS社の持つ加盟店網から、東京都内（例：渋谷、千代田、日本橋等）に位置する飲食・小売実店舗約10店舗を「ステーブルコイン決済PoC協力店舗」としてアサイン。</p>
+                            <p class="border-l-4 border-slate-300 pl-3">・期間内のKPIとして、端末処理のスループット（トランザクション完了速度3秒以内）、誤動作ゼロ（エラー率0.01%以下）、および導入加盟店のキャッシュフロー改善度合いと利便性アンケート評価の数値化を定義する。</p>
+                        </div>
+                    </div>
+
+                    <!-- Collapsible Outline item 4 -->
+                    <div class="border border-slate-200 rounded-lg overflow-hidden bg-slate-50">
+                        <div class="p-4 font-bold text-slate-800 text-sm bg-slate-100 flex justify-between items-center cursor-pointer font-sans" onclick="toggleDetails('outline-4')">
+                            <span>第4章: 安全性、コンプライアンス管理（AML/CFT、トラベルルール、システムセキュリティ）</span>
+                            <i class="fa-solid fa-chevron-down text-slate-500 text-sm" id="icon-outline-4"></i>
+                        </div>
+                        <div id="outline-4" class="p-6 text-sm text-slate-600 space-y-3 bg-white leading-relaxed">
+                            <p class="font-bold text-slate-900">【記載方針と合意内容】</p>
+                            <p class="border-l-4 border-slate-300 pl-3">・東京都および金融庁のガイドラインに基づく「トラベルルール」「AML/CFT（マネーロンダリング等防止策）」、不審な大口取引のリアルタイム検知アルゴリズムを明記。</p>
+                            <p class="border-l-4 border-slate-300 pl-3">・PlatONによるスマートコントラクト監査実績（脆弱性脆弱性診断の完了）、マルチシグ（複数署名）キー管理、および万が一の端末盗難・鍵紛失・不正流出発生時の即時取引一時凍結・ハードウェア隔離機能などのセーフガードを証明する。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 5.5: NEW ESTIMATE DETAIL & UNIT QUOTES (1 PAGE FORMAT) -->
+        <div id="tab-estimates" class="tab-content hidden">
+            <div class="bg-slate-200 rounded-xl p-4 md:p-6 overflow-hidden flex flex-col items-center">
+                <div class="w-full flex justify-between items-center mb-3">
+                    <span class="text-xs text-slate-600 font-bold flex items-center gap-1.5">
+                        <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                        アライアンス共同提出用：経費明細 ＆ 各社概算見積書（1ページ・A4プレビュー仕様）
+                    </span>
+                    <button onclick="window.print()" class="bg-white hover:bg-slate-100 text-slate-700 text-xs px-3 py-1.5 rounded-lg border font-bold flex items-center gap-1.5 transition">
+                        <i class="fa-solid fa-print"></i> 印刷 / PDF保存
+                    </button>
+                </div>
+
+                <!-- A4 Document Page -->
+                <div class="bg-white text-slate-900 w-full max-w-[800px] p-8 md:p-12 font-serif border border-slate-300 rounded shadow-md text-xs leading-relaxed">
+                    
+                    <!-- Document Header -->
+                    <div class="text-right text-[10px] font-sans text-slate-500 mb-2">
+                        【共同提案アライアンス 添付資料】
+                    </div>
+                    <div class="text-center text-lg font-bold border-b-2 border-slate-800 pb-2 mb-6 font-sans tracking-wide">
+                        経費明細及び見積内訳書
+                    </div>
+
+                    <!-- Company Info -->
+                    <div class="flex justify-between items-start mb-6 font-sans">
+                        <div>
+                            <span class="block">東京都知事 殿</span>
+                            <span class="block text-slate-600 text-[10px] mt-1">（ステーブルコイン社会実装促進事業補助金 申請案件）</span>
+                        </div>
+                        <div class="text-right text-[10px]">
+                            <span class="block">令和8年6月30日</span>
+                            <span class="block font-bold">HIT株式会社 (申請主体)</span>
+                            <span class="block">ForBetter合同会社 (PMO推進)</span>
+                            <span class="block">PlatON (基盤実装)</span>
+                            <span class="block">CFS株式会社 (PoCアクワイアラー)</span>
+                        </div>
+                    </div>
+
+                    <p class="mb-4 font-sans text-slate-700">
+                        本申請事業（総事業費：60,000,000円、補助金申請額：40,000,000円、自己負担額：20,000,000円）に係る、アライアンス各社の具体的な役割および提供するサービス・システム開発費用の見積内訳を、以下の通り提出いたします。
+                    </p>
+
+                    <!-- Table of Estimates -->
+                    <table class="w-full border-collapse border border-slate-800 text-left font-sans text-[10.5px] mb-6">
+                        <thead>
+                            <tr class="bg-slate-100 border-b border-slate-800 text-center font-bold">
+                                <th class="border border-slate-800 p-2 w-1/5">経費区分 / 主担当</th>
+                                <th class="border border-slate-800 p-2 w-2/5">具体的な仕様・作業内容（使途）</th>
+                                <th class="border border-slate-800 p-2 w-1/5">単価 ✕ 数量・期間</th>
+                                <th class="border border-slate-800 p-2 w-1/5 text-right">見積金額（税込）</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-slate-800">
+                            <!-- HIT -->
+                            <tr>
+                                <td class="border border-slate-800 p-2 font-bold bg-blue-50/40">
+                                    HIT株式会社<br>
+                                    <span class="text-[9px] text-slate-500 font-normal">（開発・調達・営業）</span>
+                                </td>
+                                <td class="border border-slate-800 p-2 leading-relaxed">
+                                    <span class="font-bold text-slate-800 block">■ 自社決済端末SC対応APP開発・調達</span>
+                                    ・決済端末用ステーブルコインモジュールの組み込み及び検証用ハードウェア調達。<br>
+                                    ・アクワイアラー(CFS社など)向け決済APP仕様変更と統合テスト。
+                                </td>
+                                <td class="border border-slate-800 p-2 text-center text-slate-600">
+                                    1式<br>（内訳別途）
+                                </td>
+                                <td class="border border-slate-800 p-2 font-mono text-right font-semibold pr-3">¥25,000,000</td>
+                            </tr>
+
+                            <!-- PlatON -->
+                            <tr>
+                                <td class="border border-slate-800 p-2 font-bold bg-cyan-50/40">
+                                    PlatON<br>
+                                    <span class="text-[9px] text-slate-500 font-normal">（インフラ・開発）</span>
+                                </td>
+                                <td class="border border-slate-800 p-2 leading-relaxed">
+                                    <span class="font-bold text-slate-800 block">■ SC決済プラットフォーム構築・監査</span>
+                                    ・スマートコントラクト実装、セキュリティ脆弱性監査、暗号鍵管理、AML不正トランザクション自動検知モジュールの設計開発。<br>
+                                    ・ブロックチェーン決済環境（テスト・本番）初期構築費用。
+                                </td>
+                                <td class="border border-slate-800 p-2 text-center text-slate-600">
+                                    1式<br>（インフラ仕様書添付）
+                                </td>
+                                <td class="border border-slate-800 p-2 font-mono text-right font-semibold pr-3">¥20,000,000</td>
+                            </tr>
+
+                            <!-- ForBetter -->
+                            <tr>
+                                <td class="border border-slate-800 p-2 font-bold bg-purple-50/40">
+                                    ForBetter合同会社<br>
+                                    <span class="text-[9px] text-slate-500 font-normal">（全体PMO）</span>
+                                </td>
+                                <td class="border border-slate-800 p-2 leading-relaxed">
+                                    <span class="font-bold text-slate-800 block">■ 推進PMO業務 & 申請書類策定・推進</span>
+                                    ・アライアンス全体の進行・課題管理、東京都提出資料の統合・校正。<br>
+                                    ・面接ピッチ資料作成サポート、アクワイアラー/加盟店間の各種契約・利害調整支援。
+                                </td>
+                                <td class="border border-slate-800 p-2 text-center text-slate-600">
+                                    1式<br>（10ヶ月）
+                                </td>
+                                <td class="border border-slate-800 p-2 font-mono text-right font-semibold pr-3">¥10,000,000</td>
+                            </tr>
+
+                            <!-- CFS -->
+                            <tr>
+                                <td class="border border-slate-800 p-2 font-bold bg-emerald-50/40">
+                                    CFS株式会社<br>
+                                    <span class="text-[9px] text-slate-500 font-normal">（PoC調整）</span>
+                                </td>
+                                <td class="border border-slate-800 p-2 leading-relaxed">
+                                    <span class="font-bold text-slate-800 block">■ 都内PoC実証フィールド調整・検証</span>
+                                    ・東京都内PoCターゲット加盟店（飲食・小売等10店舗）の交渉、店頭への端末設置、実運用のスタッフ教育。<br>
+                                    ・検証トランザクション結果の収集と集計、都側レポート作成支援。
+                                </td>
+                                <td class="border border-slate-800 p-2 text-center text-slate-600">
+                                    1式<br>（都内10店舗対応）
+                                </td>
+                                <td class="border border-slate-800 p-2 font-mono text-right font-semibold pr-3">¥5,000,000</td>
+                            </tr>
+
+                            <!-- Total -->
+                            <tr class="bg-slate-50 font-bold border-t-2 border-slate-800 text-slate-900">
+                                <td class="border border-slate-800 p-2 text-center" colspan="3">総事業費（4社見積り合計）</td>
+                                <td class="border border-slate-800 p-2 font-mono text-right text-brand-700 pr-3">¥60,000,000</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <!-- Notes & Compliance -->
+                    <div class="bg-slate-50 p-4 border border-slate-300 rounded font-sans text-[10px]">
+                        <span class="font-bold text-slate-800 block mb-1">【見積算出および適用基準】</span>
+                        <ul class="space-y-1 text-slate-600 list-disc pl-4">
+                            <li>システム開発費用（HIT社・PlatON社分）は、東京都産業労働局のIT人件費基準（システムエンジニア単価等）に基づき妥当性を算定。</li>
+                            <li>専門家・リーガルチェック費用、第三者セキュリティ診断費用は、見積実績に基づき「専門家相談・監査経費」として別紙2経費明細へ計上予定。</li>
+                            <li>補助事業終了後、実績報告による検査・都側の確認を経て、最終的な補助対象額・補助金交付額（最大40,000,000円）が精算・確定します。</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 6: TASKS & DELIVERABLES -->
+        <div id="tab-tasks" class="tab-content hidden">
+            <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-6">
+                <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-6 border-b pb-4">
+                    <div>
+                        <h3 class="text-lg font-bold text-slate-900 flex items-center gap-2">
+                            <i class="fa-solid fa-list-check text-brand-500"></i>
+                            提出物一覧 ＆ 各社タスク割当マトリクス
+                        </h3>
+                        <p class="text-xs text-slate-500 mt-1">
+                            都側への申請書類の抜け漏れがないようにするための全件リストです。
+                        </p>
+                    </div>
+                    <!-- Quick Filters -->
+                    <div class="flex flex-wrap gap-2">
+                        <button onclick="filterTasks('all')" class="bg-brand-500 text-white text-xs px-3 py-1.5 rounded-lg font-semibold shadow hover:bg-brand-600 transition" id="btn-f-all">全員分</button>
+                        <button onclick="filterTasks('HIT')" class="bg-slate-100 text-slate-700 text-xs px-3 py-1.5 rounded-lg font-semibold hover:bg-slate-200 transition" id="btn-f-hit">HIT</button>
+                        <button onclick="filterTasks('ForBetter')" class="bg-slate-100 text-slate-700 text-xs px-3 py-1.5 rounded-lg font-semibold hover:bg-slate-200 transition" id="btn-f-fb">ForBetter</button>
+                        <button onclick="filterTasks('PlatON')" class="bg-slate-100 text-slate-700 text-xs px-3 py-1.5 rounded-lg font-semibold hover:bg-slate-200 transition" id="btn-f-platon">PlatON</button>
+                        <button onclick="filterTasks('CFS')" class="bg-slate-100 text-slate-700 text-xs px-3 py-1.5 rounded-lg font-semibold hover:bg-slate-200 transition" id="btn-f-cfs">CFS</button>
+                    </div>
+                </div>
+
+                <!-- Tasks Table/List -->
+                <div class="overflow-x-auto custom-scrollbar">
+                    <table class="w-full text-left border-collapse">
+                        <thead>
+                            <tr class="bg-slate-100 border-b border-slate-200 text-xs uppercase text-slate-600">
+                                <th class="p-3 font-semibold">提出書類対象</th>
+                                <th class="p-3 font-semibold">具体的なタスク・対応方針</th>
+                                <th class="p-3 font-semibold">主担当社</th>
+                                <th class="p-3 font-semibold">協同パートナー</th>
+                                <th class="p-3 font-semibold">予定デッドライン</th>
+                                <th class="p-3 font-semibold">状態</th>
+                            </tr>
+                        </thead>
+                        <tbody id="task-table-body" class="text-sm">
+                            <tr class="border-b border-slate-100 hover:bg-slate-50/50 task-row" data-owner="HIT">
+                                <td class="p-3 font-medium text-brand-700 font-mono text-xs">【様式1】交付申請書</td>
+                                <td class="p-3">
+                                    <span class="font-bold block text-slate-800">基本会社情報と代表者印の手配</span>
+                                    <span class="text-xs text-slate-500">HIT社HPおよび登記情報と一致する内容の記入準備。</span>
+                                </td>
+                                <td class="p-3"><span class="bg-blue-100 text-blue-800 text-xs px-2.5 py-1 rounded font-bold">HIT</span></td>
+                                <td class="p-3 text-slate-500 text-xs">ForBetter</td>
+                                <td class="p-3 text-xs font-mono text-slate-600">6月25日</td>
+                                <td class="p-3">
+                                    <select onchange="updateTaskBadge(this)" class="bg-amber-50 text-amber-700 border border-amber-200 text-xs rounded px-1.5 py-1 focus:outline-none font-semibold">
+                                        <option value="todo">未着手</option>
+                                        <option value="doing" selected>準備中</option>
+                                        <option value="done">完了</option>
+                                    </select>
+                                </td>
+                            </tr>
+
+                            <tr class="border-b border-slate-100 hover:bg-slate-50/50 task-row" data-owner="ForBetter">
+                                <td class="p-3 font-medium text-brand-700 font-mono text-xs">【別紙1】事業計画書</td>
+                                <td class="p-3">
+                                    <span class="font-bold block text-slate-800">全体プロット・事業意義パート執筆</span>
+                                    <span class="text-xs text-slate-500">自社決済端末へのSCモジュール搭載の普及戦略と、東京のDX促進ストーリー作成。</span>
+                                </td>
+                                <td class="p-3"><span class="bg-purple-100 text-purple-800 text-xs px-2.5 py-1 rounded font-bold">ForBetter</span></td>
+                                <td class="p-3 text-slate-500 text-xs">HIT</td>
+                                <td class="p-3 text-xs font-mono text-slate-600">6月18日</td>
+                                <td class="p-3">
+                                    <select onchange="updateTaskBadge(this)" class="bg-amber-50 text-amber-700 border border-amber-200 text-xs rounded px-1.5 py-1 focus:outline-none font-semibold">
+                                        <option value="todo">未着手</option>
+                                        <option value="doing" selected>準備中</option>
+                                        <option value="done">完了</option>
+                                    </select>
+                                </td>
+                            </tr>
+
+                            <tr class="border-b border-slate-100 hover:bg-slate-50/50 task-row" data-owner="PlatON">
+                                <td class="p-3 font-medium text-brand-700 font-mono text-xs">【別紙1】事業計画書</td>
+                                <td class="p-3">
+                                    <span class="font-bold block text-slate-800">AML/CFT、マルチシグ鍵管理の安全技術証明</span>
+                                    <span class="text-xs text-slate-500">技術アーキテクチャの安全性（スマートコントラクト監査実績等）の説明。</span>
+                                </td>
+                                <td class="p-3"><span class="bg-cyan-100 text-cyan-800 text-xs px-2.5 py-1 rounded font-bold">PlatON</span></td>
+                                <td class="p-3 text-slate-500 text-xs">ForBetter</td>
+                                <td class="p-3 text-xs font-mono text-slate-600">6月15日</td>
+                                <td class="p-3">
+                                    <select onchange="updateTaskBadge(this)" class="bg-red-50 text-red-700 border border-red-200 text-xs rounded px-1.5 py-1 focus:outline-none font-semibold">
+                                        <option value="todo" selected>未着手</option>
+                                        <option value="doing">準備中</option>
+                                        <option value="done">完了</option>
+                                    </select>
+                                </td>
+                            </tr>
+
+                            <tr class="border-b border-slate-100 hover:bg-slate-50/50 task-row" data-owner="CFS">
+                                <td class="p-3 font-medium text-brand-700 font-mono text-xs">【別紙1】事業計画書</td>
+                                <td class="p-3">
+                                    <span class="font-bold block text-slate-800">PoC都内加盟店の実証連携合意</span>
+                                    <span class="text-xs text-slate-500">CFS社が手配する実店舗数（10店程度）のリスト提供および検証計画。</span>
+                                </td>
+                                <td class="p-3"><span class="bg-emerald-100 text-emerald-800 text-xs px-2.5 py-1 rounded font-bold">CFS</span></td>
+                                <td class="p-3 text-slate-500 text-xs">ForBetter</td>
+                                <td class="p-3 text-xs font-mono text-slate-600">6月15日</td>
+                                <td class="p-3">
+                                    <select onchange="updateTaskBadge(this)" class="bg-red-50 text-red-700 border border-red-200 text-xs rounded px-1.5 py-1 focus:outline-none font-semibold">
+                                        <option value="todo" selected>未着手</option>
+                                        <option value="doing">準備中</option>
+                                        <option value="done">完了</option>
+                                    </select>
+                                </td>
+                            </tr>
+
+                            <tr class="border-b border-slate-100 hover:bg-slate-50/50 task-row" data-owner="HIT">
+                                <td class="p-3 font-medium text-brand-700 font-mono text-xs">【別紙1】事業計画書</td>
+                                <td class="p-3">
+                                    <span class="font-bold block text-slate-800">資金決済法等、法規準拠性の記載</span>
+                                    <span class="text-xs text-slate-500">自社端末を介したSC提供時における法律顧問弁護士の見解まとめ。</span>
+                                </td>
+                                <td class="p-3"><span class="bg-blue-100 text-blue-800 text-xs px-2.5 py-1 rounded font-bold">HIT</span></td>
+                                <td class="p-3 text-slate-500 text-xs">ForBetter, 法律事務所</td>
+                                <td class="p-3 text-xs font-mono text-slate-600">6月20日</td>
+                                <td class="p-3">
+                                    <select onchange="updateTaskBadge(this)" class="bg-red-50 text-red-700 border border-red-200 text-xs rounded px-1.5 py-1 focus:outline-none font-semibold">
+                                        <option value="todo" selected>未着手</option>
+                                        <option value="doing">準備中</option>
+                                        <option value="done">完了</option>
+                                    </select>
+                                </td>
+                            </tr>
+
+                            <tr class="border-b border-slate-100 hover:bg-slate-50/50 task-row" data-owner="ForBetter">
+                                <td class="p-3 font-medium text-brand-700 font-mono text-xs">【別紙2】経費明細＆見積</td>
+                                <td class="p-3">
+                                    <span class="font-bold block text-slate-800">各社経費・見積もり書の集約</span>
+                                    <span class="text-xs text-slate-500">PlatON開発費、HIT端末費用、監査費、法律専門家費用の見積・統合。</span>
+                                </td>
+                                <td class="p-3"><span class="bg-purple-100 text-purple-800 text-xs px-2.5 py-1 rounded font-bold">ForBetter</span></td>
+                                <td class="p-3 text-slate-500 text-xs">PlatON, HIT</td>
+                                <td class="p-3 text-xs font-mono text-slate-600">6月22日</td>
+                                <td class="p-3">
+                                    <select onchange="updateTaskBadge(this)" class="bg-amber-50 text-amber-700 border border-amber-200 text-xs rounded px-1.5 py-1 focus:outline-none font-semibold">
+                                        <option value="todo">未着手</option>
+                                        <option value="doing" selected>準備中</option>
+                                        <option value="done">完了</option>
+                                    </select>
+                                </td>
+                            </tr>
+
+                            <tr class="border-b border-slate-100 hover:bg-slate-50/50 task-row" data-owner="HIT">
+                                <td class="p-3 font-medium text-brand-700 font-mono text-xs">公的証明書確認</td>
+                                <td class="p-3">
+                                    <span class="font-bold block text-slate-800">登記簿謄本・納税証明書・決算書の準備</span>
+                                    <span class="text-xs text-slate-500">東京都に実体登記されている事の証明、納税遅延なき都税証明。</span>
+                                </td>
+                                <td class="p-3"><span class="bg-blue-100 text-blue-800 text-xs px-2.5 py-1 rounded font-bold">HIT</span></td>
+                                <td class="p-3 text-slate-500 text-xs">HIT管理部</td>
+                                <td class="p-3 text-xs font-mono text-slate-600">6月15日</td>
+                                <td class="p-3">
+                                    <select onchange="updateTaskBadge(this)" class="bg-amber-50 text-amber-700 border border-amber-200 text-xs rounded px-1.5 py-1 focus:outline-none font-semibold">
+                                        <option value="todo">未着手</option>
+                                        <option value="doing" selected>準備中</option>
+                                        <option value="done">完了</option>
+                                    </select>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 7: BUDGET SIMULATOR & ALLOCATION -->
+        <div id="tab-budget" class="tab-content hidden">
+            <!-- Summary stats card -->
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 mb-6">
+                <!-- Inputs & Controls -->
+                <div class="lg:col-span-7 bg-white rounded-xl shadow-sm border border-slate-200 p-6">
+                    <h3 class="text-lg font-bold text-slate-900 mb-4 flex items-center gap-2 border-b pb-2">
+                        <i class="fa-solid fa-calculator text-brand-500"></i>
+                        【補助上限4,000万円・補助率2/3】 予算概算シミュレーター
+                    </h3>
+                    <p class="text-xs text-slate-500 mb-6">
+                        東京都ステーブルコイン補助金は、全体の補助対象経費の「2/3」を補助（上限4,000万円）します。システム開発費、外部利用経費、専門家相談監査等の内訳金額を入力し、明日の予算合意ラインを計算しましょう。
+                    </p>
+
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 mb-2">① システム開発経費 (PlatONプラットフォーム、HIT側端末アプリ等)</label>
+                            <div class="relative rounded-md shadow-sm">
+                                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                    <span class="text-slate-500 sm:text-sm">¥</span>
+                                </div>
+                                <input type="number" id="input-dev-cost" class="w-full pl-8 pr-12 py-2.5 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-500 font-mono text-slate-800 text-sm" value="45000000" oninput="calculateBudget()">
+                                <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                                    <span class="text-slate-500 sm:text-sm font-mono text-xs">円</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 mb-2">② 外部基盤利用経費 (サーバー/クラウド、ブロックチェーンガス代など)</label>
+                            <div class="relative rounded-md shadow-sm">
+                                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                    <span class="text-slate-500 sm:text-sm">¥</span>
+                                </div>
+                                <input type="number" id="input-infra-cost" class="w-full pl-8 pr-12 py-2.5 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-500 font-mono text-slate-800 text-sm" value="9000000" oninput="calculateBudget()">
+                                <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                                    <span class="text-slate-500 sm:text-sm font-mono text-xs">円</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 mb-2">③ 専門家・監査相談経費 (法律顧問弁護士、スマートコントラクト監査)</label>
+                            <div class="relative rounded-md shadow-sm">
+                                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                    <span class="text-slate-500 sm:text-sm">¥</span>
+                                </div>
+                                <input type="number" id="input-expert-cost" class="w-full pl-8 pr-12 py-2.5 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-500 font-mono text-slate-800 text-sm" value="6000000" oninput="calculateBudget()">
+                                <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                                    <span class="text-slate-500 sm:text-sm font-mono text-xs">円</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Simulation Results Panel -->
+                <div class="lg:col-span-5 bg-gradient-to-b from-brand-900 to-brand-700 text-white rounded-xl p-6 shadow-md flex flex-col justify-between">
+                    <div>
+                        <h3 class="text-md font-bold mb-4 border-b border-brand-800 pb-2 flex items-center gap-2">
+                            <i class="fa-solid fa-chart-pie text-cyan-300"></i>
+                            リアルタイム予算判定
+                        </h3>
+
+                        <div class="space-y-4">
+                            <div>
+                                <span class="text-xs text-cyan-200">総事業費 (① + ② + ③)</span>
+                                <div class="text-2xl font-mono font-bold" id="result-total">¥0</div>
+                            </div>
+
+                            <hr class="border-brand-800">
+
+                            <div>
+                                <span class="text-xs text-cyan-200">想定補助金申請額 (総事業費 × 2/3)</span>
+                                <div class="text-3xl font-mono font-bold text-emerald-300" id="result-subsidy">¥0</div>
+                                <span class="text-[10px] text-cyan-200 block mt-1" id="limit-alert">*上限4,000万円が適用されています。</span>
+                            </div>
+
+                            <hr class="border-brand-800">
+
+                            <div>
+                                <span class="text-xs text-cyan-200">自己負担分額</span>
+                                <div class="text-xl font-mono font-bold" id="result-self">¥0</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Budget TIPS -->
+                    <div class="bg-white/10 p-4 rounded-lg border border-white/10 text-xs leading-relaxed mt-4 font-sans">
+                        <span class="font-bold text-cyan-300 block mb-1">【PMO精算アドバイス】</span>
+                        本補助金は「精算払い」であるため、事業期間中は一度HIT社が全額立替える形になります。自己資金またはブリッジローン（つなぎ融資）等の調達計画の裏付けも必要となります。
+                    </div>
+                </div>
+            </div>
+
+            <!-- BUDGET ALLOCATION PLAN -->
+            <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-6">
+                <div class="border-b pb-4 mb-4">
+                    <h3 class="text-lg font-bold text-slate-900 flex items-center gap-2">
+                        <i class="fa-solid fa-chart-line text-brand-500"></i>
+                        4社アライアンス 予算配分案（総事業費：6,000万円モデル）
+                    </h3>
+                    <p class="text-xs text-slate-500 mt-1">
+                        補助金申請における上限4,000万円をフル活用するためのアライアンス各社の予算割当て配分モデルです。明日のキックオフでの対HIT社・対パートナー交渉のベンチマークとして活用ください。
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <!-- Allocation chart list -->
+                    <div class="space-y-4">
+                        <h4 class="text-sm font-bold text-slate-800 border-l-4 border-brand-500 pl-2 mb-3">役割・パートナー別 予算分配率</h4>
+                        
+                        <!-- HIT -->
+                        <div>
+                            <div class="flex justify-between items-center text-xs mb-1 font-sans">
+                                <span class="font-semibold text-slate-700">HIT株式会社（端末アプリ開発＆端末調達）</span>
+                                <span class="font-mono font-bold text-slate-900">¥25,000,000 (41.7%)</span>
+                            </div>
+                            <div class="w-full bg-slate-100 h-3 rounded-full overflow-hidden">
+                                <div class="bg-blue-500 h-full" style="width: 41.7%"></div>
+                            </div>
+                        </div>
+
+                        <!-- PlatON -->
+                        <div>
+                            <div class="flex justify-between items-center text-xs mb-1 font-sans">
+                                <span class="font-semibold text-slate-700">PlatON（SCプラットフォーム開発＆基盤実装）</span>
+                                <span class="font-mono font-bold text-slate-900">¥20,000,000 (33.3%)</span>
+                            </div>
+                            <div class="w-full bg-slate-100 h-3 rounded-full overflow-hidden">
+                                <div class="bg-cyan-500 h-full" style="width: 33.3%"></div>
+                            </div>
+                        </div>
+
+                        <!-- ForBetter -->
+                        <div>
+                            <div class="flex justify-between items-center text-xs mb-1 font-sans">
+                                <span class="font-semibold text-slate-700">ForBetter合同会社（PMO・都側申請書類作成推進）</span>
+                                <span class="font-mono font-bold text-slate-900">¥10,000,000 (16.7%)</span>
+                            </div>
+                            <div class="w-full bg-slate-100 h-3 rounded-full overflow-hidden">
+                                <div class="bg-purple-500 h-full" style="width: 16.7%"></div>
+                            </div>
+                        </div>
+
+                        <!-- CFS -->
+                        <div>
+                            <div class="flex justify-between items-center text-xs mb-1 font-sans">
+                                <span class="font-semibold text-slate-700">CFS株式会社（PoC加盟店調整＆実証運営）</span>
+                                <span class="font-mono font-bold text-slate-900">¥5,000,000 (8.3%)</span>
+                            </div>
+                            <div class="w-full bg-slate-100 h-3 rounded-full overflow-hidden">
+                                <div class="bg-emerald-500 h-full" style="width: 8.3%"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Detail allocation table -->
+                    <div>
+                        <h4 class="text-sm font-bold text-slate-800 border-l-4 border-emerald-500 pl-2 mb-3">予算配分内訳（明細詳細案）</h4>
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-left text-xs border-collapse font-sans">
+                                <thead>
+                                    <tr class="bg-slate-50 border-b border-slate-200 text-slate-600 font-semibold">
+                                        <th class="p-2">配分先</th>
+                                        <th class="p-2">主な対応経費使途</th>
+                                        <th class="p-2 text-right">金額（税込）</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="divide-y divide-slate-100 text-slate-600">
+                                    <tr>
+                                        <td class="p-2 font-bold text-blue-600">HIT社</td>
+                                        <td class="p-2">端末アプリ(APP)開発人件費、検証端末調達、弁護士相談費用</td>
+                                        <td class="p-2 text-right font-mono font-semibold text-slate-800">¥25,000,000</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="p-2 font-bold text-cyan-600">PlatON</td>
+                                        <td class="p-2">SC決済エンジン構築費、セキュリティ・スマートコントラクト外部監査費用</td>
+                                        <td class="p-2 text-right font-mono font-semibold text-slate-800">¥20,000,000</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="p-2 font-bold text-purple-600">ForBetter</td>
+                                        <td class="p-2">PMO業務、申請書類・ピッチ資料作成サポート、プロジェクト進行管理</td>
+                                        <td class="p-2 text-right font-mono font-semibold text-slate-800">¥10,000,000</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="p-2 font-bold text-emerald-600">CFS社</td>
+                                        <td class="p-2">都内実証店舗開拓・加盟店調整、トランザクション検証データ収集サポート</td>
+                                        <td class="p-2 text-right font-mono font-semibold text-slate-800">¥5,000,000</td>
+                                    </tr>
+                                    <tr class="bg-slate-50 font-bold text-slate-900 border-t-2 border-slate-200">
+                                        <td class="p-2" colspan="2">合計総事業費（上限適合ライン）</td>
+                                        <td class="p-2 text-right font-mono text-sm text-brand-600">¥60,000,000</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="bg-slate-900 text-slate-400 py-6 text-center text-xs border-t border-slate-800 mt-12">
+        <p>© 2026 ForBetter合同会社 - 東京都ステーブルコイン社会実装促進事業補助金 申請PMO推進ダッシュボード</p>
+    </footer>
+
+    <script>
+        // Custom Toast system wrapper
+        function showNotification(msg, type = "info") {
+            const toast = document.getElementById('toast-notification');
+            const messageEl = document.getElementById('toast-message');
+            const iconWrapper = document.getElementById('toast-icon-wrapper');
+            
+            messageEl.textContent = msg;
+            
+            if (type === "success") {
+                iconWrapper.className = "bg-emerald-500/20 p-1.5 rounded-lg text-emerald-400";
+                iconWrapper.innerHTML = '<i class="fa-solid fa-circle-check"></i>';
+            } else if (type === "warning") {
+                iconWrapper.className = "bg-amber-500/20 p-1.5 rounded-lg text-amber-400";
+                iconWrapper.innerHTML = '<i class="fa-solid fa-triangle-exclamation"></i>';
+            } else {
+                iconWrapper.className = "bg-cyan-500/20 p-1.5 rounded-lg text-cyan-400";
+                iconWrapper.innerHTML = '<i class="fa-solid fa-circle-info"></i>';
+            }
+            
+            toast.className = "fixed bottom-5 right-5 z-50 transform translate-y-0 opacity-100 transition-all duration-300 pointer-events-auto";
+            
+            setTimeout(() => {
+                toast.className = "fixed bottom-5 right-5 z-50 transform translate-y-10 opacity-0 transition-all duration-300 pointer-events-none";
+            }, 3000);
+        }
+
+        // Tab switching system
+        function switchTab(tabId) {
+            const contents = document.querySelectorAll('.tab-content');
+            contents.forEach(content => {
+                content.classList.add('hidden');
+                content.classList.remove('block');
+            });
+
+            const activeContent = document.getElementById(tabId);
+            activeContent.classList.remove('hidden');
+            activeContent.classList.add('block');
+
+            const tabMeta = [
+                { id: 'btn-tab-agenda', tab: 'tab-agenda' },
+                { id: 'btn-tab-checklist', tab: 'tab-checklist' },
+                { id: 'btn-tab-alliance', tab: 'tab-alliance' },
+                { id: 'btn-tab-schedule', tab: 'tab-schedule' },
+                { id: 'btn-tab-outline', tab: 'tab-outline' },
+                { id: 'btn-tab-estimates', tab: 'tab-estimates' },
+                { id: 'btn-tab-tasks', tab: 'tab-tasks' },
+                { id: 'btn-tab-budget', tab: 'tab-budget' }
+            ];
+
+            tabMeta.forEach(btn => {
+                const element = document.getElementById(btn.id);
+                if (!element) return;
+                if (btn.tab === tabId) {
+                    element.classList.add('tab-active');
+                    element.classList.remove('text-slate-500');
+                } else {
+                    element.classList.remove('tab-active');
+                    element.classList.add('text-slate-500');
+                }
+            });
+            
+            showNotification(`タブを切り替えました`, "info");
+        }
+
+        // Realtime Memo persistence & counting
+        const memoEl = document.getElementById('realtime-memo');
+        const countEl = document.getElementById('memo-char-count');
+
+        // Load cached memo
+        if (localStorage.getItem('stablecoin_memo')) {
+            memoEl.value = localStorage.getItem('stablecoin_memo');
+            countEl.textContent = memoEl.value.length;
+        }
+
+        memoEl.addEventListener('input', function() {
+            countEl.textContent = this.value.length;
+            localStorage.setItem('stablecoin_memo', this.value);
+        });
+
+        function triggerClearMemo() {
+            const modal = document.getElementById('custom-confirm-modal');
+            const cancelBtn = document.getElementById('confirm-btn-cancel');
+            const confirmBtn = document.getElementById('confirm-btn-action');
+            
+            modal.classList.remove('hidden');
+            
+            cancelBtn.onclick = () => modal.classList.add('hidden');
+            confirmBtn.onclick = () => {
+                memoEl.value = '';
+                countEl.textContent = '0';
+                localStorage.removeItem('stablecoin_memo');
+                modal.classList.add('hidden');
+                showNotification("リアルタイムメモを削除しました", "success");
+            };
+        }
+
+        function copyMemo() {
+            memoEl.select();
+            document.execCommand('copy');
+            showNotification("メモをクリップボードにコピーしました！", "success");
+        }
+
+        // Tasks filtering
+        function filterTasks(owner) {
+            const rows = document.querySelectorAll('.task-row');
+            rows.forEach(row => {
+                if (owner === 'all') {
+                    row.classList.remove('hidden');
+                } else {
+                    if (row.getAttribute('data-owner') === owner) {
+                        row.classList.remove('hidden');
+                    } else {
+                        row.classList.add('hidden');
+                    }
+                }
+            });
+
+            const filterButtons = [
+                { id: 'btn-f-all', key: 'all' },
+                { id: 'btn-f-hit', key: 'HIT' },
+                { id: 'btn-f-fb', key: 'ForBetter' },
+                { id: 'btn-f-platon', key: 'PlatON' },
+                { id: 'btn-f-cfs', key: 'CFS' }
+            ];
+
+            filterButtons.forEach(btn => {
+                const element = document.getElementById(btn.id);
+                if (btn.key === owner) {
+                    element.className = "bg-brand-500 text-white text-xs px-3 py-1.5 rounded-lg font-semibold shadow hover:bg-brand-600 transition";
+                } else {
+                    element.className = "bg-slate-100 text-slate-700 text-xs px-3 py-1.5 rounded-lg font-semibold hover:bg-slate-200 transition";
+                }
+            });
+        }
+
+        // Budget calculation logic
+        function calculateBudget() {
+            const dev = parseFloat(document.getElementById('input-dev-cost').value) || 0;
+            const infra = parseFloat(document.getElementById('input-infra-cost').value) || 0;
+            const expert = parseFloat(document.getElementById('input-expert-cost').value) || 0;
+
+            const total = dev + infra + expert;
+            let subsidy = total * (2/3);
+            let isLimitApplied = false;
+
+            if (subsidy > 40000000) {
+                subsidy = 40000000;
+                isLimitApplied = true;
+            }
+
+            const selfPaid = total - subsidy;
+
+            document.getElementById('result-total').innerText = "¥" + total.toLocaleString();
+            document.getElementById('result-subsidy').innerText = "¥" + Math.floor(subsidy).toLocaleString();
+            document.getElementById('result-self').innerText = "¥" + Math.ceil(selfPaid).toLocaleString();
+
+            const alertEl = document.getElementById('limit-alert');
+            if (isLimitApplied) {
+                alertEl.style.display = 'block';
+            } else {
+                alertEl.style.display = 'none';
+            }
+        }
+
+        // Task badge visual updater
+        function updateTaskBadge(selectElement) {
+            const val = selectElement.value;
+            if (val === 'todo') {
+                selectElement.className = "bg-red-50 text-red-700 border border-red-200 text-xs rounded px-1.5 py-1 focus:outline-none font-semibold";
+            } else if (val === 'doing') {
+                selectElement.className = "bg-amber-50 text-amber-700 border border-amber-200 text-xs rounded px-1.5 py-1 focus:outline-none font-semibold";
+            } else if (val === 'done') {
+                selectElement.className = "bg-emerald-50 text-emerald-700 border border-emerald-200 text-xs rounded px-1.5 py-1 focus:outline-none font-semibold";
+            }
+            showNotification("タスクステータスを更新しました", "success");
+        }
+
+        // Toggle Expandable Sections for Skeleton
+        function toggleDetails(elementId) {
+            const target = document.getElementById(elementId);
+            const icon = document.getElementById('icon-' + elementId);
+            if (target.classList.contains('hidden')) {
+                target.classList.remove('hidden');
+                icon.className = "fa-solid fa-chevron-up text-slate-500";
+            } else {
+                target.classList.add('hidden');
+                icon.className = "fa-solid fa-chevron-down text-slate-400";
+            }
+        }
+
+        // Save Slide Notes (If elements exist, safely handle)
+        function saveSlideNotes() {
+            const n1 = document.getElementById('slide-note-1').value;
+            const n2 = document.getElementById('slide-note-2').value;
+            localStorage.setItem('slide_note_1', n1);
+            localStorage.setItem('slide_note_2', n2);
+            showNotification("計画書のアイデアをブラウザに保存しました！", "success");
+        }
+
+        // Load notes on boot
+        if (localStorage.getItem('slide_note_1')) {
+            const el = document.getElementById('slide-note-1');
+            if (el) el.value = localStorage.getItem('slide_note_1');
+        }
+        if (localStorage.getItem('slide_note_2')) {
+            const el = document.getElementById('slide-note-2');
+            if (el) el.value = localStorage.getItem('slide_note_2');
+        }
+
+        // Start initialization on window load
+        window.onload = function() {
+            calculateBudget();
+        };
+    </script>
+</body>
+</html>
