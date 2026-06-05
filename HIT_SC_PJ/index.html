@@ -8,8 +8,6 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- FontAwesome for professional icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Google Fonts Inter & Noto Sans JP -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+JP:wght@300;400;500;700&display=swap" rel="stylesheet">
     
     <script>
         tailwind.config = {
@@ -30,13 +28,22 @@
                         }
                     },
                     fontFamily: {
-                        sans: ['Inter', 'Noto Sans JP', 'sans-serif'],
+                        // メイリオを最優先に指定
+                        sans: ['Meiryo', 'MS PGothic', 'sans-serif'],
+                        serif: ['Meiryo', 'MS PGothic', 'sans-serif'],
                     }
                 }
             }
         }
     </script>
     <style>
+        /* 投影用に全体のルートフォントサイズを110%に拡大 */
+        html {
+            font-size: 110%;
+        }
+        body {
+            font-family: 'Meiryo', 'MS PGothic', 'MS Gothic', sans-serif !important;
+        }
         .tab-active {
             border-bottom: 2px solid #0284c7;
             color: #0284c7;
@@ -59,7 +66,7 @@
         }
     </style>
 </head>
-<body class="bg-slate-50 text-slate-800 font-sans min-h-screen">
+<body class="bg-slate-50 text-slate-800 min-h-screen">
 
     <!-- Custom Dialog / Toast System -->
     <div id="toast-notification" class="fixed bottom-5 right-5 z-50 transform translate-y-10 opacity-0 transition-all duration-300 pointer-events-none">
@@ -118,6 +125,9 @@
             <button onclick="switchTab('tab-agenda')" id="btn-tab-agenda" class="tab-active py-3 px-4 text-sm font-medium flex items-center gap-2 focus:outline-none shrink-0 border-b-2 border-transparent">
                 <i class="fa-solid fa-list-check"></i> Agenda
             </button>
+            <button onclick="switchTab('tab-checklist')" id="btn-tab-checklist" class="py-3 px-4 text-sm font-medium text-slate-500 hover:text-brand-500 hover:border-brand-500 flex items-center gap-2 focus:outline-none shrink-0 border-b-2 border-transparent">
+                <i class="fa-solid fa-clipboard-check"></i> 基本要件チェック
+            </button>
             <button onclick="switchTab('tab-outline')" id="btn-tab-outline" class="py-3 px-4 text-sm font-medium text-slate-500 hover:text-brand-500 hover:border-brand-500 flex items-center gap-2 focus:outline-none shrink-0 border-b-2 border-transparent">
                 <i class="fa-solid fa-file-invoice"></i> 事業計画 骨子案
             </button>
@@ -145,7 +155,7 @@
                         <span class="text-brand-600 font-mono font-bold shrink-0 w-16">00-05m</span>
                         <div>
                             <h4 class="font-bold text-slate-800">1. イントロダクションと本補助金の狙い</h4>
-                            <p class="text-xs text-slate-500 mt-1">最大4,000万円（補助率2/3）を活かしたアライアンス構築と、HIT社の端末展開ビジョンの擦り合わせ。</p>
+                            <p class="text-xs text-slate-500 mt-1">最大4,000万円（補助率 2/3）を活かしたアライアンス構築と、HIT社の端末展開ビジョンの擦り合わせ。</p>
                         </div>
                     </div>
                     
@@ -184,7 +194,88 @@
             </div>
         </div>
 
-        <!-- TAB 2: PROPOSAL OUTLINE -->
+        <!-- TAB 2: PRE-REQUISITE CHECKLIST (RESTORED) -->
+        <div id="tab-checklist" class="tab-content hidden">
+            <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-6">
+                <div class="flex justify-between items-center mb-4 border-b pb-2">
+                    <h3 class="text-lg font-bold text-slate-900 flex items-center gap-2">
+                        <i class="fa-solid fa-clipboard-check text-brand-500"></i>
+                        東京都ステーブルコイン補助金 申請資格 &amp; 必須要件チェック
+                    </h3>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="space-y-4">
+                        <h4 class="font-bold text-brand-700 text-sm border-l-4 border-brand-500 pl-2">事業者要件（HIT社前提条件）</h4>
+                        
+                        <div class="flex items-start gap-3 p-3 bg-slate-50 rounded-lg border border-slate-200">
+                            <input type="checkbox" id="chk-tokyo-office" class="w-5 h-5 mt-0.5 accent-brand-500 rounded cursor-pointer" checked>
+                            <label for="chk-tokyo-office" class="text-sm cursor-pointer">
+                                <span class="font-bold text-slate-800 block">都内に本店または支店登記があるか？</span>
+                                <span class="text-xs text-slate-500">HIT社は都内に実体登記が必要です。支店登記でも可ですが登記簿謄本の提出が必要。</span>
+                            </label>
+                        </div>
+
+                        <div class="flex items-start gap-3 p-3 bg-slate-50 rounded-lg border border-slate-200">
+                            <input type="checkbox" id="chk-gbiz" class="w-5 h-5 mt-0.5 accent-brand-500 rounded cursor-pointer">
+                            <label for="chk-gbiz" class="text-sm cursor-pointer">
+                                <span class="font-bold text-slate-800 block">GbizIDプライムアカウントを所持しているか？</span>
+                                <span class="text-xs text-slate-500">電子申請「jGrants」の利用に必須。未所持の場合、即時申請手続き（郵送等）に入ってください。</span>
+                            </label>
+                        </div>
+
+                        <div class="flex items-start gap-3 p-3 bg-slate-50 rounded-lg border border-slate-200">
+                            <input type="checkbox" id="chk-tax" class="w-5 h-5 mt-0.5 accent-brand-500 rounded cursor-pointer">
+                            <label for="chk-tax" class="text-sm cursor-pointer">
+                                <span class="font-bold text-slate-800 block">都税の滞納がないか？</span>
+                                <span class="text-xs text-slate-500">都税（法人都民税、法人事業税等）の未納がない証明原本の提出が必要です。</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="space-y-4">
+                        <h4 class="font-bold text-accent-600 text-sm border-l-4 border-accent-500 pl-2">事業（ステーブルコイン）要件</h4>
+
+                        <div class="flex items-start gap-3 p-3 bg-slate-50 rounded-lg border border-slate-200">
+                            <input type="checkbox" id="chk-sc-jpy" class="w-5 h-5 mt-0.5 accent-brand-500 rounded cursor-pointer" checked>
+                            <label for="chk-sc-jpy" class="text-sm cursor-pointer">
+                                <span class="font-bold text-slate-800 block">「実発行された国内の日本円建てSC」との連携か？</span>
+                                <span class="text-xs text-slate-500">自社でSCを新発行することは本スキーム対象外。すでに流通している信頼ある日本円SCとの接続が条件。</span>
+                            </label>
+                        </div>
+
+                        <div class="flex items-start gap-3 p-3 bg-slate-50 rounded-lg border border-slate-200">
+                            <input type="checkbox" id="chk-tokyo-area" class="w-5 h-5 mt-0.5 accent-brand-500 rounded cursor-pointer" checked>
+                            <label for="chk-tokyo-area" class="text-sm cursor-pointer">
+                                <span class="font-bold text-slate-800 block">実装または検証を行う地域に「東京都内」を含むか？</span>
+                                <span class="text-xs text-slate-500">CFS社が用意する実証店舗（PoC加盟店）として、必ず都内店舗の参加が必要です。</span>
+                            </label>
+                        </div>
+
+                        <div class="flex items-start gap-3 p-3 bg-slate-50 rounded-lg border border-slate-200">
+                            <input type="checkbox" id="chk-timeline" class="w-5 h-5 mt-0.5 accent-brand-500 rounded cursor-pointer" checked>
+                            <label for="chk-timeline" class="text-sm cursor-pointer">
+                                <span class="font-bold text-slate-800 block">2027年3月31日までに検証・精算完了可能か？</span>
+                                <span class="text-xs text-slate-500">東京都の会計年度に合わせて事業計画を期間内に納める必要があります。</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Guidance alert card -->
+                <div class="bg-amber-50 border border-amber-200 text-amber-900 rounded-lg p-4 mt-6 flex gap-3">
+                    <i class="fa-solid fa-triangle-exclamation text-amber-500 text-lg mt-1 shrink-0"></i>
+                    <div>
+                        <span class="font-bold block">【重要】登記情報の不整合・未取得への対策</span>
+                        <p class="text-xs text-amber-800 mt-1">
+                            HIT社がGbizIDプライムを未取得の場合、手配に最大2週間要する場合があります。未取得の兆候があれば、すぐに「暫定的に紙提出」を行う郵送準備をForBetter社にて主導する必要があります。
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 3: PROPOSAL OUTLINE -->
         <div id="tab-outline" class="tab-content hidden">
             <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-6">
                 <div class="mb-6 border-b pb-4">
@@ -201,7 +292,7 @@
                     <!-- Collapsible Outline item 1 -->
                     <div class="border border-slate-200 rounded-lg overflow-hidden bg-slate-50">
                         <div class="p-4 font-bold text-slate-800 text-sm bg-slate-100 flex justify-between items-center cursor-pointer font-sans" onclick="toggleDetails('outline-1')">
-                            <span>第1章: 事業 of 背景、目的及び社会的意義（加盟店と利用者の課題解決）</span>
+                            <span>第1章: 事業の背景、目的及び社会的意義（加盟店と利用者の課題解決）</span>
                             <i class="fa-solid fa-chevron-down text-slate-500 text-sm" id="icon-outline-1"></i>
                         </div>
                         <div id="outline-1" class="p-6 text-sm text-slate-600 space-y-3 bg-white leading-relaxed">
@@ -253,7 +344,7 @@
             </div>
         </div>
 
-        <!-- TAB 3: ALLIANCE & TEAM ROLES -->
+        <!-- TAB 4: ALLIANCE & TEAM ROLES -->
         <div id="tab-alliance" class="tab-content hidden">
             <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-6">
                 <div class="mb-6">
@@ -309,7 +400,7 @@
                             <li><strong>SCプラットフォームの実装提供</strong></li>
                             <li>セキュリティ対策、暗号鍵管理</li>
                             <li>システム構成図の設計・提供</li>
-                            <li>マネロン防止(AML/CFT)対策の記述</li>
+                            <li>マネロン防止(AML/CFT)対策 of 記述</li>
                         </ul>
                     </div>
 
@@ -342,7 +433,7 @@
             </div>
         </div>
 
-        <!-- TAB 4: ESTIMATES & BUDGET PLANS -->
+        <!-- TAB 5: ESTIMATES & BUDGET PLANS -->
         <div id="tab-estimates" class="tab-content hidden">
             <div class="bg-slate-200 rounded-xl p-4 md:p-6 overflow-hidden flex flex-col items-center">
                 <div class="w-full flex justify-between items-center mb-3">
@@ -356,7 +447,7 @@
                 </div>
 
                 <!-- A4 Document Page -->
-                <div class="bg-white text-slate-900 w-full max-w-[800px] p-8 md:p-12 font-serif border border-slate-300 rounded shadow-md text-xs leading-relaxed">
+                <div class="bg-white text-slate-900 w-full max-w-[800px] p-8 md:p-12 border border-slate-300 rounded shadow-md text-xs leading-relaxed">
                     
                     <!-- Document Header -->
                     <div class="text-right text-[10px] font-sans text-slate-500 mb-2">
@@ -437,7 +528,7 @@
                                     <span class="text-[9px] text-slate-500 font-normal">（全体PMO）</span>
                                 </td>
                                 <td class="border border-slate-800 p-2 leading-relaxed">
-                                    <span class="font-bold text-slate-800 block">■ 推進PMO業務 & 申請書類策定・推進</span>
+                                    <span class="font-bold text-slate-800 block">■ 推進PMO業務 &amp; 申請書類策定・推進</span>
                                     ・アライアンス全体の進行・課題管理、東京都提出資料の統合・校正。<br>
                                     ・面接ピッチ資料作成サポート、アクワイアラー/加盟店間の各種契約・利害調整支援。
                                 </td>
@@ -485,7 +576,7 @@
             </div>
         </div>
 
-        <!-- TAB 5: OVERALL SCHEDULE -->
+        <!-- TAB 6: OVERALL SCHEDULE -->
         <div id="tab-schedule" class="tab-content hidden">
             <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-6 space-y-8">
                 <div>
@@ -524,7 +615,7 @@
                                     </div>
                                     <!-- Bar -->
                                     <div class="col-span-1 px-1">
-                                        <div class="bg-blue-500 h-6 rounded flex items-center justify-center text-white text-[9px] font-bold shadow-sm">本日合意</div>
+                                        <div class="bg-blue-500 h-6 rounded flex items-center justify-center text-white text-[9px] font-bold shadow-sm font-sans">本日合意</div>
                                     </div>
                                     <div class="col-span-8"></div>
                                 </div>
@@ -538,7 +629,7 @@
                                     <!-- Bar spanning W1 & W2 -->
                                     <div class="col-span-1"></div>
                                     <div class="col-span-2 px-1">
-                                        <div class="bg-cyan-500 h-6 rounded flex items-center justify-center text-white text-[9px] font-bold shadow-sm">ドラフト作成 & 収集</div>
+                                        <div class="bg-cyan-500 h-6 rounded flex items-center justify-center text-white text-[9px] font-bold shadow-sm font-sans">ドラフト作成 &amp; 収集</div>
                                     </div>
                                     <div class="col-span-6"></div>
                                 </div>
@@ -555,7 +646,7 @@
                                     <!-- Marker at 6/12 column -->
                                     <div class="col-span-2"></div>
                                     <div class="col-span-1 px-1">
-                                        <div class="bg-amber-500 h-6 rounded flex items-center justify-center text-white text-[9px] font-bold shadow-sm">レビュー</div>
+                                        <div class="bg-amber-500 h-6 rounded flex items-center justify-center text-white text-[9px] font-bold shadow-sm font-sans">レビュー</div>
                                     </div>
                                     <div class="col-span-6"></div>
                                 </div>
@@ -572,7 +663,7 @@
                                     <!-- Marker at 6/15 column -->
                                     <div class="col-span-3"></div>
                                     <div class="col-span-1 px-1">
-                                        <div class="bg-amber-500 h-6 rounded flex items-center justify-center text-white text-[9px] font-bold shadow-sm">確定前</div>
+                                        <div class="bg-amber-500 h-6 rounded flex items-center justify-center text-white text-[9px] font-bold shadow-sm font-sans">確定前</div>
                                     </div>
                                     <div class="col-span-5"></div>
                                 </div>
@@ -580,13 +671,13 @@
                                 <!-- Task 3 -->
                                 <div class="grid grid-cols-12 items-center py-3">
                                     <div class="col-span-3 pl-4 border-r border-slate-100">
-                                        <span class="font-bold text-slate-800 block">リーガル検証 & MOU調印</span>
+                                        <span class="font-bold text-slate-800 block">リーガル検証 &amp; MOU調印</span>
                                         <span class="text-[10px] text-slate-500">HIT社 / ForBetter / 顧問弁護士</span>
                                     </div>
                                     <!-- Bar spanning W3 -->
                                     <div class="col-span-4"></div>
                                     <div class="col-span-2 px-1">
-                                        <div class="bg-purple-500 h-6 rounded flex items-center justify-center text-white text-[9px] font-bold shadow-sm">検証 & 協定調印</div>
+                                        <div class="bg-purple-500 h-6 rounded flex items-center justify-center text-white text-[9px] font-bold shadow-sm font-sans">検証 &amp; 協定調印</div>
                                     </div>
                                     <div class="col-span-3"></div>
                                 </div>
@@ -600,7 +691,7 @@
                                     <!-- Bar spanning W4 & W5 (up to 6/30) -->
                                     <div class="col-span-6"></div>
                                     <div class="col-span-3 px-1">
-                                        <div class="bg-emerald-600 h-6 rounded flex items-center justify-center text-white text-[9px] font-bold shadow-sm">電子申請・最終送信</div>
+                                        <div class="bg-emerald-600 h-6 rounded flex items-center justify-center text-white text-[9px] font-bold shadow-sm font-sans">電子申請・最終送信</div>
                                     </div>
                                 </div>
                             </div>
@@ -626,7 +717,7 @@
                     <div class="space-y-8 relative before:absolute before:inset-0 before:left-4 before:h-full before:w-0.5 before:bg-slate-200 pl-4 text-slate-700">
                         <div class="flex gap-6 relative">
                             <span class="w-9 h-9 bg-brand-500 text-white rounded-full flex items-center justify-center font-bold text-sm shrink-0 z-10 shadow-sm"><i class="fa-solid fa-calendar-day"></i></span>
-                            <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 w-full">
+                            <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 w-full font-sans">
                                 <span class="bg-brand-100 text-brand-800 text-xs px-2.5 py-1 rounded-full font-bold font-mono">6/5 キックオフ</span>
                                 <h4 class="font-bold text-slate-900 text-base mt-2">申請準備会議（本日）</h4>
                                 <p class="text-sm text-slate-600 mt-1">本推進PMOダッシュボードを用い、体制・役割・提出資料・経費配分などのアライアンス間全会一致の合意を形成します。</p>
@@ -635,7 +726,7 @@
 
                         <div class="flex gap-6 relative">
                             <span class="w-9 h-9 bg-brand-500 text-white rounded-full flex items-center justify-center font-bold text-sm shrink-0 z-10 shadow-sm"><i class="fa-solid fa-file-signature"></i></span>
-                            <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 w-full">
+                            <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 w-full font-sans">
                                 <span class="bg-cyan-100 text-cyan-800 text-xs px-2.5 py-1 rounded-full font-bold font-mono">6/6 - 6/11</span>
                                 <h4 class="font-bold text-slate-900 text-base mt-2">第1次事業計画・経費明細見積ドラフトの集約</h4>
                                 <p class="text-sm text-slate-600 mt-1">PlatONがSCインフラ開発および安全認証監査の見積を作成。CFS社にて都内の実証（PoC）候補店舗（約10店）を選定。HIT社が本店登記簿謄本と都税納税証明書を調達します。</p>
@@ -645,7 +736,7 @@
                         <!-- Checkpoint Review 1 -->
                         <div class="flex gap-6 relative">
                             <span class="w-9 h-9 bg-amber-500 text-white rounded-full flex items-center justify-center font-bold text-sm shrink-0 z-10 shadow-sm"><i class="fa-solid fa-magnifying-glass"></i></span>
-                            <div class="bg-amber-50 border border-amber-100 p-4 rounded-xl w-full">
+                            <div class="bg-amber-50 border border-amber-100 p-4 rounded-xl w-full font-sans">
                                 <span class="bg-amber-100 text-amber-800 text-xs px-2.5 py-1 rounded-full font-bold font-mono">6/12</span>
                                 <h4 class="font-bold text-amber-900 text-base mt-2">第1回チェックポイントレビュー会</h4>
                                 <p class="text-sm text-slate-600 mt-1">集約した各社の初期ドラフト（事業計画概要、概算見積、PoC候補店舗リスト）を突き合わせ、全体の整合性と方向性の軌道修正を行います。</p>
@@ -655,7 +746,7 @@
                         <!-- Checkpoint Review 2 -->
                         <div class="flex gap-6 relative">
                             <span class="w-9 h-9 bg-amber-500 text-white rounded-full flex items-center justify-center font-bold text-sm shrink-0 z-10 shadow-sm"><i class="fa-solid fa-magnifying-glass"></i></span>
-                            <div class="bg-amber-50 border border-amber-100 p-4 rounded-xl w-full">
+                            <div class="bg-amber-50 border border-amber-100 p-4 rounded-xl w-full font-sans">
                                 <span class="bg-amber-100 text-amber-800 text-xs px-2.5 py-1 rounded-full font-bold font-mono">6/15</span>
                                 <h4 class="font-bold text-amber-900 text-base mt-2">第2回チェックポイントレビュー会</h4>
                                 <p class="text-sm text-slate-600 mt-1">修正を反映した中間ドラフトを基に、提出書類の最終確定に向けた細部調整、および必要公的書類・調印用MOUドラフトの最終整合性確認を行います。</p>
@@ -664,16 +755,16 @@
 
                         <div class="flex gap-6 relative">
                             <span class="w-9 h-9 bg-brand-500 text-white rounded-full flex items-center justify-center font-bold text-sm shrink-0 z-10 shadow-sm"><i class="fa-solid fa-gavel"></i></span>
-                            <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 w-full">
+                            <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 w-full font-sans">
                                 <span class="bg-amber-100 text-amber-800 text-xs px-2.5 py-1 rounded-full font-bold font-mono">6/16 - 6/23</span>
-                                <h4 class="font-bold text-slate-900 text-base mt-2">リーガル検証 & 共同事業者間MOU調印</h4>
+                                <h4 class="font-bold text-slate-900 text-base mt-2">リーガル検証 &amp; 共同事業者間MOU調印</h4>
                                 <p class="text-sm text-slate-600 mt-1">改正資金決済法などの規制遵守性をHIT社法律顧問弁護士と公式に検証。4社協働推進に向けた基本協定（MOU）を調印します。</p>
                             </div>
                         </div>
 
                         <div class="flex gap-6 relative">
                             <span class="w-9 h-9 bg-emerald-500 text-white rounded-full flex items-center justify-center font-bold text-sm shrink-0 z-10 shadow-sm"><i class="fa-solid fa-cloud-arrow-up"></i></span>
-                            <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 w-full">
+                            <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 w-full font-sans">
                                 <span class="bg-emerald-100 text-emerald-800 text-xs px-2.5 py-1 rounded-full font-bold font-mono">6/24 - 6/30</span>
                                 <h4 class="font-bold text-slate-900 text-base mt-2">jGrantsによる東京都電子申請完了（申請デッドライン：6/30）</h4>
                                 <p class="text-sm text-slate-600 mt-1">ForBetter社PMOが全ての添付書類・明細を最終統合。HIT社が電子政府申請システム「jGrants」より本申請を実行・完了させます。</p>
@@ -685,7 +776,7 @@
         </div>
     </main>
 
-    <footer class="bg-slate-900 text-slate-400 py-6 text-center text-xs border-t border-slate-800 mt-12">
+    <footer class="bg-slate-900 text-slate-400 py-6 text-center text-xs border-t border-slate-800 mt-12 font-sans">
         <p>© 2026 ForBetter合同会社 - 東京都ステーブルコイン社会実装促進事業補助金 申請PMO推進ダッシュボード</p>
     </footer>
 
@@ -730,6 +821,7 @@
 
             const tabMeta = [
                 { id: 'btn-tab-agenda', tab: 'tab-agenda' },
+                { id: 'btn-tab-checklist', tab: 'tab-checklist' },
                 { id: 'btn-tab-outline', tab: 'tab-outline' },
                 { id: 'btn-tab-alliance', tab: 'tab-alliance' },
                 { id: 'btn-tab-estimates', tab: 'tab-estimates' },
@@ -762,25 +854,6 @@
                 target.classList.add('hidden');
                 icon.className = "fa-solid fa-chevron-down text-slate-400";
             }
-        }
-
-        // Save Slide Notes (If elements exist, safely handle)
-        function saveSlideNotes() {
-            const n1 = document.getElementById('slide-note-1').value;
-            const n2 = document.getElementById('slide-note-2').value;
-            localStorage.setItem('slide_note_1', n1);
-            localStorage.setItem('slide_note_2', n2);
-            showNotification("計画書のアイデアをブラウザに保存しました！", "success");
-        }
-
-        // Load notes on boot
-        if (localStorage.getItem('slide_note_1')) {
-            const el = document.getElementById('slide-note-1');
-            if (el) el.value = localStorage.getItem('slide_note_1');
-        }
-        if (localStorage.getItem('slide_note_2')) {
-            const el = document.getElementById('slide-note-2');
-            if (el) el.value = localStorage.getItem('slide_note_2');
         }
     </script>
 </body>
