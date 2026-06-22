@@ -1,0 +1,241 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Google Sites embed code - FC Pay JPYC Demo</title>
+<style>
+body{margin:24px;font-family:-apple-system,BlinkMacSystemFont,"Hiragino Sans","Yu Gothic","Meiryo",Arial,sans-serif;color:#17243b;background:#f6f9fd}
+textarea{width:100%;min-height:520px;border:1px solid #c8d8ea;border-radius:8px;padding:14px;font:12px/1.5 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+h1{font-size:22px;margin:0 0 10px;color:#071735}
+p{font-size:14px;font-weight:700;color:#52657f}
+</style>
+</head>
+<body>
+<h1>Google Sites 貼り付け用コード</h1>
+<p>Google Sites の「挿入」→「埋め込む」→「埋め込みコード」に下記を貼り付けます。</p>
+<textarea readonly>&lt;iframe
+  title="FC Pay JPYC Payment Demo"
+  srcdoc="&amp;lt;!doctype html&amp;gt;
+&amp;lt;html lang=&amp;quot;ja&amp;quot;&amp;gt;
+&amp;lt;head&amp;gt;
+&amp;lt;meta charset=&amp;quot;utf-8&amp;quot;&amp;gt;
+&amp;lt;meta name=&amp;quot;viewport&amp;quot; content=&amp;quot;width=device-width, initial-scale=1&amp;quot;&amp;gt;
+&amp;lt;title&amp;gt;FC Pay JPYC Payment Demo&amp;lt;/title&amp;gt;
+&amp;lt;style&amp;gt;
+*{box-sizing:border-box}
+:root{--navy:#071735;--ink:#17243b;--muted:#65758f;--blue:#0b5bc7;--cyan:#08a9e8;--green:#12884e;--amber:#d89213;--line:#c8d8ea;--soft-blue:#eaf4ff;--shadow:0 20px 46px rgba(15,37,75,.15)}
+html,body{height:100%}
+body{margin:0;color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,&amp;quot;Hiragino Sans&amp;quot;,&amp;quot;Yu Gothic&amp;quot;,&amp;quot;Meiryo&amp;quot;,Arial,sans-serif;background:linear-gradient(180deg,#f8fbff 0%,#edf4fb 100%)}
+button{font:inherit;cursor:pointer}
+.window{min-height:100%;display:grid;grid-template-rows:auto 1fr}
+.top{display:flex;justify-content:space-between;gap:20px;align-items:flex-start;padding:20px 26px 14px;border-bottom:1px solid #dce7f4;background:rgba(255,255,255,.78)}
+.top-main{max-width:790px}
+h1{margin:0;color:var(--navy);font-size:clamp(24px,3vw,40px);line-height:1.12;font-weight:900;letter-spacing:0}
+.top p{margin:8px 0 0;color:#263f66;font-size:14px;font-weight:800;line-height:1.5}
+.top-tools{display:grid;gap:10px;justify-items:end}
+.languageToggle{display:inline-flex;gap:4px;padding:4px;border:1px solid var(--line);border-radius:9px;background:#fff}
+.languageToggle button{border:0;border-radius:7px;background:transparent;color:#344b69;font-size:12px;font-weight:900;min-height:30px;padding:0 10px}
+.languageToggle button.active{background:var(--blue);color:#fff}
+.chips{display:flex;flex-wrap:wrap;gap:8px;justify-content:flex-end;max-width:520px}
+.chip{display:inline-flex;align-items:center;gap:7px;min-height:32px;padding:6px 10px;border:1px solid var(--line);border-radius:8px;background:#fff;color:#283d5d;font-size:12px;font-weight:900}
+.chip i{width:14px;height:14px;border-radius:4px;background:var(--blue);display:block}
+.chip.wallet i{background:var(--amber)}.chip.chain i{background:var(--green)}
+.workspace{width:100%;max-width:1540px;margin:0 auto;padding:18px 20px 22px;display:grid;grid-template-columns:300px minmax(420px,1fr) 430px;gap:14px}
+.panel{background:rgba(255,255,255,.95);border:1px solid var(--line);border-radius:8px;box-shadow:var(--shadow);overflow:hidden}
+.panel-head{padding:14px 15px;border-bottom:1px solid var(--line);background:linear-gradient(180deg,#fff,#f7fbff)}
+.panel-head h2{margin:0;color:var(--navy);font-size:16px}.panel-head p{margin:5px 0 0;color:var(--muted);font-size:12px;font-weight:700;line-height:1.45}
+.steps{display:grid;gap:8px;padding:12px}
+.step{border:1px solid var(--line);border-radius:8px;background:white;padding:10px;display:grid;grid-template-columns:32px 1fr;gap:10px;align-items:center;text-align:left}
+.step.active{border-color:var(--blue);background:var(--soft-blue);box-shadow:inset 4px 0 0 var(--blue)}.step.done{border-color:#99d5b5;background:#f7fcf9}
+.num{width:30px;height:30px;border-radius:50%;background:#e6eef8;color:#2d4868;font-size:13px;font-weight:900;display:grid;place-items:center}.active .num{background:var(--blue);color:#fff}.done .num{background:var(--green);color:#fff}
+.step b{font-size:13px;color:var(--navy);display:block;line-height:1.25}.step span span{display:block;margin-top:4px;font-size:11px;color:var(--muted);font-weight:800;line-height:1.3}
+.side-controls{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:12px;border-top:1px solid var(--line);background:#fbfdff}
+.btn{min-height:40px;border:1px solid #9dbce6;border-radius:7px;background:white;color:#143d78;font-weight:900}.btn.primary{background:var(--blue);border-color:var(--blue);color:#fff}.btn.green{background:var(--green);border-color:var(--green);color:#fff}.btn:disabled{opacity:.48;cursor:not-allowed}
+.phone-zone{display:grid;grid-template-rows:auto 1fr auto;min-height:760px}
+.stage-head{padding:14px 17px;border-bottom:1px solid var(--line);background:linear-gradient(180deg,#fff,#f8fbff)}.stage-head h2{margin:0;color:var(--navy);font-size:21px;line-height:1.28}.stage-head p{margin:6px 0 0;color:var(--muted);font-size:13px;font-weight:800;line-height:1.5}
+.phone-wrap{display:grid;place-items:center;padding:22px;background:linear-gradient(90deg,rgba(11,91,199,.07),transparent 30%,transparent 70%,rgba(18,136,78,.06)),#fbfdff}
+.phoneViewport{width:360px;max-width:100%;height:690px;background:#111827;border-radius:42px;padding:13px;box-shadow:0 26px 64px rgba(9,22,46,.28);position:relative}
+.phoneViewport:before{content:&amp;quot;&amp;quot;;position:absolute;top:18px;left:50%;width:96px;height:24px;background:#111827;border-radius:0 0 16px 16px;transform:translateX(-50%);z-index:3}
+.phone-screen{height:100%;border-radius:32px;background:#f6f9fe;overflow:hidden;display:grid;grid-template-rows:auto 1fr auto;position:relative}
+.phone-status{height:34px;padding:9px 18px 0;display:flex;justify-content:space-between;color:#0f1c32;font-size:12px;font-weight:900}
+.phone-app{padding:14px;display:grid;align-content:start;gap:12px;overflow:auto}
+.app-card{border:1px solid #c8d8ea;border-radius:16px;background:#fff;padding:14px;box-shadow:0 8px 18px rgba(18,41,78,.07)}
+.brand{display:flex;align-items:center;gap:10px}.mark{width:42px;height:42px;border-radius:12px;background:var(--cyan);color:white;font-weight:900;display:grid;place-items:center}.brand h3{margin:0;color:var(--navy);font-size:17px}.brand p{margin:3px 0 0;color:var(--muted);font-size:11px;font-weight:800}
+.hero-ticket{background:linear-gradient(135deg,#0b5bc7,#08a9e8);color:white;border-radius:16px;padding:16px}.hero-ticket b{display:block;font-size:17px;margin-bottom:5px}.hero-ticket span{display:block;font-size:12px;font-weight:800;opacity:.92;line-height:1.5}
+.kv{display:grid;gap:7px}.kv div{display:flex;justify-content:space-between;gap:10px;font-size:12px;border-bottom:1px solid #edf2f8;padding-bottom:7px}.kv div:last-child{border-bottom:0;padding-bottom:0}.kv span{color:var(--muted);font-weight:900}.kv b{color:var(--navy);text-align:right}
+.phone-btn{width:100%;min-height:46px;border:0;border-radius:13px;background:var(--blue);color:#fff;font-weight:900}.phone-btn.secondary{background:white;color:var(--blue);border:1px solid #9dbce6}.phone-btn.green{background:var(--green)}.phone-btn.amber{background:var(--amber)}
+.phone-nav{height:32px;display:grid;place-items:center}.home-indicator{width:112px;height:5px;border-radius:6px;background:#111827;opacity:.9}
+.wallet-top{background:linear-gradient(135deg,#fff5dc,#ffffff);border:1px solid #efd394}.wallet-logo{width:46px;height:46px;border-radius:13px;border:3px solid var(--blue);position:relative}.wallet-logo:after{content:&amp;quot;&amp;quot;;position:absolute;inset:10px;border:3px solid #66a8ff;border-radius:8px;transform:rotate(45deg)}
+.amount{font-size:32px;color:var(--navy);font-weight:900;text-align:center;margin:4px 0}.confirm-box{border:1px solid #efd394;background:#fffaf0;border-radius:14px;padding:12px;display:grid;gap:7px}.loader{height:9px;background:#e5edf7;border-radius:999px;overflow:hidden}.loader span{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--blue),var(--green));border-radius:999px;transition:width .25s ease}.toast-line{font-size:12px;color:#39506e;font-weight:800;line-height:1.5}
+.pc{display:grid;grid-template-rows:auto auto 1fr auto;min-height:760px}.browserPanel{padding:12px;display:grid;gap:12px}.browser-shell{border:1px solid var(--line);border-radius:8px;background:#fff;overflow:hidden}.browser-bar{height:34px;background:#edf3fa;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:7px;padding:0 10px}.browser-dot{width:9px;height:9px;border-radius:50%;background:#c7d5e7}.browser-url{height:20px;flex:1;border-radius:999px;background:#fff;color:#62738c;font-size:11px;font-weight:800;display:flex;align-items:center;padding:0 10px;overflow:hidden;white-space:nowrap}.browser-body{padding:12px}.browser-body h3{margin:0 0 8px;color:var(--navy);font-size:14px}
+.rows{display:grid;gap:0;border:1px solid #e4edf7;border-radius:8px;overflow:hidden}.row{display:flex;justify-content:space-between;gap:10px;padding:9px 10px;border-bottom:1px solid #e4edf7;font-size:12px}.row:last-child{border-bottom:0}.row span{color:var(--muted);font-weight:900}.row b{color:var(--navy);text-align:right}
+pre{margin:0;border:1px solid #dbe7f4;background:#071735;color:#e7f0ff;border-radius:8px;padding:11px;max-height:270px;overflow:auto;font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:11px;line-height:1.5}
+.log{padding:12px;border-top:1px solid var(--line);background:#fbfdff}.log h3{margin:0 0 8px;color:var(--navy);font-size:13px}#eventLog{min-height:120px;white-space:pre-wrap}.floating-toast{position:fixed;right:20px;bottom:20px;background:#071735;color:white;border-radius:8px;padding:12px 14px;font-size:13px;font-weight:900;box-shadow:0 14px 32px rgba(5,18,45,.28);opacity:0;transform:translateY(12px);transition:.2s ease;max-width:360px;line-height:1.45}.floating-toast.show{opacity:1;transform:translateY(0)}
+@media(max-width:1180px){.workspace{grid-template-columns:270px 1fr}.pc{grid-column:1/-1;min-height:auto}}
+@media(max-width:760px){.top{display:block;padding:18px 14px}.top-tools{justify-items:start;margin-top:12px}.chips{justify-content:flex-start}.workspace{grid-template-columns:1fr;padding:12px}.phone-zone,.pc{min-height:auto}.phoneViewport{height:650px}}
+&amp;lt;/style&amp;gt;
+&amp;lt;/head&amp;gt;
+&amp;lt;body&amp;gt;
+&amp;lt;div class=&amp;quot;window&amp;quot;&amp;gt;
+  &amp;lt;header class=&amp;quot;top&amp;quot;&amp;gt;
+    &amp;lt;div class=&amp;quot;top-main&amp;quot;&amp;gt;
+      &amp;lt;h1 id=&amp;quot;heroTitle&amp;quot;&amp;gt;&amp;lt;/h1&amp;gt;
+      &amp;lt;p id=&amp;quot;heroLead&amp;quot;&amp;gt;&amp;lt;/p&amp;gt;
+    &amp;lt;/div&amp;gt;
+    &amp;lt;div class=&amp;quot;top-tools&amp;quot;&amp;gt;
+      &amp;lt;div class=&amp;quot;languageToggle&amp;quot; id=&amp;quot;languageToggle&amp;quot; aria-label=&amp;quot;Language&amp;quot;&amp;gt;
+        &amp;lt;button type=&amp;quot;button&amp;quot; data-lang=&amp;quot;ja&amp;quot; class=&amp;quot;active&amp;quot;&amp;gt;日本語&amp;lt;/button&amp;gt;
+        &amp;lt;button type=&amp;quot;button&amp;quot; data-lang=&amp;quot;en&amp;quot;&amp;gt;English&amp;lt;/button&amp;gt;
+      &amp;lt;/div&amp;gt;
+      &amp;lt;div class=&amp;quot;chips&amp;quot;&amp;gt;
+        &amp;lt;span class=&amp;quot;chip&amp;quot;&amp;gt;&amp;lt;i&amp;gt;&amp;lt;/i&amp;gt;FC Pay App&amp;lt;/span&amp;gt;
+        &amp;lt;span class=&amp;quot;chip wallet&amp;quot;&amp;gt;&amp;lt;i&amp;gt;&amp;lt;/i&amp;gt;HashPort Wallet&amp;lt;/span&amp;gt;
+        &amp;lt;span class=&amp;quot;chip chain&amp;quot;&amp;gt;&amp;lt;i&amp;gt;&amp;lt;/i&amp;gt;JPYC / Ethereum&amp;lt;/span&amp;gt;
+      &amp;lt;/div&amp;gt;
+    &amp;lt;/div&amp;gt;
+  &amp;lt;/header&amp;gt;
+  &amp;lt;main class=&amp;quot;workspace&amp;quot;&amp;gt;
+    &amp;lt;aside class=&amp;quot;panel&amp;quot;&amp;gt;
+      &amp;lt;div class=&amp;quot;panel-head&amp;quot;&amp;gt;&amp;lt;h2 id=&amp;quot;stepsTitle&amp;quot;&amp;gt;&amp;lt;/h2&amp;gt;&amp;lt;p id=&amp;quot;stepsLead&amp;quot;&amp;gt;&amp;lt;/p&amp;gt;&amp;lt;/div&amp;gt;
+      &amp;lt;div class=&amp;quot;steps&amp;quot; id=&amp;quot;steps&amp;quot;&amp;gt;&amp;lt;/div&amp;gt;
+      &amp;lt;div class=&amp;quot;side-controls&amp;quot;&amp;gt;
+        &amp;lt;button class=&amp;quot;btn&amp;quot; id=&amp;quot;prevBtn&amp;quot; type=&amp;quot;button&amp;quot;&amp;gt;&amp;lt;/button&amp;gt;
+        &amp;lt;button class=&amp;quot;btn primary&amp;quot; id=&amp;quot;nextBtn&amp;quot; type=&amp;quot;button&amp;quot;&amp;gt;&amp;lt;/button&amp;gt;
+        &amp;lt;button class=&amp;quot;btn&amp;quot; id=&amp;quot;resetBtn&amp;quot; type=&amp;quot;button&amp;quot;&amp;gt;&amp;lt;/button&amp;gt;
+        &amp;lt;button class=&amp;quot;btn green&amp;quot; id=&amp;quot;autoBtn&amp;quot; type=&amp;quot;button&amp;quot;&amp;gt;&amp;lt;/button&amp;gt;
+      &amp;lt;/div&amp;gt;
+    &amp;lt;/aside&amp;gt;
+    &amp;lt;section class=&amp;quot;panel phone-zone&amp;quot;&amp;gt;
+      &amp;lt;div class=&amp;quot;stage-head&amp;quot;&amp;gt;&amp;lt;h2 id=&amp;quot;stageTitle&amp;quot;&amp;gt;&amp;lt;/h2&amp;gt;&amp;lt;p id=&amp;quot;stageLead&amp;quot;&amp;gt;&amp;lt;/p&amp;gt;&amp;lt;/div&amp;gt;
+      &amp;lt;div class=&amp;quot;phone-wrap&amp;quot;&amp;gt;
+        &amp;lt;div class=&amp;quot;phoneViewport&amp;quot; id=&amp;quot;phoneViewport&amp;quot;&amp;gt;
+          &amp;lt;div class=&amp;quot;phone-screen&amp;quot;&amp;gt;
+            &amp;lt;div class=&amp;quot;phone-status&amp;quot;&amp;gt;&amp;lt;span&amp;gt;9:41&amp;lt;/span&amp;gt;&amp;lt;span id=&amp;quot;phoneAppName&amp;quot;&amp;gt;FC Pay&amp;lt;/span&amp;gt;&amp;lt;/div&amp;gt;
+            &amp;lt;div class=&amp;quot;phone-app&amp;quot; id=&amp;quot;phoneApp&amp;quot;&amp;gt;&amp;lt;/div&amp;gt;
+            &amp;lt;div class=&amp;quot;phone-nav&amp;quot;&amp;gt;&amp;lt;div class=&amp;quot;home-indicator&amp;quot;&amp;gt;&amp;lt;/div&amp;gt;&amp;lt;/div&amp;gt;
+          &amp;lt;/div&amp;gt;
+        &amp;lt;/div&amp;gt;
+      &amp;lt;/div&amp;gt;
+      &amp;lt;div class=&amp;quot;log&amp;quot;&amp;gt;&amp;lt;h3 id=&amp;quot;logTitle&amp;quot;&amp;gt;&amp;lt;/h3&amp;gt;&amp;lt;pre id=&amp;quot;eventLog&amp;quot;&amp;gt;&amp;lt;/pre&amp;gt;&amp;lt;/div&amp;gt;
+    &amp;lt;/section&amp;gt;
+    &amp;lt;aside class=&amp;quot;panel pc&amp;quot;&amp;gt;
+      &amp;lt;div class=&amp;quot;panel-head&amp;quot;&amp;gt;&amp;lt;h2 id=&amp;quot;pcTitle&amp;quot;&amp;gt;&amp;lt;/h2&amp;gt;&amp;lt;p id=&amp;quot;pcLead&amp;quot;&amp;gt;&amp;lt;/p&amp;gt;&amp;lt;/div&amp;gt;
+      &amp;lt;div class=&amp;quot;browserPanel&amp;quot; id=&amp;quot;browserPanel&amp;quot;&amp;gt;
+        &amp;lt;div class=&amp;quot;browser-shell&amp;quot;&amp;gt;
+          &amp;lt;div class=&amp;quot;browser-bar&amp;quot;&amp;gt;&amp;lt;span class=&amp;quot;browser-dot&amp;quot;&amp;gt;&amp;lt;/span&amp;gt;&amp;lt;span class=&amp;quot;browser-dot&amp;quot;&amp;gt;&amp;lt;/span&amp;gt;&amp;lt;span class=&amp;quot;browser-dot&amp;quot;&amp;gt;&amp;lt;/span&amp;gt;&amp;lt;div class=&amp;quot;browser-url&amp;quot;&amp;gt;https://fc-pay.example/admin/payment-monitor&amp;lt;/div&amp;gt;&amp;lt;/div&amp;gt;
+          &amp;lt;div class=&amp;quot;browser-body&amp;quot;&amp;gt;&amp;lt;h3&amp;gt;Payment Monitor&amp;lt;/h3&amp;gt;&amp;lt;div class=&amp;quot;rows&amp;quot; id=&amp;quot;statusRows&amp;quot;&amp;gt;&amp;lt;/div&amp;gt;&amp;lt;/div&amp;gt;
+        &amp;lt;/div&amp;gt;
+        &amp;lt;pre id=&amp;quot;requestJson&amp;quot;&amp;gt;&amp;lt;/pre&amp;gt;
+      &amp;lt;/div&amp;gt;
+      &amp;lt;div class=&amp;quot;side-controls&amp;quot;&amp;gt;
+        &amp;lt;button class=&amp;quot;btn primary&amp;quot; id=&amp;quot;copyTxBtn&amp;quot; type=&amp;quot;button&amp;quot;&amp;gt;&amp;lt;/button&amp;gt;
+        &amp;lt;button class=&amp;quot;btn&amp;quot; id=&amp;quot;openFcBtn&amp;quot; type=&amp;quot;button&amp;quot;&amp;gt;&amp;lt;/button&amp;gt;
+      &amp;lt;/div&amp;gt;
+    &amp;lt;/aside&amp;gt;
+  &amp;lt;/main&amp;gt;
+&amp;lt;/div&amp;gt;
+&amp;lt;div class=&amp;quot;floating-toast&amp;quot; id=&amp;quot;toast&amp;quot; role=&amp;quot;status&amp;quot;&amp;gt;&amp;lt;/div&amp;gt;
+&amp;lt;script&amp;gt;
+const txHash = &amp;quot;0x8b7e...JPYC...42a1&amp;quot;;
+const walletAddress = &amp;quot;0xHPW9...91D8&amp;quot;;
+const merchantAddress = &amp;quot;0xFCPay...Vault&amp;quot;;
+const paymentRequest = {requestId:&amp;quot;PAY-20240620-0001&amp;quot;,orderId:&amp;quot;ORD-20240620-001&amp;quot;,item:&amp;quot;FC Pay sample order&amp;quot;,amount:&amp;quot;12000&amp;quot;,currency:&amp;quot;JPYC&amp;quot;,network:&amp;quot;Ethereum&amp;quot;,tokenStandard:&amp;quot;ERC-20&amp;quot;,fromWallet:null,toMerchantWallet:merchantAddress,callbackUrl:&amp;quot;https://fc-pay.example/webhook/jpyc&amp;quot;,walletConnectSession:null,signedPayload:null,txHash:null,status:&amp;quot;draft&amp;quot;};
+
+const i18n = {
+  ja: {
+    pageTitle:&amp;quot;FC Pay JPYC支払いデモ&amp;quot;,
+    heroTitle:&amp;quot;FC PayでJPYC支払いを体験&amp;quot;,
+    heroLead:&amp;quot;スマホ画面の中で、FC PayからHashPort Walletを呼び出し、JPYC支払いリクエストの確認、HashPort Walletで署名、JPYC Transfer、Txブロードキャスト、Webhook確認まで操作できます。&amp;quot;,
+    stepsTitle:&amp;quot;ユーザー操作&amp;quot;,
+    stepsLead:&amp;quot;左の手順でも、スマホ内のボタンでも操作できます。&amp;quot;,
+    pcTitle:&amp;quot;PC補助画面&amp;quot;,
+    pcLead:&amp;quot;browserPanel: paymentRequest、WalletConnect Session、Tx、Webhook状態を確認する補助ビューです。&amp;quot;,
+    logTitle:&amp;quot;スマホ操作ログ&amp;quot;,
+    prev:&amp;quot;戻る&amp;quot;, next:&amp;quot;次へ&amp;quot;, reset:&amp;quot;リセット&amp;quot;, auto:&amp;quot;自動再生&amp;quot;, stop:&amp;quot;停止&amp;quot;, copyTx:&amp;quot;Txをコピー&amp;quot;, openFc:&amp;quot;FC Payに戻る&amp;quot;,
+    fcSubtitle:&amp;quot;ファン向け決済チェックアウト&amp;quot;,
+    walletSubtitle:&amp;quot;WalletConnect Session&amp;quot;,
+    orderTitle:&amp;quot;FC Pay サンプル注文&amp;quot;,
+    paidTitle:&amp;quot;支払い完了&amp;quot;,
+    orderMeta:&amp;quot;注文 ORD-20240620-001&amp;lt;br&amp;gt;金額 12,000 JPYC&amp;quot;,
+    connect:&amp;quot;HashPort Walletに接続&amp;quot;,
+    pay:&amp;quot;JPYCで支払う&amp;quot;,
+    openWallet:&amp;quot;HashPort Walletを開く&amp;quot;,
+    approve:&amp;quot;承認して署名&amp;quot;,
+    broadcast:&amp;quot;JPYC Transferを送信&amp;quot;,
+    webhook:&amp;quot;Webhook確認をシミュレート&amp;quot;,
+    copied:&amp;quot;Tx情報をコピーしました&amp;quot;,
+    noTx:&amp;quot;Txはまだ送信されていません&amp;quot;,
+    paidBody:&amp;quot;Webhook確認が完了し、FC Payの注文ステータスが paid に更新されました。&amp;quot;,
+    walletDone:&amp;quot;HashPort Walletで支払い完了が表示されています。&amp;quot;,
+    waitingWebhook:&amp;quot;Txブロードキャスト完了。チェーン確認とWebhookを待っています。&amp;quot;,
+    labels:{wallet:&amp;quot;Wallet&amp;quot;,network:&amp;quot;ネットワーク&amp;quot;,token:&amp;quot;トークン&amp;quot;,status:&amp;quot;ステータス&amp;quot;,to:&amp;quot;送金先&amp;quot;,gas:&amp;quot;Gas見積&amp;quot;,request:&amp;quot;リクエスト&amp;quot;,order:&amp;quot;注文&amp;quot;,session:&amp;quot;Session&amp;quot;,tx:&amp;quot;Tx Hash&amp;quot;},
+    rows:{order:&amp;quot;Order&amp;quot;,wallet:&amp;quot;Wallet&amp;quot;,session:&amp;quot;Session&amp;quot;,status:&amp;quot;Status&amp;quot;,tx:&amp;quot;Tx Hash&amp;quot;},
+    steps:[
+      [&amp;quot;FC Payを開く&amp;quot;,&amp;quot;FC Pay App&amp;quot;,&amp;quot;ユーザーがスマホでFC Payを開き、支払い待ちの注文を確認します。&amp;quot;,&amp;quot;User opens FC Pay checkout.&amp;quot;],
+      [&amp;quot;HashPort Walletに接続&amp;quot;,&amp;quot;WalletConnect Session&amp;quot;,&amp;quot;ユーザーが接続ボタンを押すと、FC PayがWalletConnect SessionでHashPort Walletを呼び出します。&amp;quot;,&amp;quot;FC Pay -&amp;gt; WalletConnect Session -&amp;gt; HashPort Wallet.&amp;quot;],
+      [&amp;quot;JPYC支払いリクエストを作成&amp;quot;,&amp;quot;FC Pay&amp;quot;,&amp;quot;FC PayがJPYC支払いリクエストを作成し、金額・ネットワーク・送金先・Webhook URLを指定します。&amp;quot;,&amp;quot;FC Pay creates JPYC paymentRequest for 12,000 JPYC.&amp;quot;],
+      [&amp;quot;Walletで支払い内容を確認&amp;quot;,&amp;quot;HashPort Wallet&amp;quot;,&amp;quot;スマホ画面がHashPort Walletに切り替わり、金額・送金先・ネットワーク・Gas見積を確認します。&amp;quot;,&amp;quot;HashPort Wallet shows amount, recipient, network and gas estimate.&amp;quot;],
+      [&amp;quot;HashPort Walletで署名&amp;quot;,&amp;quot;User / Wallet&amp;quot;,&amp;quot;ユーザーがHashPort Walletで署名し、送信可能なJPYC Transferを作成します。&amp;quot;,&amp;quot;HashPort Wallet -&amp;gt; simulateWalletSignature(paymentRequest).&amp;quot;],
+      [&amp;quot;Txブロードキャスト&amp;quot;,&amp;quot;Ethereum&amp;quot;,&amp;quot;署名済みのJPYC TransferをEthereumへブロードキャストし、Tx Hashを取得します。&amp;quot;,`JPYC Transfer broadcasted. Tx Hash: ${txHash}`],
+      [&amp;quot;Webhook確認&amp;quot;,&amp;quot;FC Pay Backend&amp;quot;,&amp;quot;支払い基盤がチェーン上の確定を検知し、WebhookでFC Payへ通知します。注文は paid になります。&amp;quot;,&amp;quot;Webhook confirms payment. FC Pay order status becomes paid.&amp;quot;]
+    ]
+  },
+  en: {
+    pageTitle:&amp;quot;FC Pay JPYC Payment Demo&amp;quot;,
+    heroTitle:&amp;quot;Operate like a real user in FC Pay&amp;quot;,
+    heroLead:&amp;quot;Use the phone screen to call HashPort Wallet from FC Pay, review a JPYC payment request, sign in HashPort Wallet, send the JPYC Transfer, broadcast the Tx, and receive Webhook confirmation.&amp;quot;,
+    stepsTitle:&amp;quot;User Actions&amp;quot;,
+    stepsLead:&amp;quot;Use the side steps or tap the buttons inside the phone.&amp;quot;,
+    pcTitle:&amp;quot;PC Support View&amp;quot;,
+    pcLead:&amp;quot;browserPanel: a helper view for paymentRequest, WalletConnect Session, Tx, and Webhook status.&amp;quot;,
+    logTitle:&amp;quot;Phone Action Log&amp;quot;,
+    prev:&amp;quot;Back&amp;quot;, next:&amp;quot;Next&amp;quot;, reset:&amp;quot;Reset&amp;quot;, auto:&amp;quot;Auto Play&amp;quot;, stop:&amp;quot;Stop&amp;quot;, copyTx:&amp;quot;Copy Tx&amp;quot;, openFc:&amp;quot;Back to FC Pay&amp;quot;,
+    fcSubtitle:&amp;quot;Fan payment checkout&amp;quot;, walletSubtitle:&amp;quot;WalletConnect Session&amp;quot;,
+    orderTitle:&amp;quot;FC Pay Sample Order&amp;quot;, paidTitle:&amp;quot;Payment Completed&amp;quot;, orderMeta:&amp;quot;Order ORD-20240620-001&amp;lt;br&amp;gt;Amount 12,000 JPYC&amp;quot;,
+    connect:&amp;quot;Connect HashPort Wallet&amp;quot;, pay:&amp;quot;Pay with JPYC&amp;quot;, openWallet:&amp;quot;Open HashPort Wallet&amp;quot;, approve:&amp;quot;Approve &amp;amp; Sign&amp;quot;, broadcast:&amp;quot;Broadcast JPYC Transfer&amp;quot;, webhook:&amp;quot;Simulate Webhook&amp;quot;,
+    copied:&amp;quot;Tx information copied&amp;quot;, noTx:&amp;quot;Tx has not been broadcast yet&amp;quot;, paidBody:&amp;quot;Webhook confirmation is complete. FC Pay updated the order status to paid.&amp;quot;, walletDone:&amp;quot;HashPort Wallet shows the payment as completed.&amp;quot;, waitingWebhook:&amp;quot;Tx broadcast completed. Waiting for chain confirmation and Webhook.&amp;quot;,
+    labels:{wallet:&amp;quot;Wallet&amp;quot;,network:&amp;quot;Network&amp;quot;,token:&amp;quot;Token&amp;quot;,status:&amp;quot;Status&amp;quot;,to:&amp;quot;To&amp;quot;,gas:&amp;quot;Gas estimate&amp;quot;,request:&amp;quot;Request&amp;quot;,order:&amp;quot;Order&amp;quot;,session:&amp;quot;Session&amp;quot;,tx:&amp;quot;Tx Hash&amp;quot;},
+    rows:{order:&amp;quot;Order&amp;quot;,wallet:&amp;quot;Wallet&amp;quot;,session:&amp;quot;Session&amp;quot;,status:&amp;quot;Status&amp;quot;,tx:&amp;quot;Tx Hash&amp;quot;},
+    steps:[
+      [&amp;quot;Open FC Pay&amp;quot;,&amp;quot;FC Pay App&amp;quot;,&amp;quot;The user opens FC Pay on the phone and sees an order waiting for payment.&amp;quot;,&amp;quot;User opens FC Pay checkout.&amp;quot;],
+      [&amp;quot;Connect HashPort Wallet&amp;quot;,&amp;quot;WalletConnect Session&amp;quot;,&amp;quot;The user taps connect. FC Pay calls HashPort Wallet through WalletConnect Session.&amp;quot;,&amp;quot;FC Pay -&amp;gt; WalletConnect Session -&amp;gt; HashPort Wallet.&amp;quot;],
+      [&amp;quot;Create JPYC Payment Request&amp;quot;,&amp;quot;FC Pay&amp;quot;,&amp;quot;FC Pay creates a JPYC payment request with amount, network, recipient, and Webhook URL.&amp;quot;,&amp;quot;FC Pay creates JPYC paymentRequest for 12,000 JPYC.&amp;quot;],
+      [&amp;quot;Review Payment in Wallet&amp;quot;,&amp;quot;HashPort Wallet&amp;quot;,&amp;quot;The phone switches to HashPort Wallet, where the user reviews amount, recipient, network, and gas estimate.&amp;quot;,&amp;quot;HashPort Wallet shows amount, recipient, network and gas estimate.&amp;quot;],
+      [&amp;quot;Sign in HashPort Wallet&amp;quot;,&amp;quot;User / Wallet&amp;quot;,&amp;quot;The user signs in HashPort Wallet and creates a broadcast-ready JPYC Transfer.&amp;quot;,&amp;quot;HashPort Wallet -&amp;gt; simulateWalletSignature(paymentRequest).&amp;quot;],
+      [&amp;quot;Broadcast Tx&amp;quot;,&amp;quot;Ethereum&amp;quot;,&amp;quot;The signed JPYC Transfer is broadcast to Ethereum and receives a Tx Hash.&amp;quot;,`JPYC Transfer broadcasted. Tx Hash: ${txHash}`],
+      [&amp;quot;Webhook Confirmation&amp;quot;,&amp;quot;FC Pay Backend&amp;quot;,&amp;quot;The payment platform detects chain confirmation and notifies FC Pay by Webhook. The order becomes paid.&amp;quot;,&amp;quot;Webhook confirms payment. FC Pay order status becomes paid.&amp;quot;]
+    ]
+  }
+};
+
+let current = 0, timer = null, lang = &amp;quot;ja&amp;quot;;
+const els = {steps:document.getElementById(&amp;quot;steps&amp;quot;),phoneApp:document.getElementById(&amp;quot;phoneApp&amp;quot;),phoneAppName:document.getElementById(&amp;quot;phoneAppName&amp;quot;),stageTitle:document.getElementById(&amp;quot;stageTitle&amp;quot;),stageLead:document.getElementById(&amp;quot;stageLead&amp;quot;),statusRows:document.getElementById(&amp;quot;statusRows&amp;quot;),requestJson:document.getElementById(&amp;quot;requestJson&amp;quot;),eventLog:document.getElementById(&amp;quot;eventLog&amp;quot;),toast:document.getElementById(&amp;quot;toast&amp;quot;)};
+function t(){return i18n[lang]}
+function simulateWalletSignature(request){return `sig_hp_${request.requestId}_${Date.now().toString(36)}`}
+function updatePaymentRequest(){paymentRequest.status=[&amp;quot;draft&amp;quot;,&amp;quot;wallet_connecting&amp;quot;,&amp;quot;payment_request_created&amp;quot;,&amp;quot;wallet_reviewing&amp;quot;,&amp;quot;wallet_signed&amp;quot;,&amp;quot;tx_broadcasted&amp;quot;,&amp;quot;paid&amp;quot;][current];paymentRequest.fromWallet=current&amp;gt;=1?walletAddress:null;paymentRequest.walletConnectSession=current&amp;gt;=1?&amp;quot;wc:hashport-wallet-session-demo&amp;quot;:null;paymentRequest.signedPayload=current&amp;gt;=4?paymentRequest.signedPayload||simulateWalletSignature(paymentRequest):null;paymentRequest.txHash=current&amp;gt;=5?txHash:null}
+function kv(label,value){return `&amp;lt;div&amp;gt;&amp;lt;span&amp;gt;${label}&amp;lt;/span&amp;gt;&amp;lt;b&amp;gt;${value}&amp;lt;/b&amp;gt;&amp;lt;/div&amp;gt;`}
+function fcPayApp(){const x=t(), connected=current&amp;gt;=1, requested=current&amp;gt;=2, paid=current&amp;gt;=6;return `&amp;lt;div class=&amp;quot;app-card brand&amp;quot;&amp;gt;&amp;lt;div class=&amp;quot;mark&amp;quot;&amp;gt;FC&amp;lt;/div&amp;gt;&amp;lt;div&amp;gt;&amp;lt;h3&amp;gt;FC Pay&amp;lt;/h3&amp;gt;&amp;lt;p&amp;gt;${x.fcSubtitle}&amp;lt;/p&amp;gt;&amp;lt;/div&amp;gt;&amp;lt;/div&amp;gt;&amp;lt;div class=&amp;quot;hero-ticket&amp;quot;&amp;gt;&amp;lt;b&amp;gt;${paid?x.paidTitle:x.orderTitle}&amp;lt;/b&amp;gt;&amp;lt;span&amp;gt;${x.orderMeta}&amp;lt;/span&amp;gt;&amp;lt;/div&amp;gt;&amp;lt;div class=&amp;quot;app-card kv&amp;quot;&amp;gt;${kv(x.labels.wallet,connected?walletAddress:&amp;quot;Not connected&amp;quot;)}${kv(x.labels.network,&amp;quot;Ethereum&amp;quot;)}${kv(x.labels.token,&amp;quot;JPYC ERC-20&amp;quot;)}${kv(x.labels.status,paymentRequest.status)}&amp;lt;/div&amp;gt;${!connected?`&amp;lt;button class=&amp;quot;phone-btn&amp;quot; onclick=&amp;quot;tapConnectWallet()&amp;quot;&amp;gt;${x.connect}&amp;lt;/button&amp;gt;`:&amp;quot;&amp;quot;}${connected&amp;amp;&amp;amp;!requested?`&amp;lt;button class=&amp;quot;phone-btn&amp;quot; onclick=&amp;quot;tapPayWithJPYC()&amp;quot;&amp;gt;${x.pay}&amp;lt;/button&amp;gt;`:&amp;quot;&amp;quot;}${requested&amp;amp;&amp;amp;current&amp;lt;3?`&amp;lt;button class=&amp;quot;phone-btn amber&amp;quot; onclick=&amp;quot;tapOpenWallet()&amp;quot;&amp;gt;${x.openWallet}&amp;lt;/button&amp;gt;`:&amp;quot;&amp;quot;}${paid?`&amp;lt;div class=&amp;quot;app-card&amp;quot;&amp;gt;&amp;lt;div class=&amp;quot;amount&amp;quot;&amp;gt;Paid&amp;lt;/div&amp;gt;&amp;lt;p class=&amp;quot;toast-line&amp;quot;&amp;gt;${x.paidBody}&amp;lt;/p&amp;gt;&amp;lt;/div&amp;gt;`:&amp;quot;&amp;quot;}`}
+function hashPortWalletApp(){const x=t(), signed=current&amp;gt;=4, broadcasted=current&amp;gt;=5;return `&amp;lt;div class=&amp;quot;app-card wallet-top brand&amp;quot;&amp;gt;&amp;lt;div class=&amp;quot;wallet-logo&amp;quot;&amp;gt;&amp;lt;/div&amp;gt;&amp;lt;div&amp;gt;&amp;lt;h3&amp;gt;HashPort Wallet&amp;lt;/h3&amp;gt;&amp;lt;p&amp;gt;${x.walletSubtitle}&amp;lt;/p&amp;gt;&amp;lt;/div&amp;gt;&amp;lt;/div&amp;gt;&amp;lt;div class=&amp;quot;app-card&amp;quot;&amp;gt;&amp;lt;div class=&amp;quot;amount&amp;quot;&amp;gt;12,000 JPYC&amp;lt;/div&amp;gt;&amp;lt;div class=&amp;quot;confirm-box kv&amp;quot;&amp;gt;${kv(x.labels.to,merchantAddress)}${kv(x.labels.network,&amp;quot;Ethereum&amp;quot;)}${kv(x.labels.gas,&amp;quot;0.0000x ETH&amp;quot;)}${kv(x.labels.request,paymentRequest.requestId)}&amp;lt;/div&amp;gt;&amp;lt;/div&amp;gt;${!signed?`&amp;lt;button class=&amp;quot;phone-btn green&amp;quot; onclick=&amp;quot;tapWalletApprove()&amp;quot;&amp;gt;${x.approve}&amp;lt;/button&amp;gt;`:&amp;quot;&amp;quot;}${signed&amp;amp;&amp;amp;!broadcasted?`&amp;lt;button class=&amp;quot;phone-btn green&amp;quot; onclick=&amp;quot;tapBroadcastTx()&amp;quot;&amp;gt;${x.broadcast}&amp;lt;/button&amp;gt;`:&amp;quot;&amp;quot;}${broadcasted&amp;amp;&amp;amp;current&amp;lt;6?`&amp;lt;div class=&amp;quot;app-card&amp;quot;&amp;gt;&amp;lt;div class=&amp;quot;loader&amp;quot;&amp;gt;&amp;lt;span style=&amp;quot;width:72%&amp;quot;&amp;gt;&amp;lt;/span&amp;gt;&amp;lt;/div&amp;gt;&amp;lt;p class=&amp;quot;toast-line&amp;quot;&amp;gt;${x.waitingWebhook}&amp;lt;/p&amp;gt;&amp;lt;/div&amp;gt;&amp;lt;button class=&amp;quot;phone-btn secondary&amp;quot; onclick=&amp;quot;tapWebhookConfirm()&amp;quot;&amp;gt;${x.webhook}&amp;lt;/button&amp;gt;`:&amp;quot;&amp;quot;}${current&amp;gt;=6?`&amp;lt;div class=&amp;quot;app-card&amp;quot;&amp;gt;&amp;lt;div class=&amp;quot;amount&amp;quot;&amp;gt;Done&amp;lt;/div&amp;gt;&amp;lt;p class=&amp;quot;toast-line&amp;quot;&amp;gt;${x.walletDone}&amp;lt;/p&amp;gt;&amp;lt;/div&amp;gt;`:&amp;quot;&amp;quot;}`}
+function renderStaticText(){const x=t();document.documentElement.lang=lang;document.title=x.pageTitle;document.getElementById(&amp;quot;heroTitle&amp;quot;).innerHTML=x.heroTitle;document.getElementById(&amp;quot;heroLead&amp;quot;).textContent=x.heroLead;document.getElementById(&amp;quot;stepsTitle&amp;quot;).textContent=x.stepsTitle;document.getElementById(&amp;quot;stepsLead&amp;quot;).textContent=x.stepsLead;document.getElementById(&amp;quot;pcTitle&amp;quot;).textContent=x.pcTitle;document.getElementById(&amp;quot;pcLead&amp;quot;).textContent=x.pcLead;document.getElementById(&amp;quot;logTitle&amp;quot;).textContent=x.logTitle;document.getElementById(&amp;quot;prevBtn&amp;quot;).textContent=x.prev;document.getElementById(&amp;quot;nextBtn&amp;quot;).textContent=x.next;document.getElementById(&amp;quot;resetBtn&amp;quot;).textContent=x.reset;document.getElementById(&amp;quot;autoBtn&amp;quot;).textContent=timer?x.stop:x.auto;document.getElementById(&amp;quot;copyTxBtn&amp;quot;).textContent=x.copyTx;document.getElementById(&amp;quot;openFcBtn&amp;quot;).textContent=x.openFc;document.querySelectorAll(&amp;quot;#languageToggle button&amp;quot;).forEach(b=&amp;gt;b.classList.toggle(&amp;quot;active&amp;quot;,b.dataset.lang===lang))}
+function renderSteps(){const x=t();els.steps.innerHTML=x.steps.map((step,index)=&amp;gt;`&amp;lt;button class=&amp;quot;step&amp;quot; type=&amp;quot;button&amp;quot; data-step=&amp;quot;${index}&amp;quot;&amp;gt;&amp;lt;span class=&amp;quot;num&amp;quot;&amp;gt;${index+1}&amp;lt;/span&amp;gt;&amp;lt;span&amp;gt;&amp;lt;b&amp;gt;${step[0]}&amp;lt;/b&amp;gt;&amp;lt;span&amp;gt;${step[1]}&amp;lt;/span&amp;gt;&amp;lt;/span&amp;gt;&amp;lt;/button&amp;gt;`).join(&amp;quot;&amp;quot;);document.querySelectorAll(&amp;quot;[data-step]&amp;quot;).forEach(button=&amp;gt;button.addEventListener(&amp;quot;click&amp;quot;,()=&amp;gt;setStep(Number(button.dataset.step),true)))}
+function renderPhone(){els.phoneAppName.textContent=current&amp;gt;=3&amp;amp;&amp;amp;current&amp;lt;6?&amp;quot;HashPort Wallet&amp;quot;:&amp;quot;FC Pay&amp;quot;;els.phoneApp.innerHTML=current&amp;gt;=3&amp;amp;&amp;amp;current&amp;lt;6?hashPortWalletApp():fcPayApp()}
+function renderPc(){const x=t(), rows=[[x.rows.order,paymentRequest.orderId],[x.rows.wallet,paymentRequest.fromWallet||&amp;quot;not_connected&amp;quot;],[x.rows.session,paymentRequest.walletConnectSession||&amp;quot;not_started&amp;quot;],[x.rows.status,paymentRequest.status],[x.rows.tx,paymentRequest.txHash||&amp;quot;not_broadcasted&amp;quot;]];els.statusRows.innerHTML=rows.map(([k,v])=&amp;gt;`&amp;lt;div class=&amp;quot;row&amp;quot;&amp;gt;&amp;lt;span&amp;gt;${k}&amp;lt;/span&amp;gt;&amp;lt;b&amp;gt;${v}&amp;lt;/b&amp;gt;&amp;lt;/div&amp;gt;`).join(&amp;quot;&amp;quot;);els.requestJson.textContent=JSON.stringify(paymentRequest,null,2)}
+function renderLog(){els.eventLog.textContent=t().steps.slice(0,current+1).map((step,index)=&amp;gt;`[${index+1}] ${step[3]}`).join(&amp;quot;\n&amp;quot;)}
+function setStep(index,announce=false){current=Math.max(0,Math.min(index,t().steps.length-1));updatePaymentRequest();renderStaticText();renderSteps();const step=t().steps[current];els.stageTitle.textContent=`${current+1}. ${step[0]}`;els.stageLead.textContent=step[2];renderPhone();renderPc();renderLog();document.querySelectorAll(&amp;quot;.step&amp;quot;).forEach((button,index)=&amp;gt;{button.classList.toggle(&amp;quot;active&amp;quot;,index===current);button.classList.toggle(&amp;quot;done&amp;quot;,index&amp;lt;current)});document.getElementById(&amp;quot;prevBtn&amp;quot;).disabled=current===0;document.getElementById(&amp;quot;nextBtn&amp;quot;).disabled=current===t().steps.length-1;if(announce)showToast(step[0])}
+function setLanguage(nextLang){lang=nextLang;setStep(current,false)}
+function showToast(text){els.toast.textContent=text;els.toast.classList.add(&amp;quot;show&amp;quot;);clearTimeout(showToast.timer);showToast.timer=setTimeout(()=&amp;gt;els.toast.classList.remove(&amp;quot;show&amp;quot;),2200)}
+function stopAuto(){if(timer){clearInterval(timer);timer=null;renderStaticText()}}
+function tapConnectWallet(){stopAuto();setStep(1,true)}function tapPayWithJPYC(){stopAuto();setStep(2,true)}function tapOpenWallet(){stopAuto();setStep(3,true)}function tapWalletApprove(){stopAuto();setStep(4,true)}function tapBroadcastTx(){stopAuto();setStep(5,true)}function tapWebhookConfirm(){stopAuto();setStep(6,true)}
+document.getElementById(&amp;quot;prevBtn&amp;quot;).addEventListener(&amp;quot;click&amp;quot;,()=&amp;gt;{stopAuto();setStep(current-1,true)});document.getElementById(&amp;quot;nextBtn&amp;quot;).addEventListener(&amp;quot;click&amp;quot;,()=&amp;gt;{stopAuto();setStep(current+1,true)});document.getElementById(&amp;quot;resetBtn&amp;quot;).addEventListener(&amp;quot;click&amp;quot;,()=&amp;gt;{stopAuto();paymentRequest.signedPayload=null;setStep(0,true)});document.getElementById(&amp;quot;openFcBtn&amp;quot;).addEventListener(&amp;quot;click&amp;quot;,()=&amp;gt;{stopAuto();setStep(current&amp;gt;=6?6:Math.min(current,2),true)});document.getElementById(&amp;quot;copyTxBtn&amp;quot;).addEventListener(&amp;quot;click&amp;quot;,async()=&amp;gt;{const value=paymentRequest.txHash||t().noTx;try{await navigator.clipboard.writeText(value);showToast(t().copied)}catch(error){showToast(value)}});document.getElementById(&amp;quot;autoBtn&amp;quot;).addEventListener(&amp;quot;click&amp;quot;,()=&amp;gt;{if(timer){stopAuto();return}timer=setInterval(()=&amp;gt;{if(current&amp;gt;=t().steps.length-1){stopAuto();return}setStep(current+1,false)},1200);renderStaticText()});document.querySelectorAll(&amp;quot;#languageToggle button&amp;quot;).forEach(button=&amp;gt;button.addEventListener(&amp;quot;click&amp;quot;,()=&amp;gt;setLanguage(button.dataset.lang)));
+setStep(0);
+&amp;lt;/script&amp;gt;
+&amp;lt;/body&amp;gt;
+&amp;lt;/html&amp;gt;
+"
+  style="width:100%;height:920px;border:0;border-radius:8px;overflow:hidden;"
+  loading="lazy"
+  referrerpolicy="no-referrer"
+&gt;&lt;/iframe&gt;</textarea>
+</body>
+</html>
