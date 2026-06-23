@@ -152,8 +152,8 @@ const i18n = {
     walletDone:"HashPort Walletで支払い完了が表示されています。",
     waitingWebhook:"Txブロードキャスト完了。チェーン確認とWebhookを待っています。",
     processingTitle:"ブロックチェーン上で処理中",
-    processingBody:"JPYC TransferをEthereumへ送信しています。約1秒後にTx確認へ進みます。",
-    processingLog:"Blockchain processing animation is shown for 1 second.",
+    processingBody:"JPYC TransferをEthereumへ送信しています。約1.5秒後にTx確認へ進みます。",
+    processingLog:"Blockchain processing animation is shown for 1.5 seconds.",
     labels:{wallet:"Wallet",network:"ネットワーク",token:"トークン",status:"ステータス",to:"送金先",gas:"Gas見積",request:"リクエスト",order:"注文",session:"Session",tx:"Tx Hash"},
     rows:{order:"Order",wallet:"Wallet",session:"Session",status:"Status",tx:"Tx Hash"},
     steps:[
@@ -179,7 +179,7 @@ const i18n = {
     fcSubtitle:"Fan payment checkout", walletSubtitle:"WalletConnect Session",
     orderTitle:"FC Pay Sample Order", paidTitle:"Payment Completed", orderMeta:"Order ORD-20240620-001<br>Amount 12,000 JPYC",
     connect:"Connect HashPort Wallet", pay:"Pay with JPYC", openWallet:"Open HashPort Wallet", approve:"Approve & Sign", broadcast:"Broadcast JPYC Transfer", webhook:"Simulate Webhook",
-    copied:"Tx information copied", noTx:"Tx has not been broadcast yet", paidBody:"Webhook confirmation is complete. FC Pay updated the order status to paid.", walletDone:"HashPort Wallet shows the payment as completed.", waitingWebhook:"Tx broadcast completed. Waiting for chain confirmation and Webhook.", processingTitle:"Processing on blockchain", processingBody:"Sending the JPYC Transfer to Ethereum. The demo advances after about 1 second.", processingLog:"Blockchain processing animation is shown for 1 second.",
+    copied:"Tx information copied", noTx:"Tx has not been broadcast yet", paidBody:"Webhook confirmation is complete. FC Pay updated the order status to paid.", walletDone:"HashPort Wallet shows the payment as completed.", waitingWebhook:"Tx broadcast completed. Waiting for chain confirmation and Webhook.", processingTitle:"Processing on blockchain", processingBody:"Sending the JPYC Transfer to Ethereum. The demo advances after about 1.5 seconds.", processingLog:"Blockchain processing animation is shown for 1.5 seconds.",
     labels:{wallet:"Wallet",network:"Network",token:"Token",status:"Status",to:"To",gas:"Gas estimate",request:"Request",order:"Order",session:"Session",tx:"Tx Hash"},
     rows:{order:"Order",wallet:"Wallet",session:"Session",status:"Status",tx:"Tx Hash"},
     steps:[
@@ -211,7 +211,7 @@ function setStep(index,announce=false){processingOnChain=false;current=Math.max(
 function setLanguage(nextLang){lang=nextLang;setStep(current,false)}
 function showToast(text){els.toast.textContent=text;els.toast.classList.add("show");clearTimeout(showToast.timer);showToast.timer=setTimeout(()=>els.toast.classList.remove("show"),2200)}
 function stopAuto(){if(timer){clearInterval(timer);timer=null;renderStaticText()}}
-function tapConnectWallet(){stopAuto();setStep(1,true)}function tapPayWithJPYC(){stopAuto();setStep(2,true)}function tapOpenWallet(){stopAuto();setStep(3,true)}function tapWalletApprove(){stopAuto();setStep(4,true)}function tapBroadcastTx(){stopAuto();processingOnChain=true;updatePaymentRequest();renderStaticText();renderPhone();renderPc();renderLog();showToast(t().processingTitle);const processingOnChainDelay=1000;setTimeout(()=>{if(processingOnChain)setStep(5,true)},processingOnChainDelay)}function tapWebhookConfirm(){stopAuto();setStep(6,true)}
+function tapConnectWallet(){stopAuto();setStep(1,true)}function tapPayWithJPYC(){stopAuto();setStep(2,true)}function tapOpenWallet(){stopAuto();setStep(3,true)}function tapWalletApprove(){stopAuto();setStep(4,true)}function tapBroadcastTx(){stopAuto();processingOnChain=true;updatePaymentRequest();renderStaticText();renderPhone();renderPc();renderLog();showToast(t().processingTitle);const processingOnChainDelay=1500;setTimeout(()=>{if(processingOnChain)setStep(5,true)},processingOnChainDelay)}function tapWebhookConfirm(){stopAuto();setStep(6,true)}
 document.getElementById("prevBtn").addEventListener("click",()=>{stopAuto();setStep(current-1,true)});document.getElementById("nextBtn").addEventListener("click",()=>{stopAuto();setStep(current+1,true)});document.getElementById("resetBtn").addEventListener("click",()=>{stopAuto();paymentRequest.signedPayload=null;setStep(0,true)});document.getElementById("openFcBtn").addEventListener("click",()=>{stopAuto();setStep(current>=6?6:Math.min(current,2),true)});document.getElementById("copyTxBtn").addEventListener("click",async()=>{const value=paymentRequest.txHash||t().noTx;try{await navigator.clipboard.writeText(value);showToast(t().copied)}catch(error){showToast(value)}});document.getElementById("autoBtn").addEventListener("click",()=>{if(timer){stopAuto();return}timer=setInterval(()=>{if(current>=t().steps.length-1){stopAuto();return}setStep(current+1,false)},1200);renderStaticText()});document.querySelectorAll("#languageToggle button").forEach(button=>button.addEventListener("click",()=>setLanguage(button.dataset.lang)));
 setStep(0);
 </script>
