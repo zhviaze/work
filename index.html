@@ -1,765 +1,356 @@
-<!DOCTYPE html>
-<html lang="ja">
+<!doctype html>
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CFS株式会社 会社紹介プレゼンテーション</title>
-    <!-- Tailwind CSS CDN (Ensures design consistency when opened in a new tab) -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        brand: {
-                            50: '#f0f7ff',
-                            100: '#e0effe',
-                            200: '#bae0fd',
-                            300: '#7cc8fc',
-                            400: '#38acf8',
-                            500: '#0091ff',
-                            600: '#0073ca',
-                            700: '#035ca3',
-                            800: '#074f87',
-                            900: '#0c4270',
-                        }
-                    }
-                }
-            }
-        }
-    </script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;900&family=Noto+Sans+JP:wght@300;400;700;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <style>
-/* 1. BRAND DESIGN SYSTEM (EDITORIAL BROCHURE) */
-:root {
-  --cfs-blue: #0091ff;
-  --cfs-navy: #0f172a;
-  --cfs-gray: #475569;
-  --cfs-light-gray: #f8fafc;
-  --cfs-border: #e2e8f0;
-  --cfs-bg: #ffffff;
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Work Pages Index</title>
+<style>
+*{box-sizing:border-box}
+:root{
+  --navy:#071735;
+  --ink:#17243b;
+  --muted:#65758f;
+  --blue:#0b5bc7;
+  --cyan:#08a9e8;
+  --green:#12884e;
+  --line:#c8d8ea;
+  --surface:#fff;
+  --soft:#f5f9fd;
+  --shadow:0 18px 42px rgba(15,37,75,.13);
 }
-
-* {
-  box-sizing: border-box;
+html,body{min-height:100%}
+body{
+  margin:0;
+  color:var(--ink);
+  background:linear-gradient(180deg,#f8fbff 0%,#edf4fb 100%);
+  font-family:-apple-system,BlinkMacSystemFont,"Hiragino Sans","Yu Gothic","Meiryo",Arial,sans-serif;
 }
-
-body {
-  background-color: #e2e8f0;
-  display: grid;
-  gap: 30px;
-  grid-template-columns: 1fr;
-  margin: 0;
-  min-height: 100vh;
-  padding: 0 0 30px 0;
-  place-items: center;
+a{color:inherit}
+.top{
+  padding:34px 28px 22px;
+  border-bottom:1px solid #dce7f4;
+  background:rgba(255,255,255,.76);
 }
-
-/* Slide Container: White Editorial Brochure Concept */
-.slide-container {
-  align-items: flex-start;
-  background-color: var(--cfs-bg);
-  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.1);
-  display: flex;
-  flex-direction: column;
-  font-family: 'Inter', 'Noto Sans JP', sans-serif;
-  height: 720px;
-  justify-content: flex-start;
-  overflow: hidden;
-  padding: 55px 85px; /* Compact padding to reduce empty whitespace */
-  position: relative;
-  width: 1280px;
+.top-inner{
+  max-width:1180px;
+  margin:0 auto;
+  display:grid;
+  grid-template-columns:1fr auto;
+  gap:24px;
+  align-items:end;
 }
-
-/* Background Decoration: Subtle Technical Grid */
-.slide-container::before {
-  background-image: 
-    linear-gradient(to right, rgba(0, 145, 255, 0.02) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(0, 145, 255, 0.02) 1px, transparent 1px);
-  background-size: 30px 30px;
-  content: '';
-  height: 100%;
-  left: 0;
-  position: absolute;
-  top: 0;
-  width: 100%;
-  z-index: 0;
+h1{
+  margin:0;
+  color:var(--navy);
+  font-size:clamp(32px,5vw,62px);
+  line-height:1;
+  letter-spacing:0;
 }
-
-.slide-container > * {
-  position: relative;
-  z-index: 1;
+.lead{
+  margin:12px 0 0;
+  max-width:760px;
+  color:#263f66;
+  font-size:15px;
+  font-weight:800;
+  line-height:1.55;
 }
-
-/* Editable Text Highlight Cue */
-[contenteditable="true"] {
-  outline: none;
-  transition: background-color 0.2s ease, box-shadow 0.2s ease;
-  border-radius: 4px;
+.meta{
+  display:grid;
+  gap:8px;
+  justify-items:end;
+  font-size:12px;
+  font-weight:900;
+  color:#334b69;
 }
-[contenteditable="true"]:hover {
-  background-color: rgba(0, 145, 255, 0.03);
-  box-shadow: 0 0 0 2px rgba(0, 145, 255, 0.15);
-  cursor: text;
+.pill{
+  border:1px solid var(--line);
+  background:#fff;
+  border-radius:8px;
+  padding:7px 10px;
 }
-[contenteditable="true"]:focus {
-  background-color: rgba(0, 145, 255, 0.05);
-  box-shadow: 0 0 0 2px rgba(0, 145, 255, 0.4);
+.wrap{
+  max-width:1180px;
+  margin:0 auto;
+  padding:22px 20px 34px;
 }
-
-/* 2. TYPOGRAPHY */
-.slide-container h1, .slide-container h2, .slide-container h3, .slide-container h4 {
-  color: var(--cfs-navy);
-  font-weight: 900;
-  margin: 0;
-  line-height: 1.25;
+.toolbar{
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+  align-items:center;
+  justify-content:space-between;
+  margin-bottom:16px;
 }
-
-.slide-container p, .slide-container li, .slide-container td, .slide-container th {
-  color: var(--cfs-gray);
-  font-size: 15px;
-  line-height: 1.75;
+.status{
+  color:var(--muted);
+  font-size:13px;
+  font-weight:800;
 }
-
-/* Consistent Slide Title (Consulting Style) */
-.slide-title {
-  border-bottom: 2px solid var(--cfs-blue);
-  display: flex;
-  font-size: 30px;
-  justify-content: space-between;
-  margin-bottom: 35px;
-  padding-bottom: 12px;
-  width: 100%;
-  align-items: baseline;
+.actions{display:flex;gap:8px;flex-wrap:wrap}
+.button{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  min-height:38px;
+  padding:0 12px;
+  border-radius:8px;
+  border:1px solid #9dbce6;
+  background:#fff;
+  color:#153f79;
+  font-size:13px;
+  font-weight:900;
+  text-decoration:none;
 }
-
-.slide-title-japanese {
-  font-weight: 900;
-  letter-spacing: -0.01em;
+.button.primary{background:var(--blue);border-color:var(--blue);color:#fff}
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(290px,1fr));
+  gap:16px;
 }
-
-.slide-title-english {
-  color: var(--cfs-blue);
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.3em;
-  text-transform: uppercase;
+.card{
+  background:rgba(255,255,255,.94);
+  border:1px solid var(--line);
+  border-radius:8px;
+  box-shadow:var(--shadow);
+  overflow:hidden;
+  display:grid;
+  grid-template-rows:auto 1fr auto;
 }
-
-/* 3. LOGO COMPONENT (3x3 Grid SVG) */
-.cfs-logo-box {
-  display: grid;
-  gap: 5px;
-  grid-template-columns: repeat(3, 1fr);
-  height: 60px;
-  width: 60px;
+.preview{
+  position:relative;
+  height:220px;
+  background:#e8f0f8;
+  border-bottom:1px solid var(--line);
+  overflow:hidden;
 }
-
-.cfs-logo-box div {
-  border-radius: 4px;
-  height: 100%;
-  width: 100%;
+.preview iframe{
+  width:1440px;
+  height:960px;
+  border:0;
+  transform:scale(.215);
+  transform-origin:top left;
+  pointer-events:none;
+  background:#fff;
 }
-
-.cfs-logo-box .empty { border: 2px solid #cbd5e1; }
-.cfs-logo-box .filled { background-color: var(--cfs-blue); border: 2px solid #cbd5e1; }
-
-/* 4. FOOTER & PAGE NUMBERING */
-.page-footer {
-  align-items: center;
-  border-top: 1px solid var(--cfs-border);
-  bottom: 35px;
-  display: flex;
-  justify-content: space-between;
-  left: 85px;
-  position: absolute;
-  right: 85px;
-  padding-top: 12px;
+.preview-fallback{
+  position:absolute;
+  inset:0;
+  display:grid;
+  place-items:center;
+  color:#18385f;
+  font-weight:900;
+  background:linear-gradient(135deg,#eaf4ff,#fff);
 }
-
-.page-footer span {
-  color: #94a3b8;
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.1em;
+.card-body{padding:14px}
+.card h2{
+  margin:0;
+  color:var(--navy);
+  font-size:18px;
+  line-height:1.25;
 }
-
-.page-footer .page-number {
-  color: var(--cfs-blue);
-  font-weight: 900;
-  font-family: 'Inter', sans-serif;
+.path{
+  margin:6px 0 0;
+  color:var(--muted);
+  font-size:12px;
+  font-weight:900;
+  overflow-wrap:anywhere;
 }
-
-/* 5. LAYOUT COMPONENTS */
-.content-area {
-  display: flex;
-  flex-direction: column;
-  flex-grow: 1;
-  justify-content: center;
-  width: 100%;
+.card-actions{
+  display:flex;
+  gap:8px;
+  padding:0 14px 14px;
 }
-
-.two-column {
-  display: grid;
-  gap: 50px;
-  grid-template-columns: 1.1fr 0.9fr;
-  width: 100%;
-  align-items: stretch;
+.empty{
+  border:1px dashed #aabbd0;
+  background:rgba(255,255,255,.65);
+  border-radius:8px;
+  padding:22px;
+  color:var(--muted);
+  font-weight:800;
+  line-height:1.55;
 }
-
-.image-wrapper {
-  border-radius: 12px;
-  box-shadow: 0 15px 35px rgba(15, 23, 42, 0.12);
-  height: 380px;
-  overflow: hidden;
-  width: 100%;
-  background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
-  position: relative;
-  border: 1px solid var(--cfs-border);
+.error{
+  margin-bottom:14px;
+  border:1px solid #f0c0c0;
+  background:#fff6f6;
+  color:#8e2d2d;
+  border-radius:8px;
+  padding:12px 14px;
+  font-size:13px;
+  font-weight:800;
+  line-height:1.5;
 }
-
-.image-wrapper img {
-  height: 100%;
-  width: 100%;
-  object-fit: cover;
-  display: block;
+@media(max-width:760px){
+  .top{padding:26px 16px 18px}
+  .top-inner{grid-template-columns:1fr}
+  .meta{justify-items:start}
+  .wrap{padding:18px 12px 28px}
+  .preview{height:190px}
+  .preview iframe{transform:scale(.19)}
 }
-
-.fallback-gradient-bg {
-  position: absolute;
-  top: 0; left: 0; right: 0; bottom: 0;
-  background: linear-gradient(135deg, #0f172a 0%, #0091ff 100%);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-/* Tiled Icons */
-.tiled-content {
-  display: flex;
-  gap: 25px;
-  width: 100%;
-}
-
-.tile {
-  background-color: var(--cfs-light-gray);
-  border-radius: 16px;
-  border: 1px solid var(--cfs-border);
-  flex: 1;
-  padding: 35px;
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-}
-
-.tile::after {
-  background-color: var(--cfs-blue);
-  border-radius: 0 0 16px 16px;
-  bottom: 0;
-  content: '';
-  height: 4px;
-  left: 0;
-  position: absolute;
-  width: 100%;
-}
-
-.tile .icon {
-  color: var(--cfs-blue);
-  font-size: 28px;
-  margin-bottom: 20px;
-}
-
-.tile h3 {
-  font-size: 20px;
-  margin-bottom: 12px;
-  font-weight: 900;
-}
-
-/* Table Style */
-.table-layout table {
-  border-collapse: collapse;
-  width: 100%;
-}
-
-.table-layout th, .table-layout td {
-  border-bottom: 1px solid var(--cfs-border);
-  padding: 18px 12px;
-  text-align: left;
-}
-
-.table-layout th {
-  color: var(--cfs-navy);
-  font-weight: 900;
-  width: 25%;
-  font-size: 16px;
-}
-
-.table-layout td {
-  font-size: 15px;
-}
-
-/* Section Title Style */
-.section-title-layout {
-  align-items: flex-start;
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  justify-content: center;
-  background: linear-gradient(to right, var(--cfs-light-gray) 0%, transparent 100%);
-  padding: 40px;
-  border-radius: 16px;
-  border-left: 6px solid var(--cfs-blue);
-  width: 100%;
-}
-
-.section-title-layout h2 {
-  font-size: 48px;
-  letter-spacing: -0.03em;
-  max-width: 1000px;
-  line-height: 1.3;
-}
-
-.section-title-layout p.description {
-  font-size: 18px;
-  margin-top: 20px;
-  max-width: 900px;
-  color: var(--cfs-gray);
-  line-height: 1.8;
-}
-
-/* Bullet Points */
-.bullet-list {
-  list-style: none;
-  padding: 0;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  height: 100%;
-}
-
-.bullet-list li {
-  display: flex;
-  gap: 15px;
-  margin-bottom: 20px;
-  background-color: var(--cfs-light-gray);
-  padding: 15px 20px;
-  border-radius: 10px;
-  border: 1px solid var(--cfs-border);
-}
-
-.bullet-list i {
-  color: var(--cfs-blue);
-  font-size: 18px;
-  margin-top: 3px;
-}
-
-/* Full Background Image */
-.full-bg-image {
-  background-position: center;
-  background-size: cover;
-  color: white;
-}
-
-.full-bg-image h2 {
-  color: white;
-  font-size: 52px;
-  margin-bottom: 20px;
-}
-
-.full-bg-image p {
-  color: rgba(255, 255, 255, 0.8);
-  font-size: 20px;
-}
-
-/* 6. HIGH-END PRINT-TO-PDF SETTINGS */
-@media print {
-  @page {
-    size: A4 landscape;
-    margin: 0;
-  }
-  body {
-    background-color: #ffffff !important;
-    margin: 0 !important;
-    padding: 0 !important;
-    -webkit-print-color-adjust: exact !important;
-    print-color-adjust: exact !important;
-    font-print-color-adjust: exact !important;
-  }
-  .no-print {
-    display: none !important;
-  }
-  .slide-container {
-    width: 297mm !important;
-    height: 210mm !important;
-    page-break-after: always !important;
-    page-break-inside: avoid !important;
-    box-shadow: none !important;
-    border: none !important;
-    margin: 0 !important;
-    padding: 20mm 25mm !important; /* Calibrated strictly for paper output */
-    box-sizing: border-box !important;
-    position: relative !important;
-    overflow: hidden !important;
-    background-color: #ffffff !important;
-  }
-  .slide-container::before {
-    background-image: 
-      linear-gradient(to right, rgba(0, 145, 255, 0.03) 1px, transparent 1px),
-      linear-gradient(to bottom, rgba(0, 145, 255, 0.03) 1px, transparent 1px) !important;
-  }
-  /* Optimization of font render weights on print */
-  .slide-container h1 { font-size: 54pt !important; }
-  .slide-container h2 { font-size: 34pt !important; }
-  .slide-container h3 { font-size: 22pt !important; }
-  .slide-container p, .slide-container li, .slide-container td, .slide-container th {
-    font-size: 11pt !important;
-    color: #334155 !important;
-  }
-  .image-wrapper {
-    height: 110mm !important;
-    box-shadow: none !important;
-  }
-  .page-footer {
-    bottom: 15mm !important;
-    left: 25mm !important;
-    right: 25mm !important;
-  }
-  /* Remove visual highlights of editable nodes when printing */
-  [contenteditable="true"] {
-    background-color: transparent !important;
-    box-shadow: none !important;
-  }
-}
-    </style>
-    <script>
-        // High-Quality image load error helper to handle offline/network errors seamlessly
-        function handleImageError(imageElement, altText) {
-            const parent = imageElement.parentElement;
-            imageElement.style.display = 'none';
-            
-            // Create a premium fallback gradient card so the slide design never breaks
-            const fallbackDiv = document.createElement('div');
-            fallbackDiv.className = 'fallback-gradient-bg';
-            fallbackDiv.innerHTML = `
-                <div style="text-align: center; color: white; padding: 40px; font-family: 'Inter', 'Noto Sans JP', sans-serif;">
-                    <i class="fa-solid fa-network-wired" style="font-size: 44px; color: #ffffff; opacity: 0.9; margin-bottom: 15px;"></i>
-                    <p style="font-weight: 900; font-size: 16px; margin: 0; letter-spacing: 0.1em; text-transform: uppercase;">CFS株式会社</p>
-                    <p style="font-size: 11px; color: rgba(255,255,255,0.7); margin-top: 6px;">${altText}</p>
-                </div>
-            `;
-            parent.appendChild(fallbackDiv);
-        }
-
-        // Improved print function targeting parent window elements to maximize compatibility inside sandbox iFrames
-        function executePrint() {
-            try {
-                window.print();
-            } catch (e) {
-                // Fail-safe alternative
-                window.open(window.location.href, '_blank').print();
-            }
-        }
-    </script>
+</style>
 </head>
 <body>
+<header class="top">
+  <div class="top-inner">
+    <div>
+      <h1>Work Pages Index</h1>
+      <p class="lead">An automatically discovered index for GitHub Pages under <strong>zhviaze.github.io/work</strong>. Each subfolder with its own <code>index.html</code> appears here as a preview card.</p>
+    </div>
+    <div class="meta">
+      <span class="pill">Repository: zhviaze/work</span>
+      <span class="pill">Source: GitHub Contents API</span>
+    </div>
+  </div>
+</header>
 
-<!-- Interactive print-action header (Hidden on print output) -->
-<div class="no-print" style="position: sticky; top: 0; left: 0; right: 0; background: #0f172a; color: white; padding: 15px 30px; display: flex; justify-content: space-between; align-items: center; z-index: 1000; box-shadow: 0 4px 30px rgba(0,0,0,0.15); font-family: 'Inter', 'Noto Sans JP', sans-serif; width: 100%;">
-    <div style="display: flex; align-items: center; gap: 15px;">
-        <span style="background: var(--cfs-blue); color: white; font-weight: 900; font-size: 11px; padding: 5px 10px; border-radius: 4px; letter-spacing: 0.05em; text-transform: uppercase;">A4 LANDSCAPE PDF</span>
-        <span style="font-size: 13px; color: #cbd5e1; font-weight: 300;">スライド上のすべての文字は、直接クリックして自由に打ち替えることが可能です。</span>
+<main class="wrap">
+  <div class="toolbar">
+    <div class="status" id="status">Searching subfolders...</div>
+    <div class="actions">
+      <a class="button" href="https://github.com/zhviaze/work" target="_blank" rel="noopener">GitHub Repo</a>
+      <button class="button primary" id="refreshButton" type="button">Refresh</button>
     </div>
-    <button onclick="executePrint()" style="background: var(--cfs-blue); color: white; border: none; padding: 10px 20px; border-radius: 8px; font-weight: 700; font-size: 13px; cursor: pointer; display: flex; align-items: center; gap: 8px; transition: opacity 0.2s; box-shadow: 0 4px 12px rgba(0, 145, 255, 0.3);">
-        <i class="fa-solid fa-file-pdf"></i> PDFとして印刷・保存する
-    </button>
-</div>
+  </div>
+  <div id="errorBox"></div>
+  <section class="grid" id="projectGrid" aria-live="polite"></section>
+</main>
 
-<!-- Slide 1: COVER -->
-<div class="slide-container" id="slide1">
-    <div class="content-area" style="align-items: center; text-align: center;">
-        <div class="cfs-logo-box" style="height: 110px; width: 110px; gap: 9px; margin-bottom: 40px;">
-            <div class="empty"></div><div class="filled"></div><div class="empty"></div>
-            <div class="filled"></div><div class="filled"></div><div class="filled"></div>
-            <div class="empty"></div><div class="filled"></div><div class="empty"></div>
-        </div>
-        <p contenteditable="true" style="color: var(--cfs-blue); font-weight: 700; letter-spacing: 0.35em; text-transform: uppercase; margin-bottom: 15px; font-size: 14px;">CROSS FINANCE SERVICES</p>
-        <h1 contenteditable="true" style="font-size: 84px; letter-spacing: -0.04em; margin-bottom: 10px; line-height: 1.1;">CFS株式会社</h1>
-        <p contenteditable="true" style="font-size: 22px; color: #94a3b8; font-weight: 300; letter-spacing: 0.1em; margin-top: 10px;">Company Profile 2026</p>
-    </div>
-    <div class="page-footer">
-        <span contenteditable="true">Copyright © CFS株式会社 All Rights Reserved.</span>
-        <span class="page-number">01 / 10</span>
-    </div>
-</div>
+<script>
+const OWNER = "zhviaze";
+const REPO = "work";
+const BRANCH = "main";
+const BASE_PATH = location.pathname.startsWith("/work/") ? "/work/" : "/";
+const API_ROOT = `https://api.github.com/repos/${OWNER}/${REPO}/contents`;
+const FALLBACK_PROJECTS = [
+  { name: "HIT_SC_PJ", path: "HIT_SC_PJ", title: "HIT_SC_PJ" },
+  { name: "HIT_SC_PJ2", path: "HIT_SC_PJ2", title: "HIT_SC_PJ2" },
+  { name: "fcpaydemo", path: "fcpaydemo", title: "FC Pay JPYC Payment Demo" },
+];
 
-<!-- Slide 2: PHILOSOPHY -->
-<div class="slide-container" id="slide2">
-    <div class="section-title-layout">
-        <p contenteditable="true" style="color: var(--cfs-blue); font-weight: 700; letter-spacing: 0.25em; margin-bottom: 20px; font-size: 14px;">OUR PHILOSOPHY</p>
-        <h2 contenteditable="true">真のニーズから、<br>決済・金融の次をつくる。</h2>
-        <p contenteditable="true" class="description">私たちは、決済・金融を単なるシステム取引として捉えるのではなく、そこに関わる人、企業、社会にとって本当に使いやすく合理的な体験を提供することを目的としています。本質的な使いやすさから逆算し、実務に適合する高度なプロダクトを構想します。</p>
-    </div>
-    <div class="page-footer">
-        <span contenteditable="true">PHILOSOPHY</span>
-        <span class="page-number">02 / 10</span>
-    </div>
-</div>
+const grid = document.getElementById("projectGrid");
+const statusEl = document.getElementById("status");
+const errorBox = document.getElementById("errorBox");
+const refreshButton = document.getElementById("refreshButton");
 
-<!-- Slide 3: INTRODUCTION -->
-<div class="slide-container" id="slide3">
-    <div class="slide-title">
-        <span contenteditable="true" class="slide-title-japanese">イントロダクション</span>
-        <span contenteditable="true" class="slide-title-english">Introduction</span>
-    </div>
-    <div class="content-area">
-        <div class="two-column">
-            <div style="display: flex; flex-direction: column; justify-content: center; background-color: var(--cfs-light-gray); padding: 35px; border-radius: 16px; border: 1px solid var(--cfs-border);">
-                <h3 contenteditable="true" style="font-size: 28px; margin-bottom: 20px; line-height: 1.3;">決済プロセスに、確かな合理性と効率を</h3>
-                <p contenteditable="true" style="margin-bottom: 15px;">既存の枠組みにとらわれず、クリエイティブな発想とプロフェッショナルな知見を統合。人、企業、業界、社会にとって本当に嬉しい決済・金融ソリューションを提供します。</p>
-                <p contenteditable="true">私たちは決済を単なる手段ではなく、ビジネスを加速させる強力な社会インフラとして、無駄のない実務の仕組みを追求し続けます。</p>
-            </div>
-            <div class="image-wrapper">
-                <img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&q=80&w=800" 
-                     alt="" 
-                     onerror="handleImageError(this, '近代的な金融オフィスの外観')">
-            </div>
-        </div>
-    </div>
-    <div class="page-footer">
-        <span contenteditable="true">INTRODUCTION</span>
-        <span class="page-number">03 / 10</span>
-    </div>
-</div>
+function pageUrl(path) {
+  return `${BASE_PATH}${encodeURIComponent(path)}/`;
+}
 
-<!-- Slide 4: MVV -->
-<div class="slide-container" id="slide4">
-    <div class="slide-title">
-        <span contenteditable="true" class="slide-title-japanese">理念と価値観</span>
-        <span contenteditable="true" class="slide-title-english">Mission / Vision / Value</span>
-    </div>
-    <div class="content-area">
-        <div class="tiled-content">
-            <div class="tile">
-                <div>
-                    <div class="icon"><i class="fa-solid fa-rocket"></i></div>
-                    <h3 contenteditable="true">MISSION</h3>
-                    <p contenteditable="true">金融サービスを、より便利に、より合理的に、より効率的にすること。取引に関わる複雑な仕組みを徹底的にシンプルにします。</p>
-                </div>
-            </div>
-            <div class="tile">
-                <div>
-                    <div class="icon"><i class="fa-solid fa-eye"></i></div>
-                    <h3 contenteditable="true">VISION</h3>
-                    <p contenteditable="true">人、企業、社会にとって本当に嬉しい、ストレスフリーで強固な決済ソリューションを持続的に構築・維持します。</p>
-                </div>
-            </div>
-            <div class="tile">
-                <div>
-                    <div class="icon"><i class="fa-solid fa-star"></i></div>
-                    <h3 contenteditable="true">VALUE</h3>
-                    <p contenteditable="true">プロフェッショナルとしての実利主義、自由でクリエイティブな発想、真のニーズへのフォーカス、確実性を担保するパッション。</p>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="page-footer">
-        <span contenteditable="true">CORE VALUES</span>
-        <span class="page-number">04 / 10</span>
-    </div>
-</div>
+function githubFolderUrl(path) {
+  return `https://github.com/${OWNER}/${REPO}/tree/${BRANCH}/${encodeURIComponent(path)}`;
+}
 
-<!-- Slide 5: BUSINESS INTRO -->
-<div class="slide-container" id="slide5">
-    <div class="section-title-layout">
-        <p contenteditable="true" style="color: var(--cfs-blue); font-weight: 700; letter-spacing: 0.25em; margin-bottom: 20px; font-size: 14px;">OUR BUSINESS</p>
-        <h2 contenteditable="true">収納代行・コンサルティングを主軸に、<br>決済実務をトータルサポート。</h2>
-        <p contenteditable="true" class="description">決済は導入して終わりではありません。実務に精通した専門チームが、<br>要件定義から業務フローの再構築、日々の安定的なシステム運用や突発的な障害対応、<br>長期的な保守管理まで一貫して引き受け、クライアント企業様の決済基盤を技術面・実務面から支え続けます。</p>
-    </div>
-    <div class="page-footer">
-        <span contenteditable="true">BUSINESS OVERVIEW</span>
-        <span class="page-number">05 / 10</span>
-    </div>
-</div>
+function cleanTitle(raw, fallback) {
+  return (raw || fallback || "").replace(/\s+/g, " ").trim();
+}
 
-<!-- Slide 6: CORE BUSINESS -->
-<div class="slide-container" id="slide6">
-    <div class="slide-title">
-        <span contenteditable="true" class="slide-title-japanese">主要事業：決済と戦略</span>
-        <span contenteditable="true" class="slide-title-english">Main Services Part 1</span>
-    </div>
-    <div class="content-area">
-        <div class="two-column">
-            <div style="background-color: var(--cfs-light-gray); padding: 40px; border-radius: 20px; border: 1px solid var(--cfs-border); display: flex; flex-direction: column; justify-content: space-between;">
-                <div>
-                    <p contenteditable="true" style="font-weight: 900; color: var(--cfs-blue); margin-bottom: 15px; font-family: 'Inter'; font-size: 18px;">01</p>
-                    <h3 contenteditable="true" style="font-size: 24px; margin-bottom: 15px;">収納代行</h3>
-                    <p contenteditable="true">決済サービス「Pay Master」を中心に、オンライン・オフラインの両対応。WeChat Pay（微信支付）や銀聯（UnionPay）といった多様なインバウンド決済を網羅し、事業規模やユーザー特性に合わせた最適な決済手段と、セキュリティ基準を満たした安全なデータフローを構築します。</p>
-                </div>
-                <div contenteditable="true" style="margin-top: 20px; padding-top: 15px; border-top: 1px dashed var(--cfs-border); font-size: 13px; color: var(--cfs-gray);">
-                    <i class="fa-solid fa-circle-info text-brand-500 mr-1"></i> WeChat Pay・銀聯対応等、高度なインバウンド決済代行処理
-                </div>
-            </div>
-            <div style="background-color: var(--cfs-light-gray); padding: 40px; border-radius: 20px; border: 1px solid var(--cfs-border); display: flex; flex-direction: column; justify-content: space-between;">
-                <div>
-                    <p contenteditable="true" style="font-weight: 900; color: var(--cfs-blue); margin-bottom: 10px; font-family: 'Inter'; font-size: 18px;">02</p>
-                    <h3 contenteditable="true" style="font-size: 24px; margin-bottom: 15px;">コンサルティング</h3>
-                    <p contenteditable="true">多角的な金融実務知識と先進的なFintechを融合。クレジットカード決済、コンタクトレス、QR決済、各種バンキング、為替課題などに対し、実務レベルで実行可能な具体的な解決策を導き出します。</p>
-                </div>
-                <div contenteditable="true" style="margin-top: 20px; padding-top: 15px; border-top: 1px dashed var(--cfs-border); font-size: 13px; color: var(--cfs-gray);">
-                    <i class="fa-solid fa-circle-info text-brand-500 mr-1"></i> 各種決済ネットワークの選定と手数料最適化支援
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="page-footer">
-        <span contenteditable="true">CORE BUSINESS</span>
-        <span class="page-number">06 / 10</span>
-    </div>
-</div>
+async function fetchJson(url) {
+  const response = await fetch(url, { headers: { Accept: "application/vnd.github+json" } });
+  if (!response.ok) {
+    throw new Error(`${response.status} ${response.statusText}`);
+  }
+  return response.json();
+}
 
-<!-- Slide 7: SUPPORT SERVICES -->
-<div class="slide-container" id="slide7">
-    <div class="slide-title">
-        <span contenteditable="true" class="slide-title-japanese">付随業務：構築と運用</span>
-        <span contenteditable="true" class="slide-title-english">Support Services Part 2</span>
-    </div>
-    <div class="content-area">
-        <div class="two-column">
-            <div style="background-color: var(--cfs-light-gray); padding: 40px; border-radius: 20px; border: 1px solid var(--cfs-border); display: flex; flex-direction: column; justify-content: space-between;">
-                <div>
-                    <p contenteditable="true" style="font-weight: 900; color: var(--cfs-blue); margin-bottom: 10px; font-family: 'Inter'; font-size: 18px;">03</p>
-                    <h3 contenteditable="true" style="font-size: 24px; margin-bottom: 15px;">業務構築支援</h3>
-                    <p contenteditable="true">プロジェクトにおけるシステム要件定義、進捗管理を担うPMOの立ち上げ、簡易開発、現場の業務フロー改善まで。決済導入に必要な一連のプロセスを伴走支援します。</p>
-                </div>
-                <div contenteditable="true" style="margin-top: 20px; padding-top: 15px; border-top: 1px dashed var(--cfs-border); font-size: 13px; color: var(--cfs-gray);">
-                    <i class="fa-solid fa-circle-info text-brand-500 mr-1"></i> セキュリティ基準・API設計から伴走するエンジニアリング
-                </div>
-            </div>
-            <div style="background-color: var(--cfs-light-gray); padding: 40px; border-radius: 20px; border: 1px solid var(--cfs-border); display: flex; flex-direction: column; justify-content: space-between;">
-                <div>
-                    <p contenteditable="true" style="font-weight: 900; color: var(--cfs-blue); margin-bottom: 10px; font-family: 'Inter'; font-size: 18px;">04</p>
-                    <h3 contenteditable="true" style="font-size: 24px; margin-bottom: 15px;">実務運用・保守サポート</h3>
-                    <p contenteditable="true">システム稼働後の日常的な稼働状況監視、外部システムとのスムーズなデータ・財務情報の連携管理、万が一のシステム不具合発生時のトラブル解決など、持続可能な保守・サポートを専門体制で提供します。</p>
-                </div>
-                <div contenteditable="true" style="margin-top: 20px; padding-top: 15px; border-top: 1px dashed var(--cfs-border); font-size: 13px; color: var(--cfs-gray);">
-                    <i class="fa-solid fa-circle-info text-brand-500 mr-1"></i> 24時間365日の安定稼働を維持する堅牢な監視体制
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="page-footer">
-        <span contenteditable="true">SUPPORT SERVICES</span>
-        <span class="page-number">07 / 10</span>
-    </div>
-</div>
+async function getPageTitle(path) {
+  try {
+    const response = await fetch(pageUrl(path), { cache: "no-store" });
+    if (!response.ok) return path;
+    const html = await response.text();
+    const match = html.match(/<title[^>]*>([\s\S]*?)<\/title>/i);
+    return cleanTitle(match && match[1], path);
+  } catch {
+    return path;
+  }
+}
 
-<!-- Slide 8: STRENGTHS -->
-<div class="slide-container" id="slide8">
-    <div class="slide-title">
-        <span contenteditable="true" class="slide-title-japanese">CFSが選ばれる理由</span>
-        <span contenteditable="true" class="slide-title-english">Our Strengths</span>
-    </div>
-    <div class="content-area">
-        <div class="two-column">
-            <ul class="bullet-list">
-                <li>
-                    <i class="fa-solid fa-check-circle" style="font-size: 20px; margin-top: 5px;"></i>
-                    <div>
-                        <h4 contenteditable="true" style="font-size: 18px; margin-bottom: 5px;">決済・金融領域への深い専門性</h4>
-                        <p contenteditable="true" style="font-size: 14px;">複雑な法的規制、業界ごとの運用ルール、高度なセキュリティ基準を熟知したエキスパートが実務要件に完全適合させます。</p>
-                    </div>
-                </li>
-                <li>
-                    <i class="fa-solid fa-check-circle" style="font-size: 20px; margin-top: 5px;"></i>
-                    <div>
-                        <h4 contenteditable="true" style="font-size: 18px; margin-bottom: 5px;">設計から保守まで一貫した伴走力</h4>
-                        <p contenteditable="true" style="font-size: 14px;">アドバイスのみを行うコンサルティングにとどまらず、実際の開発・導入から日常の運用保守管理まで一社完結でやり遂げます。</p>
-                    </div>
-                </li>
-                <li>
-                    <i class="fa-solid fa-check-circle" style="font-size: 20px; margin-top: 5px;"></i>
-                    <div>
-                        <h4 contenteditable="true" style="font-size: 18px; margin-bottom: 5px;">多通貨・グローバル決済への理解</h4>
-                        <p contenteditable="true" style="font-size: 14px;">海外決済トレンドに精通し、クロスボーダーな決済環境 of 構築を支援します。</p>
-                    </div>
-                </li>
-            </ul>
-            <div class="image-wrapper" style="height: 100%;">
-                <img src="https://images.unsplash.com/photo-1557804506-669a67965ba0?auto=format&fit=crop&q=80&w=800" 
-                     alt="" 
-                     onerror="handleImageError(this, '金融戦略会議を行うプロフェッショナル')">
-            </div>
-        </div>
-    </div>
-    <div class="page-footer">
-        <span contenteditable="true">STRENGTHS</span>
-        <span class="page-number">08 / 10</span>
-    </div>
-</div>
+async function folderHasIndex(path) {
+  const contents = await fetchJson(`${API_ROOT}/${encodeURIComponent(path)}?ref=${BRANCH}`);
+  return Array.isArray(contents) && contents.some((item) => item.type === "file" && item.name.toLowerCase() === "index.html");
+}
 
-<!-- Slide 9: CORPORATE DATA -->
-<div class="slide-container" id="slide9">
-    <div class="slide-title">
-        <span contenteditable="true" class="slide-title-japanese">会社概要</span>
-        <span contenteditable="true" class="slide-title-english">Company Profile</span>
-    </div>
-    <div class="content-area">
-        <div class="two-column" style="gap: 40px; align-items: center;">
-            <div class="table-layout" style="background-color: var(--cfs-light-gray); padding: 20px; border-radius: 16px; border: 1px solid var(--cfs-border);">
-                <table>
-                    <tbody>
-                        <tr>
-                            <th contenteditable="true">商号</th>
-                            <td contenteditable="true" style="font-weight: 700; color: var(--cfs-navy);">CFS株式会社</td>
-                        </tr>
-                        <tr>
-                            <th contenteditable="true">事業内容</th>
-                            <td contenteditable="true">デジタル決済・金融システムコンサルティング、決済代行サービス、運用保守</td>
-                        </tr>
-                        <tr>
-                            <th contenteditable="true">経営体制</th>
-                            <td contenteditable="true" style="font-weight: 700;">CEO 富永 博文</td>
-                        </tr>
-                        <tr>
-                            <th contenteditable="true">所在地</th>
-                            <td contenteditable="true">東京都港区白金 3-7-29</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-            <div style="background-color: var(--cfs-navy); color: white; border-radius: 16px; padding: 40px; display: flex; flex-direction: column; justify-content: center; height: 100%;">
-                <h4 contenteditable="true" style="color: white; font-size: 22px; margin-bottom: 15px;">CROSS FINANCE SERVICES</h4>
-                <p contenteditable="true" style="color: rgba(255, 255, 255, 0.7); font-size: 14px; line-height: 1.8;">日々複雑化する国内外のデジタル決済・金融システムの合理化に向け、高い機動力と実行力、専門知識を結集してクライアント企業様に伴走するプロフェッショナルファームです。</p>
-            </div>
-        </div>
-    </div>
-    <div class="page-footer">
-        <span contenteditable="true">CORPORATE DATA</span>
-        <span class="page-number">09 / 10</span>
-    </div>
-</div>
+async function discoverProjects() {
+  const rootContents = await fetchJson(`${API_ROOT}?ref=${BRANCH}`);
+  const folders = rootContents
+    .filter((item) => item.type === "dir")
+    .map((item) => ({ name: item.name, path: item.path }));
 
-<!-- Slide 10: CONTACT & OUTRO -->
-<div class="slide-container full-bg-image" id="slide10" style="background-image: linear-gradient(rgba(15, 23, 42, 0.9), rgba(15, 23, 42, 0.9)), url('https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&q=80&w=1200');">
-    <div class="content-area" style="text-align: center; z-index: 2;">
-        <p contenteditable="true" style="color: var(--cfs-blue); font-weight: 700; letter-spacing: 0.3em; margin-bottom: 25px;">CONTACT US</p>
-        <h2 contenteditable="true" style="font-size: 54px; margin-bottom: 40px; line-height: 1.25; color: white;">決済の課題に、真の合理性を。<br><span style="font-size: 24px; font-weight: 400; color: #94a3b8;">より良い決済・金融サービスを、ともにつくる。</span></h2>
-        
-        <div style="background-color: rgba(255, 255, 255, 0.05); border-radius: 20px; padding: 35px 60px; display: inline-block; border: 1px solid rgba(255, 255, 255, 0.1); margin-bottom: 30px; backdrop-filter: blur(10px);">
-            <p contenteditable="true" style="font-size: 13px; color: #94a3b8; margin-bottom: 8px; font-weight: 700;">公式お問い合わせ窓口</p>
-            <p contenteditable="true" style="font-size: 38px; color: white; font-weight: 900; font-family: 'Inter';">contact@cfsjp.com</p>
-        </div>
-        <p contenteditable="true" style="max-width: 800px; margin: 0 auto; font-size: 15px; color: #cbd5e1; line-height: 1.8;">新規決済手段の導入によるコスト削減、他システムとの連携業務構築、セキュアな開発環境や運用体制の確立など、まずはお気軽にご相談ください。仕様が決まっていない初期検討フェーズからのサポートも大歓迎です。</p>
-    </div>
-    <div class="page-footer" style="border-top-color: rgba(255, 255, 255, 0.1);">
-        <span contenteditable="true">INQUIRY & CLOSING</span>
-        <span class="page-number" style="color: var(--cfs-blue);">10 / 10</span>
-    </div>
-</div>
+  const checked = await Promise.all(folders.map(async (folder) => {
+    try {
+      const hasIndex = await folderHasIndex(folder.path);
+      if (!hasIndex) return null;
+      const title = await getPageTitle(folder.path);
+      return { ...folder, title };
+    } catch {
+      return null;
+    }
+  }));
 
+  return checked
+    .filter(Boolean)
+    .sort((a, b) => a.name.localeCompare(b.name));
+}
+
+function renderProjects(projects) {
+  grid.innerHTML = "";
+
+  if (!projects.length) {
+    grid.innerHTML = `<div class="empty">No subfolder pages were found. Add an <code>index.html</code> inside a folder to make it appear here.</div>`;
+    statusEl.textContent = "No pages found.";
+    return;
+  }
+
+  const fragment = document.createDocumentFragment();
+  for (const project of projects) {
+    const card = document.createElement("article");
+    card.className = "card";
+    card.innerHTML = `
+      <div class="preview">
+        <iframe title="${project.title} preview" src="${pageUrl(project.path)}" loading="lazy"></iframe>
+        <div class="preview-fallback">${project.name}</div>
+      </div>
+      <div class="card-body">
+        <h2>${project.title}</h2>
+        <p class="path">${project.path}/index.html</p>
+      </div>
+      <div class="card-actions">
+        <a class="button primary" href="${pageUrl(project.path)}">Open page</a>
+        <a class="button" href="${githubFolderUrl(project.path)}" target="_blank" rel="noopener">Source</a>
+      </div>
+    `;
+    const iframe = card.querySelector("iframe");
+    const fallback = card.querySelector(".preview-fallback");
+    iframe.addEventListener("load", () => {
+      fallback.style.display = "none";
+    });
+    fragment.append(card);
+  }
+  grid.append(fragment);
+  statusEl.textContent = `${projects.length} page${projects.length === 1 ? "" : "s"} discovered.`;
+}
+
+function renderError(message) {
+  errorBox.innerHTML = `<div class="error">${message}<br>Showing fallback projects bundled with this page.</div>`;
+}
+
+async function loadIndex() {
+  errorBox.innerHTML = "";
+  statusEl.textContent = "Searching subfolders...";
+  refreshButton.disabled = true;
+  try {
+    const projects = await discoverProjects();
+    renderProjects(projects);
+  } catch (error) {
+    renderError(`Could not query the GitHub Contents API: ${error.message}`);
+    renderProjects(FALLBACK_PROJECTS);
+  } finally {
+    refreshButton.disabled = false;
+  }
+}
+
+refreshButton.addEventListener("click", loadIndex);
+loadIndex();
+</script>
 </body>
 </html>
