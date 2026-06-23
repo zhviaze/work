@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>FC Pay JPYC Payment Demo</title>
+<title>FC Pay JPYSC or JPYC Payment Demo</title>
 <style>
 *{box-sizing:border-box}
 :root{--navy:#071735;--ink:#17243b;--muted:#65758f;--blue:#0b5bc7;--cyan:#08a9e8;--green:#12884e;--amber:#d89213;--line:#c8d8ea;--soft-blue:#eaf4ff;--shadow:0 20px 46px rgba(15,37,75,.15)}
@@ -73,7 +73,7 @@ pre{margin:0;border:1px solid #dbe7f4;background:#071735;color:#e7f0ff;border-ra
       <div class="chips">
         <span class="chip"><i></i>FC Pay App</span>
         <span class="chip wallet"><i></i>HashPort Wallet</span>
-        <span class="chip chain"><i></i>JPYC / Avalanche</span>
+        <span class="chip chain"><i></i>JPYSC or JPYC / Avalanche想定</span>
       </div>
     </div>
   </header>
@@ -119,16 +119,16 @@ pre{margin:0;border:1px solid #dbe7f4;background:#071735;color:#e7f0ff;border-ra
 </div>
 <div class="floating-toast" id="toast" role="status"></div>
 <script>
-const txHash = "0x8b7e...JPYC...42a1";
+const txHash = "0x8b7e...SC...42a1";
 const walletAddress = "0xHPW9...91D8";
 const merchantAddress = "0xFCPay...Vault";
-const paymentRequest = {requestId:"PAY-20240620-0001",orderId:"ORD-20240620-001",item:"FC Pay sample order",amount:"12000",currency:"JPYC",network:"Avalanche",tokenStandard:"ERC-20",fromWallet:null,toMerchantWallet:merchantAddress,callbackUrl:"https://fc-pay.example/webhook/jpyc",walletConnectSession:null,signedPayload:null,txHash:null,status:"draft"};
+const paymentRequest = {requestId:"PAY-20240620-0001",orderId:"ORD-20240620-001",item:"FC Pay sample order",amount:"12000",currency:"JPYSC or JPYC",network:"Avalanche想定（サポートするSCによって変更可能性あり）",tokenStandard:"ERC-20",fromWallet:null,toMerchantWallet:merchantAddress,callbackUrl:"https://fc-pay.example/webhook/stablecoin",walletConnectSession:null,signedPayload:null,txHash:null,status:"draft"};
 
 const i18n = {
   ja: {
-    pageTitle:"FC Pay JPYC支払いデモ",
-    heroTitle:"FC PayでJPYC支払いを体験",
-    heroLead:"スマホ画面の中で、FC PayからHashPort Walletを呼び出し、Avalanche上のJPYC支払いリクエストの確認、HashPort Walletで署名、JPYC Transfer、Txブロードキャスト、Webhook確認まで操作できます。",
+    pageTitle:"FC Pay JPYSC or JPYC支払いデモ",
+    heroTitle:"FC PayでJPYSC or JPYC支払いを体験",
+    heroLead:"スマホ画面の中で、FC PayからHashPort Walletを呼び出し、JPYSC or JPYCの支払いリクエスト確認、HashPort Walletで署名、Stablecoin Transfer、Txブロードキャスト、Webhook確認まで操作できます。接続チェーンはAvalanche想定（サポートするSCによって変更可能性あり）です。",
     stepsTitle:"ユーザー操作",
     stepsLead:"左の手順でも、スマホ内のボタンでも操作できます。",
     pcTitle:"PC補助画面",
@@ -139,12 +139,12 @@ const i18n = {
     walletSubtitle:"WalletConnect Session",
     orderTitle:"FC Pay サンプル注文",
     paidTitle:"支払い完了",
-    orderMeta:"注文 ORD-20240620-001<br>金額 12,000 JPYC",
+    orderMeta:"注文 ORD-20240620-001<br>金額 12,000 JPYSC or JPYC",
     connect:"HashPort Walletに接続",
-    pay:"JPYCで支払う",
+    pay:"JPYSC or JPYCで支払う",
     openWallet:"HashPort Walletを開く",
     approve:"承認して署名",
-    broadcast:"JPYC Transferを送信",
+    broadcast:"Stablecoin Transferを送信",
     webhook:"Webhook確認をシミュレート",
     copied:"Tx情報をコピーしました",
     noTx:"Txはまだ送信されていません",
@@ -152,23 +152,23 @@ const i18n = {
     walletDone:"HashPort Walletで支払い完了が表示されています。",
     waitingWebhook:"Txブロードキャスト完了。チェーン確認とWebhookを待っています。",
     processingTitle:"ブロックチェーン上で処理中",
-    processingBody:"JPYC TransferをAvalancheへ送信しています。約1.5秒後にTx確認へ進みます。",
+    processingBody:"Stablecoin TransferをAvalanche想定チェーンへ送信しています。約1.5秒後にTx確認へ進みます。",
     processingLog:"Blockchain processing animation is shown for 1.5 seconds.",
     labels:{wallet:"Wallet",network:"ネットワーク",token:"トークン",status:"ステータス",to:"送金先",gas:"Gas見積",request:"リクエスト",order:"注文",session:"Session",tx:"Tx Hash"},
     rows:{order:"Order",wallet:"Wallet",session:"Session",status:"Status",tx:"Tx Hash"},
     steps:[
       ["FC Payを開く","FC Pay App","ユーザーがスマホでFC Payを開き、支払い待ちの注文を確認します。","User opens FC Pay checkout."],
-      ["HashPort Walletに接続して\nJPYCで支払う","WalletConnect Session","ユーザーが接続ボタンを押すと、FC PayがHashPort Walletを呼び出し、同時にAvalanche上のJPYC支払いリクエストを作成します。","FC Pay -> WalletConnect Session -> HashPort Wallet; pay with JPYC."],
+      ["HashPort Walletに接続して\nJPYSC or JPYCで支払う","WalletConnect Session","ユーザーが接続ボタンを押すと、FC PayがHashPort Walletを呼び出し、同時にJPYSC or JPYCの支払いリクエストを作成します。接続チェーンはAvalanche想定（サポートするSCによって変更可能性あり）です。","FC Pay -> WalletConnect Session -> HashPort Wallet; pay with JPYSC or JPYC."],
       ["Walletで支払い内容を確認","HashPort Wallet","スマホ画面がHashPort Walletに切り替わり、金額・送金先・ネットワーク・Gas見積を確認します。","HashPort Wallet shows amount, recipient, network and gas estimate."],
-      ["HashPort Walletで署名","User / Wallet","ユーザーがHashPort Walletで署名し、送信可能なJPYC Transferを作成します。","HashPort Wallet -> simulateWalletSignature(paymentRequest)."],
-      ["Txブロードキャスト","Avalanche","署名済みのJPYC TransferをAvalancheへブロードキャストし、Tx Hashを取得します。",`JPYC Transfer broadcasted. Tx Hash: ${txHash}`],
+      ["HashPort Walletで署名","User / Wallet","ユーザーがHashPort Walletで署名し、送信可能なStablecoin Transferを作成します。","HashPort Wallet -> simulateWalletSignature(paymentRequest)."],
+      ["Txブロードキャスト","Avalanche想定","署名済みのStablecoin TransferをAvalanche想定チェーンへブロードキャストし、Tx Hashを取得します。サポートするSCによって接続チェーンは変更される可能性があります。",`Stablecoin Transfer broadcasted. Tx Hash: ${txHash}`],
       ["Webhook確認","FC Pay Backend","支払い基盤がチェーン上の確定を検知し、WebhookでFC Payへ通知します。注文は paid になります。","Webhook confirms payment. FC Pay order status becomes paid."]
     ]
   },
   en: {
-    pageTitle:"FC Pay JPYC Payment Demo",
+    pageTitle:"FC Pay JPYSC or JPYC Payment Demo",
     heroTitle:"Operate like a real user in FC Pay",
-    heroLead:"Use the phone screen to call HashPort Wallet from FC Pay, review an Avalanche JPYC payment request, sign in HashPort Wallet, send the JPYC Transfer, broadcast the Tx, and receive Webhook confirmation.",
+    heroLead:"Use the phone screen to call HashPort Wallet from FC Pay, review a JPYSC or JPYC payment request, sign in HashPort Wallet, send the Stablecoin Transfer, broadcast the Tx, and receive Webhook confirmation. The connected chain is assumed to be Avalanche and may change depending on the supported stablecoin.",
     stepsTitle:"User Actions",
     stepsLead:"Use the side steps or tap the buttons inside the phone.",
     pcTitle:"PC Support View",
@@ -176,17 +176,17 @@ const i18n = {
     logTitle:"Phone Action Log",
     prev:"Back", next:"Next", reset:"Reset", auto:"Auto Play", stop:"Stop", copyTx:"Copy Tx", openFc:"Back to FC Pay",
     fcSubtitle:"Fan payment checkout", walletSubtitle:"WalletConnect Session",
-    orderTitle:"FC Pay Sample Order", paidTitle:"Payment Completed", orderMeta:"Order ORD-20240620-001<br>Amount 12,000 JPYC",
-    connect:"Connect HashPort Wallet", pay:"Pay with JPYC", openWallet:"Open HashPort Wallet", approve:"Approve & Sign", broadcast:"Broadcast JPYC Transfer", webhook:"Simulate Webhook",
-    copied:"Tx information copied", noTx:"Tx has not been broadcast yet", paidBody:"Webhook confirmation is complete. FC Pay updated the order status to paid.", walletDone:"HashPort Wallet shows the payment as completed.", waitingWebhook:"Tx broadcast completed. Waiting for chain confirmation and Webhook.", processingTitle:"Processing on blockchain", processingBody:"Sending the JPYC Transfer to Avalanche. The demo advances after about 1.5 seconds.", processingLog:"Blockchain processing animation is shown for 1.5 seconds.",
+    orderTitle:"FC Pay Sample Order", paidTitle:"Payment Completed", orderMeta:"Order ORD-20240620-001<br>Amount 12,000 JPYSC or JPYC",
+    connect:"Connect HashPort Wallet", pay:"Pay with JPYSC or JPYC", openWallet:"Open HashPort Wallet", approve:"Approve & Sign", broadcast:"Broadcast Stablecoin Transfer", webhook:"Simulate Webhook",
+    copied:"Tx information copied", noTx:"Tx has not been broadcast yet", paidBody:"Webhook confirmation is complete. FC Pay updated the order status to paid.", walletDone:"HashPort Wallet shows the payment as completed.", waitingWebhook:"Tx broadcast completed. Waiting for chain confirmation and Webhook.", processingTitle:"Processing on blockchain", processingBody:"Sending the Stablecoin Transfer to the assumed Avalanche chain. The demo advances after about 1.5 seconds.", processingLog:"Blockchain processing animation is shown for 1.5 seconds.",
     labels:{wallet:"Wallet",network:"Network",token:"Token",status:"Status",to:"To",gas:"Gas estimate",request:"Request",order:"Order",session:"Session",tx:"Tx Hash"},
     rows:{order:"Order",wallet:"Wallet",session:"Session",status:"Status",tx:"Tx Hash"},
     steps:[
       ["Open FC Pay","FC Pay App","The user opens FC Pay on the phone and sees an order waiting for payment.","User opens FC Pay checkout."],
-      ["Connect HashPort Wallet and\nPay with JPYC","WalletConnect Session","The user taps connect. FC Pay calls HashPort Wallet and creates an Avalanche JPYC payment request at the same time.","FC Pay -> WalletConnect Session -> HashPort Wallet; pay with JPYC."],
+      ["Connect HashPort Wallet and\nPay with JPYSC or JPYC","WalletConnect Session","The user taps connect. FC Pay calls HashPort Wallet and creates a JPYSC or JPYC payment request at the same time. The connected chain is assumed to be Avalanche and may change depending on the supported stablecoin.","FC Pay -> WalletConnect Session -> HashPort Wallet; pay with JPYSC or JPYC."],
       ["Review Payment in Wallet","HashPort Wallet","The phone switches to HashPort Wallet, where the user reviews amount, recipient, network, and gas estimate.","HashPort Wallet shows amount, recipient, network and gas estimate."],
-      ["Sign in HashPort Wallet","User / Wallet","The user signs in HashPort Wallet and creates a broadcast-ready JPYC Transfer.","HashPort Wallet -> simulateWalletSignature(paymentRequest)."],
-      ["Broadcast Tx","Avalanche","The signed JPYC Transfer is broadcast to Avalanche and receives a Tx Hash.",`JPYC Transfer broadcasted. Tx Hash: ${txHash}`],
+      ["Sign in HashPort Wallet","User / Wallet","The user signs in HashPort Wallet and creates a broadcast-ready Stablecoin Transfer.","HashPort Wallet -> simulateWalletSignature(paymentRequest)."],
+      ["Broadcast Tx","Assumed Avalanche","The signed Stablecoin Transfer is broadcast to the assumed Avalanche chain and receives a Tx Hash. The connected chain may change depending on the supported stablecoin.",`Stablecoin Transfer broadcasted. Tx Hash: ${txHash}`],
       ["Webhook Confirmation","FC Pay Backend","The payment platform detects chain confirmation and notifies FC Pay by Webhook. The order becomes paid.","Webhook confirms payment. FC Pay order status becomes paid."]
     ]
   }
@@ -198,8 +198,8 @@ function t(){return i18n[lang]}
 function simulateWalletSignature(request){return `sig_hp_${request.requestId}_${Date.now().toString(36)}`}
 function updatePaymentRequest(){paymentRequest.status=["draft","payment_request_created","wallet_reviewing","wallet_signed","tx_broadcasted","paid"][current];paymentRequest.fromWallet=current>=1?walletAddress:null;paymentRequest.walletConnectSession=current>=1?"wc:hashport-wallet-session-demo":null;paymentRequest.signedPayload=current>=3?paymentRequest.signedPayload||simulateWalletSignature(paymentRequest):null;paymentRequest.txHash=current>=4?txHash:null}
 function kv(label,value){return `<div><span>${label}</span><b>${value}</b></div>`}
-function fcPayApp(){const x=t(), connected=current>=1, requested=current>=1, paid=current>=5;return `<div class="app-card brand"><div class="mark">FC</div><div><h3>FC Pay</h3><p>${x.fcSubtitle}</p></div></div><div class="hero-ticket"><b>${paid?x.paidTitle:x.orderTitle}</b><span>${x.orderMeta}</span></div><div class="app-card kv">${kv(x.labels.wallet,connected?walletAddress:"Not connected")}${kv(x.labels.network,"Avalanche")}${kv(x.labels.token,"JPYC ERC-20")}${kv(x.labels.status,paymentRequest.status)}</div>${!connected?`<button class="phone-btn" onclick="tapConnectWallet()">${x.connect}</button>`:""}${connected&&!requested?`<button class="phone-btn" onclick="tapPayWithJPYC()">${x.pay}</button>`:""}${requested&&current<2?`<button class="phone-btn amber" onclick="tapOpenWallet()">${x.openWallet}</button>`:""}${paid?`<div class="app-card"><div class="amount">Paid</div><p class="toast-line">${x.paidBody}</p></div>`:""}`}
-function hashPortWalletApp(){const x=t(), signed=current>=3, broadcasted=current>=4;if(processingOnChain){return `<div class="app-card wallet-top brand"><div class="wallet-logo"></div><div><h3>HashPort Wallet</h3><p>${x.walletSubtitle}</p></div></div><div class="app-card"><div class="amount">12,000 JPYC</div><div class="confirm-box kv">${kv(x.labels.to,merchantAddress)}${kv(x.labels.network,"Avalanche")}${kv(x.labels.gas,"0.0000x AVAX")}${kv(x.labels.request,paymentRequest.requestId)}</div></div><div class="app-card chainProcessing"><div class="chainProcessing-icon" aria-hidden="true"></div><h4>${x.processingTitle}</h4><p>${x.processingBody}</p><div class="processing-bar"><span></span></div></div>`}return `<div class="app-card wallet-top brand"><div class="wallet-logo"></div><div><h3>HashPort Wallet</h3><p>${x.walletSubtitle}</p></div></div><div class="app-card"><div class="amount">12,000 JPYC</div><div class="confirm-box kv">${kv(x.labels.to,merchantAddress)}${kv(x.labels.network,"Avalanche")}${kv(x.labels.gas,"0.0000x AVAX")}${kv(x.labels.request,paymentRequest.requestId)}</div></div>${!signed?`<button class="phone-btn green" onclick="tapWalletApprove()">${x.approve}</button>`:""}${signed&&!broadcasted?`<button class="phone-btn green" onclick="tapBroadcastTx()">${x.broadcast}</button>`:""}${broadcasted&&current<5?`<div class="app-card"><div class="loader"><span style="width:72%"></span></div><p class="toast-line">${x.waitingWebhook}</p></div><button class="phone-btn secondary" onclick="tapWebhookConfirm()">${x.webhook}</button>`:""}${current>=5?`<div class="app-card"><div class="amount">Done</div><p class="toast-line">${x.walletDone}</p></div>`:""}`}
+function fcPayApp(){const x=t(), connected=current>=1, requested=current>=1, paid=current>=5;return `<div class="app-card brand"><div class="mark">FC</div><div><h3>FC Pay</h3><p>${x.fcSubtitle}</p></div></div><div class="hero-ticket"><b>${paid?x.paidTitle:x.orderTitle}</b><span>${x.orderMeta}</span></div><div class="app-card kv">${kv(x.labels.wallet,connected?walletAddress:"Not connected")}${kv(x.labels.network,paymentRequest.network)}${kv(x.labels.token,"JPYSC or JPYC ERC-20")}${kv(x.labels.status,paymentRequest.status)}</div>${!connected?`<button class="phone-btn" onclick="tapConnectWallet()">${x.connect}</button>`:""}${connected&&!requested?`<button class="phone-btn" onclick="tapPayWithStablecoin()">${x.pay}</button>`:""}${requested&&current<2?`<button class="phone-btn amber" onclick="tapOpenWallet()">${x.openWallet}</button>`:""}${paid?`<div class="app-card"><div class="amount">Paid</div><p class="toast-line">${x.paidBody}</p></div>`:""}`}
+function hashPortWalletApp(){const x=t(), signed=current>=3, broadcasted=current>=4;if(processingOnChain){return `<div class="app-card wallet-top brand"><div class="wallet-logo"></div><div><h3>HashPort Wallet</h3><p>${x.walletSubtitle}</p></div></div><div class="app-card"><div class="amount">12,000 JPYSC or JPYC</div><div class="confirm-box kv">${kv(x.labels.to,merchantAddress)}${kv(x.labels.network,paymentRequest.network)}${kv(x.labels.gas,"0.0000x AVAX")}${kv(x.labels.request,paymentRequest.requestId)}</div></div><div class="app-card chainProcessing"><div class="chainProcessing-icon" aria-hidden="true"></div><h4>${x.processingTitle}</h4><p>${x.processingBody}</p><div class="processing-bar"><span></span></div></div>`}return `<div class="app-card wallet-top brand"><div class="wallet-logo"></div><div><h3>HashPort Wallet</h3><p>${x.walletSubtitle}</p></div></div><div class="app-card"><div class="amount">12,000 JPYSC or JPYC</div><div class="confirm-box kv">${kv(x.labels.to,merchantAddress)}${kv(x.labels.network,paymentRequest.network)}${kv(x.labels.gas,"0.0000x AVAX")}${kv(x.labels.request,paymentRequest.requestId)}</div></div>${!signed?`<button class="phone-btn green" onclick="tapWalletApprove()">${x.approve}</button>`:""}${signed&&!broadcasted?`<button class="phone-btn green" onclick="tapBroadcastTx()">${x.broadcast}</button>`:""}${broadcasted&&current<5?`<div class="app-card"><div class="loader"><span style="width:72%"></span></div><p class="toast-line">${x.waitingWebhook}</p></div><button class="phone-btn secondary" onclick="tapWebhookConfirm()">${x.webhook}</button>`:""}${current>=5?`<div class="app-card"><div class="amount">Done</div><p class="toast-line">${x.walletDone}</p></div>`:""}`}
 function renderStaticText(){const x=t();document.documentElement.lang=lang;document.title=x.pageTitle;document.getElementById("heroTitle").innerHTML=x.heroTitle;document.getElementById("heroLead").textContent=x.heroLead;document.getElementById("stepsTitle").textContent=x.stepsTitle;document.getElementById("stepsLead").textContent=x.stepsLead;document.getElementById("pcTitle").textContent=x.pcTitle;document.getElementById("pcLead").textContent=x.pcLead;document.getElementById("logTitle").textContent=x.logTitle;document.getElementById("prevBtn").textContent=x.prev;document.getElementById("nextBtn").textContent=x.next;document.getElementById("resetBtn").textContent=x.reset;document.getElementById("autoBtn").textContent=timer?x.stop:x.auto;document.getElementById("copyTxBtn").textContent=x.copyTx;document.getElementById("openFcBtn").textContent=x.openFc;document.querySelectorAll("#languageToggle button").forEach(b=>b.classList.toggle("active",b.dataset.lang===lang))}
 function renderSteps(){const x=t();els.steps.innerHTML=x.steps.map((step,index)=>`<button class="step" type="button" data-step="${index}"><span class="num">${index+1}</span><span><b>${step[0]}</b><span>${step[1]}</span></span></button>`).join("");document.querySelectorAll("[data-step]").forEach(button=>button.addEventListener("click",()=>setStep(Number(button.dataset.step),true)))}
 function renderPhone(){els.phoneAppName.textContent=current>=2&&current<5?"HashPort Wallet":"FC Pay";els.phoneApp.innerHTML=current>=2&&current<5?hashPortWalletApp():fcPayApp()}
@@ -209,7 +209,7 @@ function setStep(index,announce=false){processingOnChain=false;current=Math.max(
 function setLanguage(nextLang){lang=nextLang;setStep(current,false)}
 function showToast(text){els.toast.textContent=text;els.toast.classList.add("show");clearTimeout(showToast.timer);showToast.timer=setTimeout(()=>els.toast.classList.remove("show"),2200)}
 function stopAuto(){if(timer){clearInterval(timer);timer=null;renderStaticText()}}
-function tapConnectWallet(){stopAuto();setStep(1,true)}function tapPayWithJPYC(){stopAuto();setStep(1,true)}function tapOpenWallet(){stopAuto();setStep(2,true)}function tapWalletApprove(){stopAuto();setStep(3,true)}function tapBroadcastTx(){stopAuto();processingOnChain=true;updatePaymentRequest();renderStaticText();renderPhone();renderPc();renderLog();showToast(t().processingTitle);const processingOnChainDelay=1500;setTimeout(()=>{if(processingOnChain)setStep(4,true)},processingOnChainDelay)}function tapWebhookConfirm(){stopAuto();setStep(5,true)}
+function tapConnectWallet(){stopAuto();setStep(1,true)}function tapPayWithStablecoin(){stopAuto();setStep(1,true)}function tapOpenWallet(){stopAuto();setStep(2,true)}function tapWalletApprove(){stopAuto();setStep(3,true)}function tapBroadcastTx(){stopAuto();processingOnChain=true;updatePaymentRequest();renderStaticText();renderPhone();renderPc();renderLog();showToast(t().processingTitle);const processingOnChainDelay=1500;setTimeout(()=>{if(processingOnChain)setStep(4,true)},processingOnChainDelay)}function tapWebhookConfirm(){stopAuto();setStep(5,true)}
 document.getElementById("prevBtn").addEventListener("click",()=>{stopAuto();setStep(current-1,true)});document.getElementById("nextBtn").addEventListener("click",()=>{stopAuto();setStep(current+1,true)});document.getElementById("resetBtn").addEventListener("click",()=>{stopAuto();paymentRequest.signedPayload=null;setStep(0,true)});document.getElementById("openFcBtn").addEventListener("click",()=>{stopAuto();setStep(current>=5?5:Math.min(current,1),true)});document.getElementById("copyTxBtn").addEventListener("click",async()=>{const value=paymentRequest.txHash||t().noTx;try{await navigator.clipboard.writeText(value);showToast(t().copied)}catch(error){showToast(value)}});document.getElementById("autoBtn").addEventListener("click",()=>{if(timer){stopAuto();return}timer=setInterval(()=>{if(current>=t().steps.length-1){stopAuto();return}setStep(current+1,false)},1200);renderStaticText()});document.querySelectorAll("#languageToggle button").forEach(button=>button.addEventListener("click",()=>setLanguage(button.dataset.lang)));
 setStep(0);
 </script>
