@@ -1,0 +1,1659 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CFS Stablecoin Payment Flow Demo</title>
+  <style>
+    :root {
+      --ink: #162033;
+      --muted: #647086;
+      --line: #d8dee8;
+      --paper: #f7f8fb;
+      --panel: #ffffff;
+      --blue: #2266c7;
+      --green: #198754;
+      --amber: #b86812;
+      --red: #c73a3a;
+      --teal: #137b83;
+      --violet: #6852a5;
+      --shadow: 0 18px 45px rgba(29, 42, 68, 0.12);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: var(--paper);
+      color: var(--ink);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      letter-spacing: 0;
+    }
+
+    button,
+    input,
+    select {
+      font: inherit;
+    }
+
+    .app {
+      min-height: 100vh;
+      display: grid;
+      grid-template-rows: auto 1fr;
+    }
+
+    header {
+      display: grid;
+      gap: 16px;
+      grid-template-columns: 1fr auto;
+      align-items: end;
+      padding: 24px 32px 18px;
+      border-bottom: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.86);
+      backdrop-filter: blur(14px);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    h1 {
+      margin: 0 0 6px;
+      font-size: clamp(24px, 3vw, 38px);
+      line-height: 1.08;
+    }
+
+    .lede {
+      margin: 0;
+      color: var(--muted);
+      max-width: 820px;
+      line-height: 1.55;
+    }
+
+    .header-metrics {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(90px, 1fr));
+      gap: 8px;
+      min-width: 330px;
+    }
+
+    .metric {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 10px 12px;
+      box-shadow: 0 6px 18px rgba(29, 42, 68, 0.06);
+    }
+
+    .metric strong {
+      display: block;
+      font-size: 18px;
+    }
+
+    .metric span {
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    main {
+      display: grid;
+      grid-template-columns: minmax(290px, 360px) minmax(0, 1fr);
+      gap: 18px;
+      padding: 20px 32px 32px;
+    }
+
+    .sidebar,
+    .stage,
+    .panel {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      box-shadow: var(--shadow);
+    }
+
+    .sidebar {
+      padding: 16px;
+      align-self: start;
+      position: sticky;
+      top: 124px;
+      max-height: calc(100vh - 148px);
+      overflow: auto;
+    }
+
+    .controls {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      margin-bottom: 14px;
+    }
+
+    .icon-btn {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #f9fafc;
+      color: var(--ink);
+      min-height: 38px;
+      cursor: pointer;
+    }
+
+    .icon-btn:hover {
+      border-color: #aeb8c8;
+      background: #fff;
+    }
+
+    .step-list {
+      display: grid;
+      gap: 8px;
+    }
+
+    .step {
+      display: grid;
+      grid-template-columns: 32px 1fr auto;
+      gap: 10px;
+      align-items: center;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 10px;
+      background: #fbfcfe;
+      cursor: pointer;
+      text-align: left;
+    }
+
+    .step:hover {
+      border-color: #aeb8c8;
+    }
+
+    .step.active {
+      border-color: var(--blue);
+      background: #eef5ff;
+      box-shadow: inset 4px 0 0 var(--blue);
+    }
+
+    .step.done {
+      background: #f2fbf6;
+    }
+
+    .step-number {
+      width: 28px;
+      height: 28px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      background: #e6ebf3;
+      color: var(--muted);
+      font-weight: 700;
+      font-size: 13px;
+    }
+
+    .step.active .step-number {
+      background: var(--blue);
+      color: #fff;
+    }
+
+    .step.done .step-number {
+      background: var(--green);
+      color: #fff;
+    }
+
+    .step-title {
+      display: block;
+      font-weight: 700;
+      font-size: 14px;
+      line-height: 1.25;
+    }
+
+    .step-note {
+      display: block;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.3;
+      margin-top: 3px;
+    }
+
+    .lane-tag {
+      border-radius: 999px;
+      padding: 4px 7px;
+      color: #fff;
+      font-size: 11px;
+      white-space: nowrap;
+    }
+
+    .lane-user { background: var(--violet); }
+    .lane-pos { background: var(--amber); }
+    .lane-cfs { background: var(--blue); }
+    .lane-sc { background: var(--teal); }
+    .lane-chain { background: var(--green); }
+
+    .stage {
+      padding: 18px;
+      min-width: 0;
+    }
+
+    .scenario-bar {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 12px;
+      align-items: center;
+      margin-bottom: 16px;
+    }
+
+    .segmented {
+      display: inline-grid;
+      grid-template-columns: repeat(3, minmax(88px, 1fr));
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      overflow: hidden;
+      background: #f7f9fc;
+      max-width: 420px;
+    }
+
+    .segmented button {
+      border: 0;
+      border-right: 1px solid var(--line);
+      background: transparent;
+      min-height: 38px;
+      cursor: pointer;
+      color: var(--muted);
+    }
+
+    .segmented button:last-child {
+      border-right: 0;
+    }
+
+    .segmented button.active {
+      background: var(--ink);
+      color: #fff;
+    }
+
+    .scenario-meta {
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.4;
+    }
+
+    .workspace {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 16px;
+      align-items: stretch;
+    }
+
+    .checkout-scene {
+      display: grid;
+      grid-template-columns: 170px minmax(0, 1fr);
+      gap: 14px;
+      min-width: 0;
+      align-items: stretch;
+    }
+
+    .device-pair {
+      display: grid;
+      grid-template-columns: minmax(240px, 0.95fr) minmax(300px, 1.05fr);
+      gap: 14px;
+      min-width: 0;
+    }
+
+    .qr-stand {
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+      gap: 10px;
+      align-content: start;
+      min-height: 300px;
+      padding: 0 10px 12px;
+      border: 0;
+      background: transparent;
+      box-shadow: none;
+      position: relative;
+      overflow: visible;
+      perspective: 700px;
+    }
+
+    .qr-stand::before {
+      content: "";
+      position: absolute;
+      left: 18px;
+      right: 18px;
+      bottom: 4px;
+      height: 72px;
+      transform: skewX(-9deg);
+      transform-origin: bottom;
+      background: linear-gradient(180deg, #e9dfcf, #cbbda8);
+      border: 1px solid #b9aa92;
+      border-radius: 3px 3px 8px 8px;
+      box-shadow: 0 16px 24px rgba(31, 39, 55, 0.16);
+    }
+
+    .qr-stand::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      bottom: -8px;
+      width: 135px;
+      height: 18px;
+      transform: translateX(-50%);
+      border-radius: 50%;
+      background: rgba(33, 45, 67, 0.22);
+    }
+
+    .qr-stand > .device-head {
+      display: none;
+    }
+
+    .stand-card {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      gap: 10px;
+      justify-items: center;
+      align-content: start;
+      padding: 16px 12px 18px;
+      margin-top: 8px;
+      min-height: 228px;
+      border-radius: 4px;
+      background:
+        linear-gradient(90deg, rgba(0, 0, 0, 0.04), transparent 12%, transparent 88%, rgba(0, 0, 0, 0.035)),
+        #fffdf7;
+      border: 1px solid #d8cbb5;
+      box-shadow: 0 14px 28px rgba(31, 39, 55, 0.16);
+      transform: rotateX(2deg);
+    }
+
+    .stand-card::before {
+      content: "";
+      position: absolute;
+      inset: 7px;
+      border: 1px dashed #d7c8af;
+      pointer-events: none;
+    }
+
+    .stand-title {
+      margin: 0;
+      font-size: 14px;
+      font-weight: 850;
+      text-align: center;
+      line-height: 1.25;
+    }
+
+    .stand-caption {
+      margin: 0;
+      color: var(--muted);
+      font-size: 11px;
+      line-height: 1.35;
+      text-align: center;
+    }
+
+    .stand-base-label {
+      position: relative;
+      z-index: 1;
+      margin: auto 0 0;
+      padding: 6px 8px;
+      border-radius: 6px;
+      background: #fffdf7;
+      border: 1px solid #d8cbb5;
+      color: #7a6340;
+      font-size: 11px;
+      font-weight: 800;
+      text-align: center;
+    }
+
+    .device {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 12px;
+      background: #fbfcfe;
+      min-height: 360px;
+      display: grid;
+      gap: 12px;
+      align-content: start;
+    }
+
+    .phone-device {
+      width: min(100%, 260px);
+      justify-self: center;
+      border-radius: 34px;
+      padding: 10px;
+      background: #111827;
+      border: 1px solid #0b101a;
+      box-shadow: 0 22px 38px rgba(17, 24, 39, 0.24);
+      position: relative;
+    }
+
+    .phone-device::before {
+      content: "";
+      position: absolute;
+      top: 11px;
+      left: 50%;
+      width: 82px;
+      height: 22px;
+      transform: translateX(-50%);
+      border-radius: 0 0 16px 16px;
+      background: #0b101a;
+      z-index: 3;
+    }
+
+    .phone-device .device-head {
+      display: none;
+    }
+
+    .pos-device {
+      border-radius: 18px;
+      padding: 16px 16px 22px;
+      background: linear-gradient(180deg, #313946, #151b24);
+      border: 1px solid #111827;
+      box-shadow: 0 22px 38px rgba(17, 24, 39, 0.22);
+      position: relative;
+    }
+
+    .pos-device::after {
+      content: "";
+      width: 84px;
+      height: 8px;
+      border-radius: 999px;
+      background: #0b101a;
+      position: absolute;
+      left: 50%;
+      bottom: 8px;
+      transform: translateX(-50%);
+    }
+
+    .device-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      color: var(--muted);
+      font-size: 12px;
+      text-transform: uppercase;
+      font-weight: 800;
+    }
+
+    .screen {
+      border: 1px solid #cbd4e3;
+      border-radius: 8px;
+      background: #fff;
+      min-height: 205px;
+      padding: 14px;
+      display: grid;
+      gap: 12px;
+      align-content: start;
+      overflow: hidden;
+    }
+
+    .phone-screen {
+      min-height: 500px;
+      border-radius: 26px;
+      border: 0;
+      padding: 0;
+      background: #f7f9fc;
+      overflow: hidden;
+      display: block;
+    }
+
+    .pos-screen {
+      min-height: 500px;
+      border-radius: 12px;
+      border: 1px solid #3f4a5a;
+      padding: 0;
+      background: #eef2f7;
+      overflow: hidden;
+      display: block;
+    }
+
+    .mobile-ui,
+    .pos-ui {
+      min-height: 500px;
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+      background: #f7f9fc;
+    }
+
+    .phone-status,
+    .pos-status {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      min-height: 34px;
+      padding: 10px 16px 6px;
+      font-size: 11px;
+      font-weight: 800;
+      color: #172033;
+    }
+
+    .phone-appbar,
+    .pos-appbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 12px 16px;
+      border-bottom: 1px solid #e1e6ef;
+      background: #fff;
+    }
+
+    .app-title {
+      display: block;
+      font-weight: 850;
+      line-height: 1.15;
+    }
+
+    .app-subtitle {
+      display: block;
+      color: var(--muted);
+      font-size: 11px;
+      margin-top: 3px;
+    }
+
+    .mobile-content,
+    .pos-content {
+      display: grid;
+      gap: 12px;
+      align-content: start;
+      padding: 14px;
+    }
+
+    .mobile-bottom,
+    .pos-bottom {
+      display: grid;
+      gap: 8px;
+      padding: 12px 14px 16px;
+      background: #fff;
+      border-top: 1px solid #e1e6ef;
+    }
+
+    .primary-action,
+    .secondary-action,
+    .keypad-key {
+      border: 0;
+      border-radius: 8px;
+      font-weight: 850;
+      min-height: 42px;
+      cursor: pointer;
+    }
+
+    .primary-action {
+      background: var(--blue);
+      color: #fff;
+    }
+
+    .secondary-action {
+      background: #e9edf4;
+      color: var(--ink);
+    }
+
+    .camera-view {
+      min-height: 215px;
+      border-radius: 14px;
+      overflow: hidden;
+      position: relative;
+      background:
+        linear-gradient(rgba(7, 12, 20, 0.18), rgba(7, 12, 20, 0.18)),
+        repeating-linear-gradient(90deg, #1d2736 0 14px, #263243 14px 28px);
+      display: grid;
+      place-items: center;
+      color: #fff;
+    }
+
+    .camera-view::before,
+    .camera-view::after {
+      content: "";
+      position: absolute;
+      width: 58px;
+      height: 58px;
+      border-color: rgba(255, 255, 255, 0.9);
+      border-style: solid;
+    }
+
+    .camera-view::before {
+      top: 34px;
+      left: 34px;
+      border-width: 3px 0 0 3px;
+      border-radius: 12px 0 0 0;
+    }
+
+    .camera-view::after {
+      right: 34px;
+      bottom: 34px;
+      border-width: 0 3px 3px 0;
+      border-radius: 0 0 12px 0;
+    }
+
+    .scan-line {
+      position: absolute;
+      left: 26px;
+      right: 26px;
+      top: 48%;
+      height: 2px;
+      background: #42f59b;
+      box-shadow: 0 0 18px rgba(66, 245, 155, 0.86);
+      animation: scanMove 1.6s ease-in-out infinite alternate;
+    }
+
+    @keyframes scanMove {
+      from { transform: translateY(-52px); }
+      to { transform: translateY(52px); }
+    }
+
+    .camera-target {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      place-items: center;
+      width: 128px;
+      height: 128px;
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.94);
+      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.28);
+    }
+
+    .wallet-card,
+    .pos-card {
+      border: 1px solid #e0e6f0;
+      border-radius: 8px;
+      padding: 12px;
+      background: #fff;
+      display: grid;
+      gap: 8px;
+    }
+
+    .terms-document {
+      border: 1px solid #d9e1ee;
+      border-radius: 8px;
+      background: #fff;
+      max-height: 255px;
+      overflow: auto;
+      padding: 13px;
+      display: grid;
+      gap: 11px;
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.85);
+    }
+
+    .terms-document h3 {
+      margin: 0;
+      font-size: 15px;
+      line-height: 1.25;
+    }
+
+    .terms-clause {
+      border-top: 1px solid #e7ecf4;
+      padding-top: 9px;
+      display: grid;
+      gap: 4px;
+    }
+
+    .terms-clause strong {
+      font-size: 12px;
+      color: var(--ink);
+    }
+
+    .terms-clause p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 11px;
+      line-height: 1.45;
+    }
+
+    .terms-check {
+      display: flex;
+      gap: 8px;
+      align-items: flex-start;
+      border-radius: 8px;
+      background: #f1f5fb;
+      padding: 10px;
+      font-size: 12px;
+      line-height: 1.35;
+      color: var(--muted);
+    }
+
+    .terms-check span:first-child {
+      display: grid;
+      place-items: center;
+      flex: 0 0 18px;
+      width: 18px;
+      height: 18px;
+      border-radius: 5px;
+      background: var(--blue);
+      color: #fff;
+      font-size: 12px;
+      font-weight: 850;
+    }
+
+    .wallet-balance {
+      font-size: 25px;
+      font-weight: 850;
+      line-height: 1.1;
+    }
+
+    .merchant-line {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.4;
+    }
+
+    .merchant-line strong {
+      color: var(--ink);
+    }
+
+    .wallet-list,
+    .receipt-list {
+      display: grid;
+      gap: 7px;
+    }
+
+    .wallet-row,
+    .receipt-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 9px 10px;
+      border-radius: 8px;
+      background: #f1f4f8;
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .wallet-row strong,
+    .receipt-row strong {
+      color: var(--ink);
+    }
+
+    .keypad {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+    }
+
+    .keypad-key {
+      background: #fff;
+      color: var(--ink);
+      box-shadow: inset 0 -1px 0 #d4dce8;
+    }
+
+    .pos-total {
+      border-radius: 8px;
+      padding: 12px;
+      background: #111827;
+      color: #fff;
+    }
+
+    .pos-total span {
+      display: block;
+      color: #aeb8c8;
+      font-size: 12px;
+    }
+
+    .pos-total strong {
+      display: block;
+      font-size: 32px;
+      line-height: 1.05;
+      margin-top: 4px;
+    }
+
+    .pos-camera .camera-view {
+      min-height: 260px;
+      background:
+        linear-gradient(rgba(8, 13, 22, 0.08), rgba(8, 13, 22, 0.2)),
+        repeating-linear-gradient(0deg, #364154 0 18px, #2a3445 18px 36px);
+    }
+
+    .amount {
+      font-size: 34px;
+      font-weight: 850;
+      line-height: 1;
+    }
+
+    .subtle {
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    .qr {
+      width: 116px;
+      aspect-ratio: 1;
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 4px;
+      padding: 8px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+    }
+
+    .qr i {
+      background: #172033;
+      border-radius: 2px;
+      opacity: 0.15;
+    }
+
+    .qr i.on {
+      opacity: 1;
+    }
+
+    .qr.stand-qr {
+      width: min(100%, 112px);
+      box-shadow: 0 8px 18px rgba(29, 42, 68, 0.1);
+    }
+
+    .status-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      border-radius: 999px;
+      padding: 6px 10px;
+      font-size: 12px;
+      font-weight: 800;
+      width: fit-content;
+      background: #edf2f8;
+      color: var(--muted);
+    }
+
+    .status-pill.ok {
+      background: #e9f8ef;
+      color: var(--green);
+    }
+
+    .status-pill.warn {
+      background: #fff4e1;
+      color: var(--amber);
+    }
+
+    .status-pill.fail {
+      background: #fff0f0;
+      color: var(--red);
+    }
+
+    .flow-panel {
+      display: grid;
+      gap: 14px;
+    }
+
+    .lane-board {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .lane-row {
+      display: grid;
+      grid-template-columns: 118px 1fr;
+      border-bottom: 1px solid var(--line);
+      min-height: 70px;
+    }
+
+    .lane-row:last-child {
+      border-bottom: 0;
+    }
+
+    .lane-name {
+      display: grid;
+      place-items: center;
+      padding: 10px;
+      font-size: 13px;
+      font-weight: 800;
+      color: #fff;
+    }
+
+    .lane-user-bg { background: var(--violet); }
+    .lane-pos-bg { background: var(--amber); }
+    .lane-cfs-bg { background: var(--blue); }
+    .lane-sc-bg { background: var(--teal); }
+    .lane-chain-bg { background: var(--green); }
+
+    .lane-events {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      overflow: auto;
+      padding: 10px;
+      background: #fff;
+    }
+
+    .event-chip {
+      flex: 0 0 auto;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 8px 10px;
+      min-width: 112px;
+      background: #f9fafc;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 700;
+      opacity: 0.48;
+      transition: 180ms ease;
+    }
+
+    .event-chip.active {
+      opacity: 1;
+      transform: translateY(-2px);
+      color: var(--ink);
+      background: #fff;
+      border-color: var(--blue);
+      box-shadow: 0 8px 18px rgba(34, 102, 199, 0.16);
+    }
+
+    .detail-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 16px;
+    }
+
+    .panel {
+      box-shadow: none;
+      padding: 14px;
+      min-width: 0;
+    }
+
+    .panel h2 {
+      margin: 0 0 10px;
+      font-size: 16px;
+    }
+
+    .kv {
+      display: grid;
+      grid-template-columns: 110px 1fr;
+      gap: 8px 10px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.45;
+    }
+
+    .kv strong {
+      color: var(--ink);
+      font-weight: 800;
+    }
+
+    .log-list {
+      display: grid;
+      gap: 8px;
+      max-height: 205px;
+      overflow: auto;
+    }
+
+    .log-item {
+      border-left: 3px solid var(--line);
+      padding: 7px 0 7px 10px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.4;
+    }
+
+    .log-item.hot {
+      border-color: var(--blue);
+      color: var(--ink);
+      font-weight: 700;
+    }
+
+    .reference {
+      margin-top: 16px;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 280px;
+      gap: 14px;
+      align-items: center;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 14px;
+      background: #fbfcfe;
+    }
+
+    .reference img {
+      width: 100%;
+      border-radius: 8px;
+      border: 1px solid var(--line);
+      background: #fff;
+    }
+
+    .progress-wrap {
+      height: 8px;
+      background: #e7ecf4;
+      border-radius: 999px;
+      overflow: hidden;
+      margin: 10px 0 2px;
+    }
+
+    .progress {
+      height: 100%;
+      width: 0;
+      background: linear-gradient(90deg, var(--blue), var(--green));
+      transition: width 220ms ease;
+    }
+
+    @media (max-width: 1120px) {
+      header,
+      main {
+        padding-left: 18px;
+        padding-right: 18px;
+      }
+
+      header,
+      main,
+      .workspace,
+      .checkout-scene,
+      .device-pair,
+      .detail-grid,
+      .reference {
+        grid-template-columns: 1fr;
+      }
+
+      .sidebar {
+        position: static;
+        max-height: none;
+      }
+
+      .header-metrics {
+        min-width: 0;
+      }
+    }
+
+    @media (max-width: 620px) {
+      header {
+        padding-top: 18px;
+      }
+
+      .header-metrics,
+      .controls,
+      .segmented {
+        grid-template-columns: 1fr;
+      }
+
+      .scenario-bar {
+        grid-template-columns: 1fr;
+      }
+
+      .lane-row {
+        grid-template-columns: 92px 1fr;
+      }
+
+      .kv {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <header>
+      <div>
+        <h1>CFS Stablecoin Payment Flow Demo</h1>
+        <p class="lede">CPM方式の支払導線を、ユーザー・POS・CFS Platform・SC基盤・Blockchain・通知/管理ポータルの状態変化として確認する動的デモです。</p>
+      </div>
+      <div class="header-metrics" aria-label="payment summary">
+        <div class="metric"><strong id="metricAmount">¥12,800</strong><span>決済金額</span></div>
+        <div class="metric"><strong id="metricCoin">JPYSC</strong><span>Stablecoin</span></div>
+        <div class="metric"><strong id="metricStatus">未開始</strong><span>ステータス</span></div>
+      </div>
+    </header>
+
+    <main>
+      <aside class="sidebar">
+        <div class="controls" aria-label="demo controls">
+          <button class="icon-btn" id="prevBtn" title="Previous step" aria-label="Previous step">←</button>
+          <button class="icon-btn" id="playBtn" title="Auto play" aria-label="Auto play">▶</button>
+          <button class="icon-btn" id="nextBtn" title="Next step" aria-label="Next step">→</button>
+        </div>
+        <div class="progress-wrap" aria-label="flow progress"><div class="progress" id="progress"></div></div>
+        <div class="step-list" id="stepList"></div>
+      </aside>
+
+      <section class="stage">
+        <div class="scenario-bar">
+          <div>
+            <div class="segmented" role="tablist" aria-label="scenario selector">
+              <button class="active" data-scenario="success">成功</button>
+              <button data-scenario="timeout">Timeout</button>
+              <button data-scenario="failure">失敗</button>
+            </div>
+            <p class="scenario-meta" id="scenarioMeta">標準の決済成功フロー。TxHash取得後、Wallet・POS・管理ポータルへ完了通知。</p>
+          </div>
+          <span class="status-pill" id="globalPill">Ready</span>
+        </div>
+
+        <div class="workspace">
+          <div class="checkout-scene">
+            <aside class="qr-stand" aria-label="Static QR stand">
+              <div class="device-head"><span>Static QR</span><span>Store</span></div>
+              <div class="stand-card" id="standScreen"></div>
+              <div class="stand-base-label">CFS PoC Store</div>
+            </aside>
+
+            <div class="device-pair">
+              <article class="device phone-device">
+                <div class="device-head"><span>User Smartphone</span><span>Wallet</span></div>
+                <div class="screen phone-screen" id="walletScreen"></div>
+              </article>
+
+              <article class="device pos-device">
+                <div class="device-head"><span>POS APP</span><span id="posClock">14:05</span></div>
+                <div class="screen pos-screen" id="posScreen"></div>
+              </article>
+            </div>
+          </div>
+
+          <div class="flow-panel">
+            <div class="lane-board" id="laneBoard"></div>
+          </div>
+        </div>
+
+        <div class="detail-grid">
+          <article class="panel">
+            <h2>Transaction</h2>
+            <div class="kv" id="transactionKv"></div>
+          </article>
+          <article class="panel">
+            <h2>Notification Queue</h2>
+            <div class="log-list" id="notificationLog"></div>
+          </article>
+          <article class="panel">
+            <h2>Admin Portal</h2>
+            <div class="kv" id="adminKv"></div>
+          </article>
+        </div>
+
+        <div class="reference">
+          <div>
+            <h2>Source Flow Reference</h2>
+            <p class="subtle">このデモは、既存資料の「静的QR読取、規約同意、Wallet起動、CPM QR表示、POS読取、ブロックチェーン決済、完了通知」の流れを、画面操作として追える形に整理しています。</p>
+          </div>
+          <img src="assets/process-flow-imagegen-v2.png" alt="Stablecoin payment process flow reference">
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script>
+    const steps = [
+      { id: 1, lane: "user", title: "静的QR読取", note: "店頭POPをスキャン", status: "未開始" },
+      { id: 2, lane: "user", title: "規約表示・同意", note: "利用規約を確認", status: "同意待ち" },
+      { id: 3, lane: "user", title: "Wallet検出", note: "対応Walletを一覧表示", status: "Wallet選択" },
+      { id: 4, lane: "user", title: "Wallet起動", note: "選択Walletを起動", status: "Wallet起動" },
+      { id: 5, lane: "user", title: "CPM QR表示", note: "JPYSC/JPYC支払用QR", status: "QR表示中" },
+      { id: 6, lane: "pos", title: "POS金額入力", note: "JPYSC/JPYCで支払う", status: "POS入力" },
+      { id: 7, lane: "pos", title: "POS QR読取", note: "ユーザーQRをスキャン", status: "QR読取" },
+      { id: 8, lane: "cfs", title: "取引リクエスト", note: "店舗情報・金額を送信", status: "受付" },
+      { id: 9, lane: "cfs", title: "支払要求生成", note: "Walletへ支払要求", status: "要求生成" },
+      { id: 10, lane: "user", title: "支払確認・承認", note: "店舗名・金額・SC表示", status: "承認待ち" },
+      { id: 11, lane: "sc", title: "Tx送信", note: "Avalanche想定", status: "送信中" },
+      { id: 12, lane: "chain", title: "Tx確定", note: "決済結果をCFSへ返却", status: "確認中" },
+      { id: 13, lane: "cfs", title: "完了通知", note: "Wallet・POSへ表示", status: "通知" },
+      { id: 14, lane: "cfs", title: "アフター処理", note: "履歴保存・レポート・精算", status: "完了" }
+    ];
+
+    const lanes = [
+      ["user", "ユーザー", "lane-user-bg"],
+      ["pos", "店舗POS", "lane-pos-bg"],
+      ["cfs", "CFS Platform", "lane-cfs-bg"],
+      ["sc", "SC基盤", "lane-sc-bg"],
+      ["chain", "Blockchain", "lane-chain-bg"]
+    ];
+
+    const scenarioCopy = {
+      success: "標準の決済成功フロー。TxHash取得後、Wallet・POS・管理ポータルへ完了通知。",
+      timeout: "Tx確定待ちでタイムアウト。CFSは照会APIで再確認し、POSへ再確認ステータスを返します。",
+      failure: "Wallet承認後の送信で失敗。CFSは失敗通知、ログ、再試行/取消の運用判断を残します。"
+    };
+
+    const state = {
+      current: 0,
+      timer: null,
+      scenario: "success",
+      amount: 12800,
+      coin: "JPYSC",
+      txId: "CFS-20260624-0018",
+      txHash: "0x7c9d...4a21",
+      keypadText: ""
+    };
+
+    const $ = (selector) => document.querySelector(selector);
+    const stepList = $("#stepList");
+    const laneBoard = $("#laneBoard");
+    const standScreen = $("#standScreen");
+    const posScreen = $("#posScreen");
+    const walletScreen = $("#walletScreen");
+    const metricStatus = $("#metricStatus");
+    const metricAmount = $("#metricAmount");
+    const metricCoin = $("#metricCoin");
+    const globalPill = $("#globalPill");
+    const progress = $("#progress");
+
+    function formatYen(value) {
+      return new Intl.NumberFormat("ja-JP", { style: "currency", currency: "JPY", maximumFractionDigits: 0 }).format(value);
+    }
+
+    function buildQr(seed) {
+      const cells = Array.from({ length: 49 }, (_, i) => {
+        const on = ((i * 17 + seed * 11) % 7) < 3 || [0, 1, 7, 8, 5, 6, 12, 13, 35, 36, 42, 43].includes(i);
+        return `<i class="${on ? "on" : ""}"></i>`;
+      }).join("");
+      return `<div class="qr ${seed === 1 ? "stand-qr" : ""}" aria-label="sample QR">${cells}</div>`;
+    }
+
+    function renderSteps() {
+      stepList.innerHTML = steps.map((step, index) => `
+        <button class="step ${index === state.current ? "active" : ""} ${index < state.current ? "done" : ""}" data-step="${index}">
+          <span class="step-number">${step.id}</span>
+          <span><span class="step-title">${step.title}</span><span class="step-note">${step.note}</span></span>
+          <span class="lane-tag lane-${step.lane}">${laneLabel(step.lane)}</span>
+        </button>
+      `).join("");
+
+      stepList.querySelectorAll(".step").forEach((button) => {
+        button.addEventListener("click", () => {
+          stopAuto();
+          state.current = Number(button.dataset.step);
+          render();
+        });
+      });
+    }
+
+    function laneLabel(lane) {
+      return {
+        user: "User",
+        pos: "POS",
+        cfs: "CFS",
+        sc: "SC",
+        chain: "Chain"
+      }[lane];
+    }
+
+    function renderLanes() {
+      laneBoard.innerHTML = lanes.map(([lane, name, bg]) => `
+        <div class="lane-row">
+          <div class="lane-name ${bg}">${name}</div>
+          <div class="lane-events">
+            ${steps.filter((step) => step.lane === lane).map((step, idx) => {
+              const originalIndex = steps.indexOf(step);
+              return `<div class="event-chip ${originalIndex <= state.current ? "active" : ""}">${step.id}. ${step.title}</div>`;
+            }).join("")}
+          </div>
+        </div>
+      `).join("");
+    }
+
+    function bindDeviceActions() {
+      document.querySelectorAll("[data-target-step]").forEach((button) => {
+        button.addEventListener("click", () => {
+          stopAuto();
+          const target = Number(button.dataset.targetStep);
+          if (Number.isFinite(target)) {
+            if (button.dataset.commitAmount === "true" && state.keypadText) {
+              const enteredAmount = Number(state.keypadText);
+              if (Number.isFinite(enteredAmount) && enteredAmount > 0) {
+                state.amount = enteredAmount;
+              }
+            }
+            const nextTarget = target <= state.current ? state.current + 1 : target;
+            state.current = Math.max(0, Math.min(steps.length - 1, nextTarget));
+            render();
+          }
+        });
+      });
+
+      document.querySelectorAll("[data-keypad]").forEach((button) => {
+        button.addEventListener("click", () => {
+          const key = button.dataset.keypad;
+          state.keypadText = key === "C" ? "" : `${state.keypadText}${key}`.slice(0, 8);
+          render();
+        });
+      });
+    }
+
+    function scenarioStatus() {
+      if (state.scenario === "timeout" && state.current >= 11) return { label: "要再確認", cls: "warn" };
+      if (state.scenario === "failure" && state.current >= 10) return { label: "失敗", cls: "fail" };
+      if (state.current >= 13) return { label: "完了", cls: "ok" };
+      if (state.current >= 8) return { label: "処理中", cls: "warn" };
+      return { label: steps[state.current].status, cls: "" };
+    }
+
+    function renderStand() {
+      const isRead = state.current > 0;
+      standScreen.innerHTML = `
+        <p class="stand-title">JPYSC / JPYC<br>お支払いはこちら</p>
+        ${buildQr(1)}
+        <p class="stand-caption">${isRead ? "読み取り済み。スマホ側で規約確認へ進みます。" : "ユーザスマホでこの静的QRを読み取ります。"}</p>
+        <span class="status-pill ${isRead ? "ok" : ""}">${isRead ? "Read" : "Scan"}</span>
+      `;
+    }
+
+    function mobileShell(title, subtitle, content, footer = "") {
+      return `
+        <div class="mobile-ui">
+          <div>
+            <div class="phone-status"><span>14:05</span><span>5G  82%</span></div>
+            <div class="phone-appbar">
+              <span><span class="app-title">${title}</span><span class="app-subtitle">${subtitle}</span></span>
+              <span class="status-pill">${state.coin}</span>
+            </div>
+          </div>
+          <div class="mobile-content">${content}</div>
+          <div class="mobile-bottom">${footer}</div>
+        </div>
+      `;
+    }
+
+    function posShell(title, subtitle, content, footer = "") {
+      return `
+        <div class="pos-ui">
+          <div>
+            <div class="pos-status"><span>CFS POS</span><span>Terminal 03</span></div>
+            <div class="pos-appbar">
+              <span><span class="app-title">${title}</span><span class="app-subtitle">${subtitle}</span></span>
+              <span class="status-pill">Online</span>
+            </div>
+          </div>
+          <div class="pos-content">${content}</div>
+          <div class="pos-bottom">${footer}</div>
+        </div>
+      `;
+    }
+
+    function cameraMarkup(label, detail, seed = 5) {
+      return `
+        <div class="camera-view">
+          <span class="scan-line"></span>
+          <div class="camera-target">${buildQr(seed)}</div>
+        </div>
+        <p class="subtle">${label}<br>${detail}</p>
+      `;
+    }
+
+    function renderScreens() {
+      const active = steps[state.current];
+      const finalState = scenarioStatus();
+      renderStand();
+
+      if (state.current < 1) {
+        walletScreen.innerHTML = mobileShell(
+          "Camera",
+          "静的QRを読み取る",
+          cameraMarkup("店頭スタンドのQRにカメラを向けています。", "QR検出後、支払ページを開きます。", 1),
+          `<button class="primary-action" data-target-step="1">QRをスキャン</button>`
+        );
+      } else if (state.current < 2) {
+        walletScreen.innerHTML = mobileShell(
+          "CFS Pay",
+          "利用規約",
+          `
+            <div class="terms-document">
+              <span class="status-pill warn">同意待ち</span>
+              <h3>Stablecoin Payment Terms</h3>
+              <div class="terms-clause">
+                <strong>第1条 支払方法</strong>
+                <p>本決済は、JPYSCまたはJPYCを用いたCPM方式の店頭決済として処理されます。</p>
+              </div>
+              <div class="terms-clause">
+                <strong>第2条 決済確定</strong>
+                <p>Wallet承認後、CFS PlatformおよびSC基盤による検証を経て、ブロックチェーン上の取引確定を確認します。</p>
+              </div>
+              <div class="terms-clause">
+                <strong>第3条 取消・返金</strong>
+                <p>決済確定後の取消または返金は、加盟店およびCFS所定の運用手続に従って処理されます。</p>
+              </div>
+              <div class="terms-clause">
+                <strong>第4条 処理時間</strong>
+                <p>ネットワーク混雑、Wallet状態、外部基盤の応答により、結果通知まで時間を要する場合があります。</p>
+              </div>
+              <div class="terms-check"><span>✓</span><span>上記の決済条件、返金条件、処理時間を確認しました。</span></div>
+            </div>
+            <div class="wallet-list">
+              <div class="wallet-row"><span>店舗</span><strong>CFS PoC Store</strong></div>
+              <div class="wallet-row"><span>方式</span><strong>CPM</strong></div>
+            </div>
+          `,
+          `<button class="primary-action" data-target-step="2">同意して進む</button>`
+        );
+      } else if (state.current < 4) {
+        walletScreen.innerHTML = mobileShell(
+          "Wallet Select",
+          active.title,
+          `
+            <div class="wallet-card">
+              <span class="status-pill warn">${active.status}</span>
+              <div class="wallet-balance">JPYSC Wallet</div>
+              <p class="subtle">対応Walletを検出しました。Deep Linkで選択したWalletを起動します。</p>
+            </div>
+            <div class="wallet-list">
+              <div class="wallet-row"><span>Main Wallet</span><strong>利用可能</strong></div>
+              <div class="wallet-row"><span>Backup Wallet</span><strong>未接続</strong></div>
+            </div>
+          `,
+          `<button class="primary-action" data-target-step="4">Main Walletを開く</button>`
+        );
+      } else if (state.current < 10) {
+        walletScreen.innerHTML = mobileShell(
+          "CPM QR",
+          "POSに提示",
+          `
+            <div class="wallet-card" style="justify-items:center;text-align:center;">
+              <span class="status-pill warn">POS読取待ち</span>
+              ${buildQr(9)}
+              <p class="subtle">このユーザーQRをPOS APPのカメラで読み取ります。</p>
+            </div>
+            <div class="wallet-list">
+              <div class="wallet-row"><span>店舗</span><strong>CFS PoC Store</strong></div>
+              <div class="wallet-row"><span>取引ID</span><strong>${state.txId}</strong></div>
+            </div>
+          `,
+          `<button class="secondary-action" data-target-step="5">POSに提示する</button>`
+        );
+      } else if (state.current < 13) {
+        walletScreen.innerHTML = mobileShell(
+          "Payment Approval",
+          "支払承認",
+          `
+            <div class="wallet-card">
+              <span class="status-pill warn">${finalState.label}</span>
+              <div class="wallet-balance">${formatYen(state.amount)}</div>
+              <div class="merchant-line"><span>Merchant</span><strong>CFS PoC Store</strong></div>
+              <div class="merchant-line"><span>Stablecoin</span><strong>${state.coin}</strong></div>
+              <div class="merchant-line"><span>TxHash</span><strong>${state.current >= 11 ? state.txHash : "未発行"}</strong></div>
+            </div>
+          `,
+          `<button class="primary-action" data-target-step="11">支払を承認</button>`
+        );
+      } else {
+        walletScreen.innerHTML = mobileShell(
+          "Payment Result",
+          "決済結果",
+          `
+            <div class="wallet-card">
+              <span class="status-pill ${finalState.cls}">${finalState.label}</span>
+              <div class="wallet-balance">${formatYen(state.amount)}</div>
+              <p class="subtle">${state.scenario === "success" ? "支払完了通知を受信しました。" : "支払結果を確認してください。"}</p>
+            </div>
+            <div class="receipt-list">
+              <div class="receipt-row"><span>取引ID</span><strong>${state.txId}</strong></div>
+              <div class="receipt-row"><span>TxHash</span><strong>${state.txHash}</strong></div>
+            </div>
+          `,
+          `<button class="secondary-action" data-target-step="13">履歴を見る</button>`
+        );
+      }
+
+      if (state.current < 6) {
+        posScreen.innerHTML = posShell(
+          "Amount Entry",
+          "金額入力",
+          `
+            <div class="pos-total"><span>Total</span><strong>${state.keypadText ? `¥${state.keypadText}` : formatYen(state.amount)}</strong></div>
+            <div class="keypad">
+              ${["1", "2", "3", "4", "5", "6", "7", "8", "9", "00", "0", "C"].map((key) => `<button class="keypad-key" data-keypad="${key}">${key}</button>`).join("")}
+            </div>
+          `,
+          `<button class="primary-action" data-target-step="${state.current < 5 ? 5 : 6}" data-commit-amount="true">JPYSC / JPYCで支払う</button>`
+        );
+      } else if (state.current < 7) {
+        posScreen.innerHTML = posShell(
+          "Scan Customer QR",
+          "POSカメラ起動",
+          `<div class="pos-camera">${cameraMarkup("ユーザーのスマホに表示されたCPM QRを読み取っています。", "店舗、端末、金額をCFS Platformへ送信します。", 9)}</div>`,
+          `<button class="primary-action" data-target-step="7">QRをスキャン</button>`
+        );
+      } else if (state.current < 8) {
+        posScreen.innerHTML = posShell(
+          "QR Detected",
+          "読取完了",
+          `
+            <div class="pos-card">
+              <span class="status-pill ok">QR読取完了</span>
+              <div class="receipt-row"><span>Amount</span><strong>${formatYen(state.amount)}</strong></div>
+              <div class="receipt-row"><span>Coin</span><strong>${state.coin}</strong></div>
+              <div class="receipt-row"><span>Terminal</span><strong>T-03</strong></div>
+            </div>
+          `,
+          `<button class="primary-action" data-target-step="8">決済リクエスト送信</button>`
+        );
+      } else if (state.current < 13) {
+        posScreen.innerHTML = posShell(
+          "Processing",
+          "決済処理中",
+          `
+            <div class="pos-total"><span>Total</span><strong>${formatYen(state.amount)}</strong></div>
+            <div class="pos-card">
+              <span class="status-pill warn">${finalState.label}</span>
+              <p class="subtle">取引ID: ${state.txId}<br>CFS Platformから結果通知待ち。</p>
+            </div>
+            <div class="receipt-list">
+              <div class="receipt-row"><span>Request</span><strong>Sent</strong></div>
+              <div class="receipt-row"><span>TxHash</span><strong>${state.current >= 11 ? state.txHash : "未発行"}</strong></div>
+            </div>
+          `,
+          `<button class="secondary-action" data-target-step="12">状態を再確認</button>`
+        );
+      } else {
+        posScreen.innerHTML = posShell(
+          "Payment Result",
+          "レシート",
+          `
+            <div class="pos-total"><span>Total</span><strong>${formatYen(state.amount)}</strong></div>
+            <div class="pos-card">
+              <span class="status-pill ${finalState.cls}">${finalState.label}</span>
+              <p class="subtle">レシート、取引履歴、精算データに反映済み。</p>
+            </div>
+            <div class="receipt-list">
+              <div class="receipt-row"><span>取引ID</span><strong>${state.txId}</strong></div>
+              <div class="receipt-row"><span>通知</span><strong>${state.current >= 13 ? "送信済み" : "未送信"}</strong></div>
+            </div>
+          `,
+          `<button class="primary-action" data-target-step="13">レシート印刷</button>`
+        );
+      }
+
+      bindDeviceActions();
+    }
+
+    function renderPanels() {
+      const finalState = scenarioStatus();
+      $("#transactionKv").innerHTML = `
+        <span>取引ID</span><strong>${state.txId}</strong>
+        <span>店舗/端末</span><strong>CFS PoC Store / T-03</strong>
+        <span>金額</span><strong>${formatYen(state.amount)}</strong>
+        <span>通貨</span><strong>${state.coin}</strong>
+        <span>TxHash</span><strong>${state.current >= 11 ? state.txHash : "未発行"}</strong>
+        <span>Status</span><strong>${finalState.label}</strong>
+      `;
+
+      const logs = [
+        ["User", "Walletへ支払ページを表示", 1],
+        ["POS", "CPM QR読取結果をCFSへ送信", 7],
+        ["CFS", "支払要求を生成しステータスを承認待ちへ更新", 9],
+        ["SC", "ブロックチェーン送信用Txを生成", 11],
+        ["Chain", "Tx確定結果をCFSへ返却", 12],
+        ["Notify", state.scenario === "success" ? "Wallet・POS・管理ポータルへ完了通知" : "Wallet・POS・管理ポータルへ例外通知", 13]
+      ];
+      $("#notificationLog").innerHTML = logs.map(([source, text, threshold]) => `
+        <div class="log-item ${state.current + 1 >= threshold ? "hot" : ""}"><strong>${source}</strong> ${text}</div>
+      `).join("");
+
+      $("#adminKv").innerHTML = `
+        <span>検索対象</span><strong>取引一覧 / 詳細</strong>
+        <span>監査ログ</span><strong>${state.current >= 8 ? "記録中" : "待機"}</strong>
+        <span>通知</span><strong>${state.current >= 13 ? "送信済み" : "未送信"}</strong>
+        <span>精算</span><strong>${state.current >= 14 ? "レポート反映" : "未反映"}</strong>
+        <span>運用判断</span><strong>${state.scenario === "timeout" ? "照会・再確認" : state.scenario === "failure" ? "再試行/取消確認" : "通常完了"}</strong>
+      `;
+    }
+
+    function renderMetrics() {
+      const finalState = scenarioStatus();
+      metricAmount.textContent = formatYen(state.amount);
+      metricCoin.textContent = state.coin;
+      metricStatus.textContent = finalState.label;
+      globalPill.className = `status-pill ${finalState.cls}`;
+      globalPill.textContent = finalState.label;
+      progress.style.width = `${((state.current + 1) / steps.length) * 100}%`;
+      $("#scenarioMeta").textContent = scenarioCopy[state.scenario];
+    }
+
+    function render() {
+      renderSteps();
+      renderLanes();
+      renderScreens();
+      renderPanels();
+      renderMetrics();
+    }
+
+    function stopAuto() {
+      clearInterval(state.timer);
+      state.timer = null;
+      $("#playBtn").textContent = "▶";
+    }
+
+    function playAuto() {
+      if (state.timer) {
+        stopAuto();
+        return;
+      }
+      $("#playBtn").textContent = "⏸";
+      state.timer = setInterval(() => {
+        if (state.current >= steps.length - 1) {
+          stopAuto();
+          return;
+        }
+        state.current += 1;
+        render();
+      }, 900);
+    }
+
+    $("#prevBtn").addEventListener("click", () => {
+      stopAuto();
+      state.current = Math.max(0, state.current - 1);
+      render();
+    });
+
+    $("#nextBtn").addEventListener("click", () => {
+      stopAuto();
+      state.current = Math.min(steps.length - 1, state.current + 1);
+      render();
+    });
+
+    $("#playBtn").addEventListener("click", playAuto);
+
+    document.querySelectorAll(".segmented button").forEach((button) => {
+      button.addEventListener("click", () => {
+        document.querySelectorAll(".segmented button").forEach((b) => b.classList.remove("active"));
+        button.classList.add("active");
+        state.scenario = button.dataset.scenario;
+        stopAuto();
+        render();
+      });
+    });
+
+    window.addEventListener("keydown", (event) => {
+      if (event.key === "ArrowRight") $("#nextBtn").click();
+      if (event.key === "ArrowLeft") $("#prevBtn").click();
+      if (event.key === " ") {
+        event.preventDefault();
+        $("#playBtn").click();
+      }
+    });
+
+    render();
+  </script>
+</body>
+</html>
