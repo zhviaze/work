@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="color-scheme" content="light" />
+  <title>日本法人カード事業について</title>
+  <style>
+    :root{
+      --ink:#08111f;
+      --muted:#64748b;
+      --muted2:#94a3b8;
+      --line:#e2e8f0;
+      --paper:#ffffff;
+      --wash:#f6f8fb;
+      --navy:#0f172a;
+      --blue:#2563eb;
+      --sky:#0ea5e9;
+      --violet:#7c3aed;
+      --green:#10b981;
+      --amber:#f59e0b;
+      --rose:#f43f5e;
+      --shadow:0 24px 70px rgba(15,23,42,.16);
+      --soft:0 14px 32px rgba(15,23,42,.08);
+      --r:4px;
+    }
+    *{box-sizing:border-box}
+    button,input,select,textarea,table{font-family:"Meiryo UI","MERIO UI",Meiryo,sans-serif}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      font-family:"Meiryo UI","MERIO UI",Meiryo,sans-serif;
+      color:var(--ink);
+      background:#e8edf5;
+      padding:26px 0 64px;
+    }
+    .toolbar{
+      position:fixed;right:22px;top:18px;z-index:99;
+      display:flex;gap:8px;align-items:center;
+      background:rgba(255,255,255,.72);border:1px solid rgba(226,232,240,.85);backdrop-filter:blur(18px);
+      box-shadow:0 14px 38px rgba(15,23,42,.12);border-radius:999px;padding:7px;
+    }
+    .toolbar a,.toolbar button{
+      border:0;background:#fff;color:#0f172a;text-decoration:none;border-radius:999px;padding:9px 13px;
+      font-size:12px;font-weight:850;letter-spacing:-.01em;box-shadow:0 4px 12px rgba(15,23,42,.08);cursor:pointer;
+    }
+    .toolbar .ghost{background:transparent;box-shadow:none;color:#475569}
+    .deck{width:min(1480px,calc(100vw - 40px));margin:0 auto;display:flex;flex-direction:column;gap:28px}
+    .slide{
+      position:relative;
+      width:100%;aspect-ratio:16/9;
+      min-height:640px;
+      overflow:hidden;
+      border-radius:0;
+      background:var(--paper);
+      box-shadow:var(--shadow);
+      border:1px solid rgba(255,255,255,.86);
+      isolation:isolate;
+    }
+    .slide::before{
+      content:"";position:absolute;inset:0;z-index:-2;
+      background:#ffffff;
+    }
+    .slide::after{
+      content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;
+      background:none;
+    }
+    .slide.dark{background:#080f1c;color:#fff;border-color:rgba(255,255,255,.12)}
+    .slide.dark::before{
+      background:#12345b;
+    }
+    .slide.dark::after{background:none}
+    .canvas{height:100%;padding:48px 56px 32px;display:flex;flex-direction:column;gap:20px;position:relative}
+    .sparse{gap:36px}
+    .topbar{display:flex;justify-content:space-between;align-items:flex-start;gap:24px}
+    .eyebrow{font-size:12px;font-weight:900;letter-spacing:.16em;text-transform:uppercase;color:var(--blue);margin-bottom:10px}
+    .dark .eyebrow{color:#93c5fd}
+    h1,h2,h3,p{margin:0}
+    h1{font-size:64px;line-height:1.02;letter-spacing:-.065em;font-weight:950;max-width:980px}
+    h2{font-size:44px;line-height:1.08;letter-spacing:-.055em;font-weight:950;max-width:1040px}
+    h3{font-size:21px;line-height:1.15;letter-spacing:-.035em;font-weight:930}
+    .lead{font-size:20px;line-height:1.55;color:#475569;font-weight:560;max-width:1040px}
+    .dark .lead{color:#cbd5e1}
+    .mini{font-size:12px;color:#94a3b8;line-height:1.4;font-weight:700}
+    .brand{display:flex;align-items:center;gap:11px;font-size:13px;font-weight:900;color:#0f172a;white-space:nowrap}
+    .dark .brand{color:#fff}
+    .mark{width:34px;height:34px;border-radius:12px;background:var(--blue);box-shadow:0 12px 30px rgba(37,99,235,.3);position:relative;overflow:hidden;flex:none}
+    .mark::after{content:"";position:absolute;width:15px;height:15px;border-radius:6px;background:rgba(255,255,255,.94);right:5px;bottom:5px;box-shadow:-10px -8px 0 rgba(255,255,255,.34)}
+    .slide-no{position:absolute;right:58px;bottom:32px;color:#94a3b8;font-weight:900;font-size:12px;letter-spacing:.12em;text-transform:uppercase}
+    .dark .slide-no{color:rgba(255,255,255,.42)}
+    .footnote{position:absolute;left:58px;bottom:28px;max-width:920px;font-size:10.5px;line-height:1.38;color:#94a3b8;font-weight:650}
+    .dark .footnote{color:rgba(255,255,255,.48)}
+    .pillrow{display:flex;gap:10px;flex-wrap:wrap}
+    .pill{display:inline-flex;align-items:center;gap:7px;border:1px solid #e2e8f0;background:#fff;border-radius:999px;padding:8px 12px;font-size:12px;font-weight:850;color:#475569;box-shadow:0 8px 18px rgba(15,23,42,.04)}
+    .dark .pill{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.13);color:#e2e8f0;box-shadow:none}
+    .dot{width:8px;height:8px;border-radius:50%;background:var(--blue);display:inline-block;box-shadow:0 0 0 4px rgba(37,99,235,.12)}
+    .dot.green{background:var(--green);box-shadow:0 0 0 4px rgba(16,185,129,.13)}
+    .dot.violet{background:var(--violet);box-shadow:0 0 0 4px rgba(124,58,237,.13)}
+    .dot.amber{background:var(--amber);box-shadow:0 0 0 4px rgba(245,158,11,.13)}
+    .grid{display:grid;gap:18px;min-height:0}
+    .grid-2{grid-template-columns:1fr 1fr}
+    .grid-3{grid-template-columns:repeat(3,1fr)}
+    .grid-4{grid-template-columns:repeat(4,1fr)}
+    .grid-5{grid-template-columns:repeat(5,1fr)}
+    .main-grid{grid-template-columns:1.05fr .95fr;align-items:stretch;flex:1}
+    .card{background:rgba(255,255,255,.86);border:1px solid rgba(226,232,240,.9);border-radius:var(--r);box-shadow:var(--soft);padding:24px;position:relative;overflow:hidden}
+    .card.flat{box-shadow:none;background:#f8fafc}
+    .dark .card{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.12);box-shadow:0 20px 60px rgba(0,0,0,.18)}
+    .metric-card{padding:22px 22px 20px;border-radius:4px;background:#fff;border:1px solid #e2e8f0;box-shadow:var(--soft)}
+    .dark .metric-card{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.13)}
+    .metric-label{font-size:11px;font-weight:900;text-transform:uppercase;letter-spacing:.12em;color:#94a3b8;margin-bottom:9px}
+    .metric-value{font-size:34px;font-weight:950;letter-spacing:-.05em;line-height:1;color:#0f172a}
+    .dark .metric-value{color:#fff}
+    .metric-sub{font-size:12px;color:#64748b;line-height:1.35;margin-top:9px;font-weight:700}
+    .dark .metric-sub{color:#cbd5e1}
+    .hero-band{margin-top:auto;display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+    .hero-band .metric-card{backdrop-filter:blur(10px)}
+    .statement{font-size:28px;line-height:1.35;letter-spacing:-.04em;font-weight:920;max-width:980px;color:#fff}
+    .cover-main{display:grid;grid-template-columns:minmax(0,1fr) minmax(420px,500px);gap:36px;align-items:center;flex:1;min-height:0}
+    #slide-1 .statement{max-width:680px}
+    .cover-visual{position:relative;width:100%;height:min(390px,100%);min-height:330px;border-radius:4px;background-image:url("assets/cover-fintech-platform.png");background-color:#0b2b55;background-size:cover;background-position:center;border:1px solid rgba(147,197,253,.22);box-shadow:0 34px 100px rgba(0,0,0,.28);overflow:hidden}
+    .cover-visual::after{content:"";position:absolute;inset:0;background:none;pointer-events:none}
+    .usecase-title{display:flex;align-items:center;gap:14px;margin-bottom:12px}
+    .icon{width:48px;height:48px;border-radius:4px;display:grid;place-items:center;background:#eaf1ff;color:var(--blue);font-size:24px;font-weight:950;flex:none}
+    .icon.violet{background:#f2ecff;color:var(--violet)}
+    .icon.green{background:#e9fbf4;color:var(--green)}
+    .bodytext{font-size:15px;line-height:1.72;color:#475569;font-weight:560}
+    .bodytext b{color:#0f172a}
+    .dark .bodytext{color:#cbd5e1}.dark .bodytext b{color:#fff}
+    .bullet-list{display:grid;gap:12px;margin-top:18px}
+    .bullet{display:grid;grid-template-columns:18px 1fr;gap:10px;font-size:14px;line-height:1.5;color:#475569;font-weight:650}
+    .bullet::before{content:"";width:9px;height:9px;border-radius:50%;background:var(--blue);box-shadow:0 0 0 5px rgba(37,99,235,.1);margin-top:6px}
+    .bullet.green::before{background:var(--green);box-shadow:0 0 0 5px rgba(16,185,129,.11)}
+    .bullet.violet::before{background:var(--violet);box-shadow:0 0 0 5px rgba(124,58,237,.11)}
+    .market-tile{border-radius:4px;background:#16233a;color:#fff;padding:22px;min-height:160px;position:relative;overflow:hidden}
+    .market-tile::after{content:"";display:none}
+    .market-tile.violet::after{display:none}
+    .market-tile.green::after{display:none}
+    .market-k{position:relative;z-index:1;font-size:11px;font-weight:900;letter-spacing:.13em;text-transform:uppercase;color:rgba(255,255,255,.56);margin-bottom:14px}
+    .market-v{position:relative;z-index:1;font-size:42px;font-weight:950;letter-spacing:-.06em;line-height:1}
+    .market-note{position:relative;z-index:1;font-size:12px;color:rgba(255,255,255,.72);line-height:1.42;margin-top:12px;font-weight:650}
+    .market-funnel{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+    .market-funnel .market-tile{min-height:142px;padding:16px 15px;border-radius:4px}
+    .market-funnel .market-k{font-size:10px;margin-bottom:9px;letter-spacing:.11em}
+    .market-funnel .market-v{font-size:25px;letter-spacing:-.045em;white-space:nowrap}
+    .market-funnel .market-note{font-size:10.3px;line-height:1.38;margin-top:8px}
+    .market-funnel .market-tile:nth-child(2){background:#1d4ed8}
+    .market-funnel .market-tile:nth-child(3){background:#0c8aa6}
+    .market-funnel.violet .market-tile:nth-child(2){background:#6d28d9}
+    .market-funnel.violet .market-tile:nth-child(3){background:#a21caf}
+    .market-funnel.green .market-tile:nth-child(2){background:#047857}
+    .market-funnel.green .market-tile:nth-child(3){background:#0f766e}
+    .market-definition{border-top:4px solid var(--blue)}
+    .market-definition.sam{border-top-color:var(--violet)}
+    .market-definition.som{border-top-color:var(--green)}
+    .market-definition h3{display:flex;align-items:baseline;gap:9px}
+    .market-definition h3 span{font-size:11px;color:#94a3b8;letter-spacing:.08em;text-transform:uppercase}
+    .market-matrix .cell{min-height:84px;padding:14px 16px}
+    .market-matrix .cell.head{min-height:48px}
+    .market-matrix .cell.rowhead{display:flex;flex-direction:column;justify-content:center;gap:5px}
+    .market-matrix .cell.rowhead small{font-size:10.5px;line-height:1.35;color:#64748b;font-weight:700}
+    .market-num{display:block;font-size:25px;line-height:1.05;letter-spacing:-.045em;font-weight:950;color:#0f172a;margin-bottom:6px}
+    .market-sub{display:block;font-size:10.5px;line-height:1.38;color:#64748b;font-weight:680}
+    .market-matrix .cell.tam{background:#f8fbff;box-shadow:inset 0 4px 0 rgba(37,99,235,.72)}
+    .market-matrix .cell.sam{background:#fbf9ff;box-shadow:inset 0 4px 0 rgba(124,58,237,.68)}
+    .market-matrix .cell.som{background:#f4fffb;box-shadow:inset 0 4px 0 rgba(16,185,129,.72)}
+    .section-label{font-size:11px;font-weight:900;letter-spacing:.12em;text-transform:uppercase;color:#94a3b8;margin-bottom:10px}
+    .flow{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;align-items:stretch;position:relative}
+    .flow::before{content:"";position:absolute;top:50%;left:8%;right:8%;height:2px;background:rgba(37,99,235,.24);z-index:0}
+    .flow-step{position:relative;z-index:1;background:#fff;border:1px solid #e2e8f0;border-radius:4px;padding:18px;min-height:142px;box-shadow:var(--soft)}
+    .flow-num{width:30px;height:30px;border-radius:10px;display:grid;place-items:center;background:#eef4ff;color:var(--blue);font-size:12px;font-weight:950;margin-bottom:14px}
+    .flow-step h3{font-size:16px;margin-bottom:8px}
+    .flow-step p{font-size:12px;line-height:1.45;color:#64748b;font-weight:650}
+    .revenue-stack{display:grid;grid-template-columns:.9fr 1.1fr;gap:18px;align-items:center;flex:1}
+    .revenue-years{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-top:14px}
+    .revenue-year{border:1px solid #e2e8f0;border-radius:4px;padding:16px;background:#f8fafc}
+    .revenue-year b{display:block;font-size:30px;line-height:1;letter-spacing:-.05em;color:#0f172a}
+    .revenue-year span{display:block;margin-top:8px;font-size:11px;font-weight:850;color:#64748b}
+    .donut{width:260px;height:260px;border-radius:50%;background:conic-gradient(var(--blue) 0 var(--proc-share),var(--violet) var(--proc-share) 100%);margin:0 auto;position:relative;box-shadow:inset 0 0 0 1px rgba(15,23,42,.06),0 20px 60px rgba(15,23,42,.09)}
+    .donut::after{content:"";position:absolute;inset:54px;border-radius:50%;background:#fff;box-shadow:inset 0 0 0 1px #e2e8f0}
+    .donut-center{position:absolute;inset:0;display:grid;place-items:center;text-align:center;z-index:2;pointer-events:none}
+    .donut-center b{font-size:30px;letter-spacing:-.05em}.donut-center span{display:block;font-size:11px;color:#64748b;font-weight:850;margin-top:5px}
+    .legend{display:grid;gap:10px;margin-top:18px}
+    .legend-item{display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #e2e8f0;padding-bottom:10px;font-size:13px;font-weight:800;color:#475569}
+    .legend-left{display:flex;align-items:center;gap:9px}.swatch{width:12px;height:12px;border-radius:4px;background:var(--blue)}.swatch.violet{background:var(--violet)}.swatch.green{background:var(--green)}
+    .table{width:100%;border-collapse:separate;border-spacing:0;overflow:hidden;border-radius:0;border:1px solid #e2e8f0;background:#fff;box-shadow:0 10px 24px rgba(15,23,42,.04)}
+    .table th,.table td{padding:13px 15px;text-align:right;border-bottom:1px solid #eef2f7;font-size:13px;font-weight:800;color:#334155}
+    .table th:first-child,.table td:first-child{text-align:left}
+    .table th{background:#f8fafc;color:#94a3b8;text-transform:uppercase;letter-spacing:.08em;font-size:10.5px;font-weight:950}
+    .table tr:last-child td{border-bottom:none}
+    .table .strong td{background:#0f172a;color:#fff;font-weight:950}
+    .table .blue{color:var(--blue);font-weight:950}
+    .mini-table{font-size:12px}
+    .mini-table td,.mini-table th{padding:10px 12px;font-size:12px}
+    .bar-chart{display:flex;align-items:flex-end;gap:18px;height:230px;border-left:1px solid #e2e8f0;border-bottom:1px solid #e2e8f0;padding:14px 4px 0 14px;margin-top:12px}
+    .bar-group{flex:1;display:flex;gap:8px;align-items:flex-end;justify-content:center;height:100%}
+    .bar{width:34px;border-radius:10px 10px 0 0;background:var(--blue);position:relative;min-height:12px}
+    .bar.violet{background:var(--violet)}
+    .bar.green{background:var(--green)}
+    .bar span{position:absolute;left:50%;bottom:calc(100% + 7px);transform:translateX(-50%);font-size:10.5px;font-weight:900;color:#334155;white-space:nowrap}
+    .bar-label{font-size:11px;color:#94a3b8;font-weight:900;text-align:center;margin-top:8px}
+    .case-chart{display:grid;gap:8px;margin-top:18px}
+    .hbar{display:grid;grid-template-columns:50px 1fr 64px;gap:10px;align-items:center;font-size:12px;font-weight:850;color:#64748b}
+    .track{height:12px;border-radius:999px;background:#e2e8f0;overflow:hidden}
+    .fill{height:100%;border-radius:999px;background:var(--blue);width:var(--w)}
+    .fill.violet{background:var(--violet)}
+    .fill.green{background:var(--green)}
+    .timeline{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;position:relative;margin-top:10px}
+    .timeline::before{content:"";position:absolute;top:42px;left:12%;right:12%;height:2px;background:#cbd5e1}
+    .year-card{position:relative;background:#fff;border:1px solid #e2e8f0;border-radius:4px;padding:24px 20px 22px;min-height:330px;box-shadow:var(--soft)}
+    .year{font-size:32px;letter-spacing:-.05em;font-weight:950;color:#0f172a;margin-bottom:24px;position:relative;z-index:1}
+    .year::after{content:"";position:absolute;left:0;bottom:-13px;width:20px;height:20px;border-radius:50%;background:var(--blue);box-shadow:0 0 0 7px rgba(37,99,235,.12)}
+    .year-card:nth-child(2) .year::after{background:var(--violet);box-shadow:0 0 0 7px rgba(124,58,237,.12)}
+    .year-card:nth-child(3) .year::after{background:var(--green);box-shadow:0 0 0 7px rgba(16,185,129,.12)}
+    .year-card:nth-child(4) .year::after{background:var(--amber);box-shadow:0 0 0 7px rgba(245,158,11,.13)}
+    .year-card ul{margin:0;padding:0;list-style:none;display:grid;gap:12px}
+    .year-card li{font-size:13px;line-height:1.45;color:#475569;font-weight:700;padding-left:18px;position:relative}
+    .year-card li::before{content:"";position:absolute;left:0;top:8px;width:6px;height:6px;border-radius:50%;background:#94a3b8}
+    .matrix{display:grid;grid-template-columns:1.05fr repeat(3,1fr);border:1px solid #e2e8f0;border-radius:0;overflow:hidden;background:#fff;box-shadow:var(--soft)}
+    .cell{padding:17px 18px;border-right:1px solid #e2e8f0;border-bottom:1px solid #e2e8f0;font-size:13px;line-height:1.4;font-weight:760;color:#475569;min-height:64px}
+    .cell.head{background:#0f172a;color:#fff;font-weight:950;font-size:12px;letter-spacing:.08em;text-transform:uppercase}
+    .cell.rowhead{background:#f8fafc;color:#0f172a;font-weight:950}
+    .cell:nth-child(4n){border-right:none}.cell:nth-last-child(-n+4){border-bottom:none}
+    .quote{font-size:27px;line-height:1.42;letter-spacing:-.035em;font-weight:900;color:#0f172a}
+    .quote b{color:var(--blue)}
+    .big-number{font-size:76px;line-height:.95;letter-spacing:-.07em;font-weight:950;color:#0f172a}
+    .big-number small{font-size:25px;letter-spacing:-.03em}
+    .summary-row{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:auto}
+    .summary-row .metric-card{min-height:142px}
+    .ask-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;flex:1;align-items:stretch}
+    .ask-card{border-radius:4px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.13);padding:26px;display:flex;flex-direction:column;gap:16px}
+    .ask-card h3{color:#fff;font-size:22px}
+    .ask-card p{color:#cbd5e1;font-size:14px;line-height:1.62;font-weight:650}
+    .ask-card .icon{background:rgba(255,255,255,.1);color:#fff}
+
+    #slide-2 .grid{gap:16px}
+    #slide-2 .quote{font-size:25px;line-height:1.38}
+    .model-grid{grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
+    .model-grid .metric-card{min-height:136px;padding:20px 18px}
+    .model-grid .metric-value{font-size:31px}
+    .model-grid .metric-card:nth-child(4) .metric-value{font-size:28px;line-height:1.08}
+    .model-grid .metric-sub{font-size:11.5px}
+
+    .scenario-slide .canvas{gap:16px}
+    .scenario-slide .topbar{gap:18px}
+    .scenario-slide h2{font-size:38px;max-width:960px}
+    .scenario-slide .main-grid{grid-template-columns:1.06fr .94fr;gap:16px}
+    .scenario-slide .card{padding:20px}
+    .scenario-slide .usecase-title{margin-bottom:10px}
+    .scenario-slide .bodytext{font-size:13.4px;line-height:1.56}
+    .scenario-slide .bullet-list{gap:9px;margin-top:14px}
+    .scenario-slide .bullet{font-size:12.4px;line-height:1.42;gap:8px}
+    .scenario-slide .market-funnel{grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+    .scenario-slide .market-funnel .market-tile{min-height:122px;padding:12px 11px;border-radius:4px}
+    .scenario-slide .market-funnel .market-k{font-size:9px;margin-bottom:7px;letter-spacing:.07em}
+    .scenario-slide .market-funnel .market-v{font-size:22px;white-space:normal;line-height:1.05}
+    .scenario-slide .market-funnel .market-note{font-size:9.2px;line-height:1.32;margin-top:6px}
+    .scenario-slide .section-label{margin-bottom:8px}
+    .scenario-slide .mini-table td,.scenario-slide .mini-table th{padding:8px 10px;font-size:11.3px}
+    .scenario-slide .case-chart{gap:6px;margin-top:10px}
+    .scenario-slide .hbar{grid-template-columns:44px 1fr 56px;gap:8px;font-size:10.8px}
+    .scenario-slide .track{height:10px}
+    .scenario-slide .footnote{position:static;font-size:9.2px;line-height:1.25;width:calc(100% - 150px);max-width:none;margin-top:0;padding-right:0}
+    .scenario-slide .slide-no{right:56px;bottom:28px}
+
+    #slide-6 .canvas{gap:16px}
+    #slide-6 h2{font-size:40px;max-width:720px}
+    #slide-6 .pillrow{justify-content:flex-end;max-width:390px}
+    #slide-6 .slide-footer{display:flex;justify-content:space-between;align-items:flex-end;gap:24px;margin-top:0}
+    #slide-6 .footnote{position:static;max-width:none;width:auto;flex:1;font-size:9.8px;line-height:1.32;margin-top:0;padding-right:0}
+    #slide-6 .slide-no{position:static;flex:none;margin:0}
+    #slide-6 .revenue-stack{grid-template-columns:.84fr 1.16fr;gap:18px;align-items:stretch;flex:0 1 auto}
+    #slide-6 .card{padding:20px}
+    #slide-6 .donut{width:205px;height:205px}
+    #slide-6 .donut::after{inset:43px}
+    #slide-6 .donut-center b{font-size:25px}
+    #slide-6 .revenue-years{gap:10px;margin-top:12px}
+    #slide-6 .revenue-year{padding:12px;border-radius:4px}
+    #slide-6 .revenue-year b{font-size:22px}
+    #slide-6 .revenue-year span{font-size:9.8px}
+    #slide-6 .legend{gap:8px;margin-top:12px}
+    #slide-6 .legend-item{font-size:11.5px;padding-bottom:8px}
+    #slide-6 .table th,#slide-6 .table td{padding:10px 7px;font-size:10.6px}
+    #slide-6 .table th{font-size:8.8px;letter-spacing:.04em}
+
+    @media (max-width:900px){
+      body{padding:12px 0 40px}.toolbar{left:12px;right:12px;justify-content:center;top:auto;bottom:12px}.toolbar a,.toolbar button{font-size:11px;padding:8px 10px}
+      .deck{width:calc(100vw - 18px);gap:14px}.slide{min-height:auto;border-radius:0}.canvas{padding:30px 28px 24px}h1{font-size:36px}h2{font-size:28px}.lead{font-size:15px}.grid-2,.grid-3,.grid-4,.grid-5,.main-grid,.flow,.revenue-stack,.timeline,.ask-grid,.summary-row,.hero-band,.market-funnel,.cover-main,.model-grid{grid-template-columns:1fr}.cover-visual{display:none}.slide{aspect-ratio:auto}.matrix{grid-template-columns:1fr}.cell{border-right:none}.cell:nth-last-child(-n+4){border-bottom:1px solid #e2e8f0}.footnote,.slide-no{position:static;margin-top:auto}.bar-chart{height:180px}
+    }
+    @page{size:16in 9in;margin:0}
+    @media print{
+      html,body{width:100%;height:auto;background:#fff;padding:0;margin:0}.toolbar{display:none}.deck{width:100%;display:block;gap:0;margin:0}.slide{width:16in;height:9in;min-height:0;border-radius:0;box-shadow:none;border:0;overflow:hidden;page-break-after:always;break-after:page}.slide:last-child{page-break-after:auto;break-after:auto}.canvas{padding:44px 52px 28px}.slide-no{right:52px;bottom:26px}.footnote{left:52px;bottom:24px}
+    }
+  </style>
+</head>
+<body>
+  <nav class="toolbar" aria-label="presentation controls">
+    <a href="#slide-1">表紙</a>
+    <a href="#slide-3">ビジネスシナリオ</a>
+    <a href="#slide-6">収益</a>
+    <a href="financial-model.html">試算</a>
+    <button class="ghost" onclick="window.print()">PDF出力</button>
+  </nav>
+
+  <main class="deck" id="deck">
+    <!-- 01 -->
+    <section class="slide dark" id="slide-1">
+      <div class="canvas sparse">
+        <div class="topbar">
+          <div>
+            <div class="eyebrow">事業概要 / 投資家 / 銀行 / 発行スポンサー</div>
+            <h1>日本法人カード事業について</h1>
+          </div>
+          <div class="brand"><span class="mark"></span><span>法人カード基盤</span></div>
+        </div>
+        <div class="cover-main">
+          <p class="statement">越境EC・貿易企業の高頻度支出を、<br>法人カードGMV（総取扱高）へ集約し、IRF・FX・チャージ手数料を継続収益化する。</p>
+          <div class="cover-visual" aria-hidden="true"></div>
+        </div>
+        <div class="slide-no">01 / 06</div>
+      </div>
+    </section>
+
+    <!-- 02 -->
+    <section class="slide" id="slide-2">
+      <div class="canvas">
+        <div class="topbar">
+          <div>
+            <div class="eyebrow">要約</div>
+            <h2>単なる法人カードではなく、<br>越境企業の「支出OS」を作る</h2>
+          </div>
+          <div class="brand"><span class="mark"></span><span>事業定義</span></div>
+        </div>
+        <div class="grid">
+          <div class="card">
+            <p class="quote">日本で売上を作る越境EC・貿易企業は、<b>中国サプライヤーへの調達</b>、<b>広告出稿</b>、<b>ECプラットフォーム費用</b>を高頻度で支払う。ここをカード化することで、支払額そのものが収益源になる。</p>
+          </div>
+          <div class="grid model-grid">
+            <div class="metric-card"><div class="metric-label">収益源 01</div><div class="metric-value">IRF</div><div class="metric-sub">カード利用に伴うインターチェンジ収益</div></div>
+            <div class="metric-card"><div class="metric-label">収益源 02</div><div class="metric-value">FX</div><div class="metric-sub">越境調達・外貨支払に伴う為替収益</div></div>
+            <div class="metric-card"><div class="metric-label">収益源 03</div><div class="metric-value">チャージ</div><div class="metric-sub">チャージ・残高管理・運用手数料</div></div>
+            <div class="metric-card"><div class="metric-label">収益源 04</div><div class="metric-value">データビジネス</div><div class="metric-sub">その他サービスによる収益</div></div>
+          </div>
+        </div>
+        <div class="slide-no">02 / 06</div>
+      </div>
+    </section>
+
+    <!-- 03 -->
+    <section class="slide scenario-slide" id="slide-3">
+      <div class="canvas">
+        <div class="topbar">
+          <div>
+            <div class="eyebrow">ビジネスシナリオ 1</div>
+            <h2>企業調達カード：日本の売上を、<br>中国サプライヤー支払へ直接つなぐ</h2>
+          </div>
+          <div class="pill"><span class="dot"></span>月次調達支出</div>
+        </div>
+        <div class="main-grid grid">
+          <div class="card">
+            <div class="usecase-title"><div><h3>シーンの説明</h3><p class="mini">対象：日本華人貿易商 / EC販売事業者 / 中国調達企業</p></div></div>
+            <p class="bodytext">日本国内で売上を得る企業が、中国サプライヤーへの仕入・前払・物流関連費用を法人カードで支払う。銀行送金、為替、請求書照合、担当者別の支払管理をカードワークフローに置き換えることで、調達支出を安定したカードGMV（総取扱高）へ転換する。</p>
+            <div class="bullet-list">
+              <div class="bullet">月次で反復する大口支出のため、少数顧客でもGMV（総取扱高）が積み上がりやすい。</div>
+              <div class="bullet">IRFに加えて、越境支払・為替関連の収益を設計できる。</div>
+              <div class="bullet">用途制限、限度額、承認フローにより、発行スポンサー側のリスク説明がしやすい。</div>
+            </div>
+          </div>
+          <div class="grid">
+            <div class="market-funnel" aria-label="企業調達カードのTAM SAM SOM">
+              <div class="market-tile"><div class="market-k">TAM｜市場全体</div><div class="market-v">514.4兆円</div><div class="market-note">2024年の国内BtoB-EC市場。企業間取引の最大支払母数。</div></div>
+              <div class="market-tile"><div class="market-k">SAM｜初期対象市場</div><div class="market-v">0.5〜2.0兆円</div><div class="market-note">越境EC・貿易企業による中国調達支出。対象顧客と用途に基づく事業仮説。</div></div>
+              <div class="market-tile"><div class="market-k">SOM｜2027獲得計画</div><div class="market-v">95億円</div><div class="market-note">2027年計画GMV。SAMに対して約0.5〜1.9%の獲得水準。</div></div>
+            </div>
+            <div class="card flat">
+              <div class="section-label">2027年 事業計画試算</div>
+              <table class="table mini-table">
+                <tbody>
+                  <tr><td>GMV（総取扱高・SOM）</td><td class="blue">95億円</td></tr>
+                  <tr><td>取扱前提</td><td>月間5,000万人民元相当</td></tr>
+                  <tr><td>収益率</td><td>2.50%</td></tr>
+                  <tr><td>2027 営業収益 / 粗利</td><td><span data-case="procRevenue2027">—</span> / <span data-case="procGross2027">—</span></td></tr>
+                </tbody>
+              </table>
+              <div class="case-chart" data-chart="procurement"></div>
+            </div>
+          </div>
+        </div>
+        <div class="footnote">出典：経済産業省「令和6年度 電子商取引に関する市場調査」。SAM・SOMは対象顧客と事業計画に基づく想定。数値は億円ベースでJavaScript計算。</div>
+        <div class="slide-no">03 / 06</div>
+      </div>
+    </section>
+    <!-- 04 -->
+    <section class="slide scenario-slide" id="slide-4">
+      <div class="canvas">
+        <div class="topbar">
+          <div>
+            <div class="eyebrow">ビジネスシナリオ 2</div>
+            <h2>広告投流カード：高頻度の広告支出を、<br>止まらない決済インフラにする</h2>
+          </div>
+          <div class="pill"><span class="dot violet"></span>日次広告支出</div>
+        </div>
+        <div class="main-grid grid">
+          <div class="card">
+            <div class="usecase-title"><div><h3>シーンの説明</h3><p class="mini">対象：越境EC事業者 / 広告代理店 / 成長支援チーム</p></div></div>
+            <p class="bodytext">Google、Meta、TikTok、Amazon、Rakuten等への広告費・投流費を専用バーチャルカードで処理する。広告アカウント単位のカード発行、予算上限、停止時の代替カード、利用明細の自動照合により、広告運用の決済リスクと管理負荷を下げる。</p>
+            <div class="bullet-list">
+              <div class="bullet violet">広告費は日次で消化されるため、カードGMV（総取扱高）の回転が速い。</div>
+              <div class="bullet violet">チャージ手数料とIRFを組み合わせ、シンプルな収益モデルを作りやすい。</div>
+              <div class="bullet violet">媒体・広告アカウント・店舗別のカード分離で、予算統制と不正検知を強化できる。</div>
+            </div>
+          </div>
+          <div class="grid">
+            <div class="market-funnel violet" aria-label="広告投流カードのTAM SAM SOM">
+              <div class="market-tile violet"><div class="market-k">TAM｜市場全体</div><div class="market-v">4兆459億円</div><div class="market-note">2025年の国内インターネット広告費。広告決済の最大支払母数。</div></div>
+              <div class="market-tile violet"><div class="market-k">SAM｜初期対象市場</div><div class="market-v">2,444億円</div><div class="market-note">物販系ECプラットフォーム広告費。初期顧客との親和性が高い広告支出。</div></div>
+              <div class="market-tile violet"><div class="market-k">SOM｜2027獲得計画</div><div class="market-v">160億円</div><div class="market-note">2027年計画GMV。SAMに対して約6.5%の獲得水準。</div></div>
+            </div>
+            <div class="card flat">
+              <div class="section-label">2027年 事業計画試算</div>
+              <table class="table mini-table">
+                <tbody>
+                  <tr><td>GMV（総取扱高・SOM）</td><td class="blue">160億円</td></tr>
+                  <tr><td>取扱前提</td><td>日次30万USD広告投流</td></tr>
+                  <tr><td>収益率</td><td>1.50%</td></tr>
+                  <tr><td>2027 営業収益 / 粗利</td><td><span data-case="adsRevenue2027">—</span> / <span data-case="adsGross2027">—</span></td></tr>
+                </tbody>
+              </table>
+              <div class="case-chart" data-chart="ads"></div>
+            </div>
+          </div>
+        </div>
+        <div class="footnote">出典：電通「2025年 日本の広告費」。SOMは事業計画上のGMV。</div>
+        <div class="slide-no">04 / 06</div>
+      </div>
+    </section>
+    <!-- 05 -->
+    <section class="slide scenario-slide" id="slide-5">
+      <div class="canvas">
+        <div class="topbar">
+          <div>
+            <div class="eyebrow">ビジネスシナリオ 3</div>
+            <h2>プラットフォーム費用カード：<br>EC運営コストを店舗・用途別に可視化する</h2>
+          </div>
+          <div class="pill"><span class="dot green"></span>EC運営支出</div>
+        </div>
+        <div class="main-grid grid">
+          <div class="card">
+            <div class="usecase-title"><div><h3>シーンの説明</h3><p class="mini">対象：EC出店者 / EC運営会社 / 経理・財務チーム</p></div></div>
+            <p class="bodytext">Amazon・Rakuten等の出店料、販売手数料、広告周辺費用、物流・倉庫費、SaaS／クラウドの月額費用をカードに集約する。店舗、ブランド、プラットフォーム、担当者別に支払を分離し、EC事業の固定費・変動費を管理可能にする。</p>
+            <div class="bullet-list">
+              <div class="bullet green">広告投流カードと同じ顧客基盤に追加導入しやすい。</div>
+              <div class="bullet green">支払先が明確なため、加盟店制御・カード上限・証憑照合の価値が出やすい。</div>
+              <div class="bullet green">初期試算では広告カードGMVに内包し、取引実績の蓄積後に独立SKUへ分離する。</div>
+            </div>
+          </div>
+          <div class="grid">
+            <div class="market-funnel green" aria-label="プラットフォーム費用カードのTAM SAM SOM">
+              <div class="market-tile green"><div class="market-k">TAM｜市場全体</div><div class="market-v">26.1兆円</div><div class="market-note">2024年の国内BtoC-EC市場。EC運営関連支出が発生する基礎取引市場。</div></div>
+              <div class="market-tile green"><div class="market-k">SAM｜初期対象市場</div><div class="market-v">2,444億円以上</div><div class="market-note">公開統計で把握できるECプラットフォーム広告費を下限値として設定。出店料・物流・SaaS等は含まない。</div></div>
+              <div class="market-tile green"><div class="market-k">SOM｜2027獲得計画</div><div class="market-v">160億円の内数</div><div class="market-note">広告・プラットフォーム統合GMVの内数。初期段階では二重計上しない。</div></div>
+            </div>
+            <div class="card flat">
+              <div class="section-label">2027年 事業計画上の扱い</div>
+              <table class="table mini-table">
+                <tbody>
+                  <tr><td>2027 SOM</td><td class="blue">統合GMV 160億円の内数</td></tr>
+                  <tr><td>GMV（総取扱高）計上</td><td>広告カードに内包</td></tr>
+                  <tr><td>初期収益率</td><td>1.50%を参照</td></tr>
+                  <tr><td>将来設計</td><td>プラットフォーム費用カードとして独立モデル化</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        <div class="footnote">出典：経済産業省「令和6年度 電子商取引に関する市場調査」／電通「2025年 日本の広告費」。SAMは公開統計で把握可能な下限値、SOMは統合GMVの内数。</div>
+        <div class="slide-no">05 / 06</div>
+      </div>
+    </section>
+    <!-- 06 -->
+    <section class="slide" id="slide-6">
+      <div class="canvas">
+        <div class="topbar">
+          <div>
+            <div class="eyebrow">収益モデル</div>
+            <h2>用途別の料率で売上と粗利を積み上げる</h2>
+          </div>
+        </div>
+        <div class="revenue-stack">
+          <div class="card">
+            <div class="section-label">2027年 重点営業収益の内訳</div>
+            <div class="donut" id="revenueDonut" style="--proc-share:50%">
+              <div class="donut-center"><div><b data-kpi="coreRevenue2027">—</b><span>重点営業収益</span></div></div>
+            </div>
+            <div class="revenue-years">
+              <div class="revenue-year"><b data-kpi="coreRevenue2027">—</b><span>2027年 重点営業収益</span></div>
+              <div class="revenue-year"><b data-kpi="coreRevenue2029">—</b><span>2029年 重点営業収益</span></div>
+            </div>
+            <div class="legend">
+              <div class="legend-item"><div class="legend-left"><span class="swatch"></span>企業調達</div><span data-case="procRevenue2027">—</span></div>
+              <div class="legend-item"><div class="legend-left"><span class="swatch violet"></span>広告投流・プラットフォーム</div><span data-case="adsRevenue2027">—</span></div>
+            </div>
+          </div>
+          <div class="grid">
+            <table class="table">
+              <thead><tr><th>用途</th><th>2027 GMV</th><th>2027 営業収益</th><th>2029 GMV</th><th>2029 営業収益</th></tr></thead>
+              <tbody>
+                <tr><td>企業調達</td><td>95億円</td><td class="blue" data-case="procRevenue2027">—</td><td>285億円</td><td class="blue" data-case="procRevenue2029">—</td></tr>
+                <tr><td>広告投流</td><td>160億円</td><td class="blue" data-case="adsRevenue2027">—</td><td>480億円</td><td class="blue" data-case="adsRevenue2029">—</td></tr>
+                <tr><td>プラットフォーム費用</td><td>広告GMVに内包</td><td>広告収益に内包</td><td>広告GMVに内包</td><td>広告収益に内包</td></tr>
+                <tr class="strong"><td>重点合計</td><td data-kpi="coreGmv2027">—</td><td data-kpi="coreRevenue2027">—</td><td data-kpi="coreGmv2029">—</td><td data-kpi="coreRevenue2029">—</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="slide-footer">
+          <div class="footnote">注記：GMVはGross Merchandise Valueの略で、カードで処理する総取扱高を指す。重点試算は企業調達 + 広告投流・プラットフォームの初期重点用途のみ。</div>
+          <div class="slide-no">06 / 06</div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <script>
+    (() => {
+      const years = [2027, 2028, 2029];
+      const cases = {
+        procurement: { label:'企業調達', gmv:[95,190,285], revenueRate:0.025, costRate:0.003, color:'blue' },
+        ads: { label:'広告投流・プラットフォーム', gmv:[160,320,480], revenueRate:0.015, costRate:0.003, color:'violet' }
+      };
+      const oku = (v, digits=1) => {
+        const scale = 10 ** digits;
+        const rounded = Math.round((Number(v) + 1e-9) * scale) / scale;
+        return `${rounded.toFixed(digits).replace(/\.0$/,'')}億円`;
+      };
+      const sum = arr => arr.reduce((a,b)=>a+b,0);
+      const calcCase = (c, idx=0) => ({
+        gmv:c.gmv[idx],
+        revenue:c.gmv[idx]*c.revenueRate,
+        cost:c.gmv[idx]*c.costRate,
+        gross:c.gmv[idx]*(c.revenueRate-c.costRate)
+      });
+      const p0 = calcCase(cases.procurement,0);
+      const a0 = calcCase(cases.ads,0);
+      const p2 = calcCase(cases.procurement,2);
+      const a2 = calcCase(cases.ads,2);
+      const core = { gmv:p0.gmv+a0.gmv, revenue:p0.revenue+a0.revenue, direct:p0.cost+a0.cost, gross:p0.gross+a0.gross };
+      const core2029 = { gmv:p2.gmv+a2.gmv, revenue:p2.revenue+a2.revenue, direct:p2.cost+a2.cost, gross:p2.gross+a2.gross };
+      const setAll = (selector, text) => document.querySelectorAll(selector).forEach(el => { el.textContent = text; });
+      setAll('[data-kpi="coreGmv2027"]', oku(core.gmv,0));
+      setAll('[data-kpi="coreRevenue2027"]', oku(core.revenue,2));
+      setAll('[data-kpi="coreDirect2027"]', oku(core.direct,2));
+      setAll('[data-kpi="coreGross2027"]', oku(core.gross,2));
+      setAll('[data-kpi="coreGmv2029"]', oku(core2029.gmv,0));
+      setAll('[data-kpi="coreRevenue2029"]', oku(core2029.revenue,2));
+      setAll('[data-case="procRevenue2027"]', oku(p0.revenue,2));
+      setAll('[data-case="procGross2027"]', oku(p0.gross,2));
+      setAll('[data-case="adsRevenue2027"]', oku(a0.revenue,2));
+      setAll('[data-case="adsGross2027"]', oku(a0.gross,2));
+      setAll('[data-case="procRevenue2029"]', oku(p2.revenue,2));
+      setAll('[data-case="adsRevenue2029"]', oku(a2.revenue,2));
+      const share = (p0.revenue / core.revenue * 100).toFixed(1) + '%';
+      const donut = document.getElementById('revenueDonut');
+      if(donut) donut.style.setProperty('--proc-share', share);
+
+      // Use case mini GMV charts
+      const maxGmv = Math.max(...cases.procurement.gmv, ...cases.ads.gmv);
+      document.querySelectorAll('[data-chart]').forEach(container => {
+        const key = container.dataset.chart;
+        const c = cases[key];
+        container.innerHTML = years.map((y,i)=>{
+          const w = Math.round(c.gmv[i] / maxGmv * 100);
+          const cls = c.color === 'violet' ? 'violet' : c.color === 'green' ? 'green' : '';
+          return `<div class="hbar"><span>${y}</span><div class="track"><div class="fill ${cls}" style="--w:${w}%"></div></div><b>${c.gmv[i]}億円</b></div>`;
+        }).join('');
+      });
+
+      // Keyboard navigation between slides
+      const slides = [...document.querySelectorAll('.slide')];
+      const getCurrentIndex = () => {
+        const mid = window.scrollY + window.innerHeight/2;
+        let idx = 0;
+        slides.forEach((s,i)=>{ if(s.offsetTop <= mid) idx = i; });
+        return idx;
+      };
+      window.addEventListener('keydown', (e)=>{
+        if(['ArrowRight','ArrowDown','PageDown'].includes(e.key)){
+          const n = Math.min(slides.length-1, getCurrentIndex()+1); slides[n].scrollIntoView({behavior:'smooth',block:'start'});
+        }
+        if(['ArrowLeft','ArrowUp','PageUp'].includes(e.key)){
+          const n = Math.max(0, getCurrentIndex()-1); slides[n].scrollIntoView({behavior:'smooth',block:'start'});
+        }
+      });
+    })();
+  </script>
+</body>
+</html>
