@@ -117,7 +117,19 @@
     .hero-band .metric-card{backdrop-filter:blur(10px)}
     .statement{font-size:28px;line-height:1.35;letter-spacing:-.04em;font-weight:920;max-width:980px;color:#fff}
     .cover-main{display:grid;grid-template-columns:minmax(0,1fr) minmax(420px,500px);gap:36px;align-items:center;flex:1;min-height:0}
-    #slide-1 .statement{max-width:680px}
+    #slide-1 .canvas{gap:20px}
+    #slide-1 .cover-main{grid-template-columns:minmax(0,1fr) minmax(420px,520px);gap:34px;align-items:center;flex:1}
+    #slide-1 .statement{max-width:700px;font-size:27px;line-height:1.34}
+    #slide-1 .cover-copy{display:grid;gap:18px;min-width:0}
+    #slide-1 .cover-definition{padding:18px 20px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.14);box-shadow:none}
+    #slide-1 .quote{font-size:17px;line-height:1.52;letter-spacing:-.02em;color:#eaf2ff}
+    #slide-1 .quote b{color:#93c5fd}
+    #slide-1 .model-grid{grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;flex:none}
+    #slide-1 .model-grid .metric-card{min-height:118px;padding:16px 15px;background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.15);box-shadow:none}
+    #slide-1 .model-grid .metric-label{font-size:9.8px;margin-bottom:6px;color:#9fb7d4}
+    #slide-1 .model-grid .metric-value{font-size:28px;color:#fff}
+    #slide-1 .model-grid .metric-card:nth-child(4) .metric-value{font-size:22px;line-height:1.05;letter-spacing:-.04em}
+    #slide-1 .model-grid .metric-sub{font-size:10.5px;line-height:1.28;margin-top:7px;color:#cbd5e1}
     .cover-visual{position:relative;width:100%;height:min(390px,100%);min-height:330px;border-radius:4px;background-image:url("assets/cover-fintech-platform.png");background-color:#0b2b55;background-size:cover;background-position:center;border:1px solid rgba(147,197,253,.22);box-shadow:0 34px 100px rgba(0,0,0,.28);overflow:hidden}
     .cover-visual::after{content:"";position:absolute;inset:0;background:none;pointer-events:none}
     .usecase-title{display:flex;align-items:center;gap:14px;margin-bottom:12px}
@@ -233,8 +245,6 @@
     .ask-card p{color:#cbd5e1;font-size:14px;line-height:1.62;font-weight:650}
     .ask-card .icon{background:rgba(255,255,255,.1);color:#fff}
 
-    #slide-2 .grid{gap:16px}
-    #slide-2 .quote{font-size:25px;line-height:1.38}
     .model-grid{grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
     .model-grid .metric-card{min-height:136px;padding:20px 18px}
     .model-grid .metric-value{font-size:31px}
@@ -263,25 +273,25 @@
     .scenario-slide .footnote{position:static;font-size:9.2px;line-height:1.25;width:calc(100% - 150px);max-width:none;margin-top:0;padding-right:0}
     .scenario-slide .slide-no{right:56px;bottom:28px}
 
-    #slide-6 .canvas{gap:16px}
-    #slide-6 h2{font-size:40px;max-width:720px}
-    #slide-6 .pillrow{justify-content:flex-end;max-width:390px}
-    #slide-6 .slide-footer{display:flex;justify-content:space-between;align-items:flex-end;gap:24px;margin-top:0}
-    #slide-6 .footnote{position:static;max-width:none;width:auto;flex:1;font-size:9.8px;line-height:1.32;margin-top:0;padding-right:0}
-    #slide-6 .slide-no{position:static;flex:none;margin:0}
-    #slide-6 .revenue-stack{grid-template-columns:.84fr 1.16fr;gap:18px;align-items:stretch;flex:0 1 auto}
-    #slide-6 .card{padding:20px}
-    #slide-6 .donut{width:205px;height:205px}
-    #slide-6 .donut::after{inset:43px}
-    #slide-6 .donut-center b{font-size:25px}
-    #slide-6 .revenue-years{gap:10px;margin-top:12px}
-    #slide-6 .revenue-year{padding:12px;border-radius:4px}
-    #slide-6 .revenue-year b{font-size:22px}
-    #slide-6 .revenue-year span{font-size:9.8px}
-    #slide-6 .legend{gap:8px;margin-top:12px}
-    #slide-6 .legend-item{font-size:11.5px;padding-bottom:8px}
-    #slide-6 .table th,#slide-6 .table td{padding:10px 7px;font-size:10.6px}
-    #slide-6 .table th{font-size:8.8px;letter-spacing:.04em}
+    #slide-5 .canvas{gap:16px}
+    #slide-5 h2{font-size:40px;max-width:720px}
+    #slide-5 .pillrow{justify-content:flex-end;max-width:390px}
+    #slide-5 .slide-footer{display:flex;justify-content:space-between;align-items:flex-end;gap:24px;margin-top:0}
+    #slide-5 .footnote{position:static;max-width:none;width:auto;flex:1;font-size:9.8px;line-height:1.32;margin-top:0;padding-right:0}
+    #slide-5 .slide-no{position:static;flex:none;margin:0}
+    #slide-5 .revenue-stack{grid-template-columns:.84fr 1.16fr;gap:18px;align-items:stretch;flex:0 1 auto}
+    #slide-5 .card{padding:20px}
+    #slide-5 .donut{width:205px;height:205px}
+    #slide-5 .donut::after{inset:43px}
+    #slide-5 .donut-center b{font-size:25px}
+    #slide-5 .revenue-years{gap:10px;margin-top:12px}
+    #slide-5 .revenue-year{padding:12px;border-radius:4px}
+    #slide-5 .revenue-year b{font-size:22px}
+    #slide-5 .revenue-year span{font-size:9.8px}
+    #slide-5 .legend{gap:8px;margin-top:12px}
+    #slide-5 .legend-item{font-size:11.5px;padding-bottom:8px}
+    #slide-5 .table th,#slide-5 .table td{padding:10px 7px;font-size:10.6px}
+    #slide-5 .table th{font-size:8.8px;letter-spacing:.04em}
 
     @media (max-width:900px){
       body{padding:12px 0 40px}.toolbar{left:12px;right:12px;justify-content:center;top:auto;bottom:12px}.toolbar a,.toolbar button{font-size:11px;padding:8px 10px}
@@ -290,26 +300,23 @@
     @page{size:16in 9in;margin:0}
     @media print{
       html,body{width:100%;height:auto;background:#fff;padding:0;margin:0}.toolbar{display:none}.deck{width:100%;display:block;gap:0;margin:0}.slide{width:16in;height:9in;min-height:0;border-radius:0;box-shadow:none;border:0;overflow:hidden;page-break-after:always;break-after:page}.slide:last-child{page-break-after:auto;break-after:auto}.canvas{padding:44px 52px 28px}.slide-no{right:52px;bottom:26px}.footnote{left:52px;bottom:24px}
-      #slide-2 .canvas{padding:34px 48px 24px;gap:13px}
-      #slide-2 .topbar{gap:16px}
-      #slide-2 h2{font-size:38px;line-height:1.04;max-width:900px}
-      #slide-2 .grid{gap:12px}
-      #slide-2 .card{padding:17px 20px}
-      #slide-2 .quote{font-size:20px;line-height:1.28;letter-spacing:-.025em}
-      #slide-2 .model-grid{grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
-      #slide-2 .model-grid .metric-card{min-height:104px;padding:14px 13px}
-      #slide-2 .model-grid .metric-label{font-size:9.5px;margin-bottom:6px}
-      #slide-2 .model-grid .metric-value{font-size:27px;line-height:1}
-      #slide-2 .model-grid .metric-card:nth-child(4) .metric-value{font-size:22px;line-height:1.04;letter-spacing:-.04em}
-      #slide-2 .model-grid .metric-sub{font-size:10.5px;line-height:1.24;margin-top:7px}
+      #slide-1 .canvas{padding:36px 52px 28px;gap:16px}
+      #slide-1 h1{font-size:56px}
+      #slide-1 .statement{font-size:24px;line-height:1.3}
+      #slide-1 .quote{font-size:15.5px;line-height:1.42}
+      #slide-1 .cover-visual{height:300px;min-height:300px}
+      #slide-1 .model-grid .metric-card{min-height:100px;padding:13px 12px}
+      #slide-1 .model-grid .metric-value{font-size:24px}
+      #slide-1 .model-grid .metric-card:nth-child(4) .metric-value{font-size:19px}
+      #slide-1 .model-grid .metric-sub{font-size:9.5px}
     }
   </style>
 </head>
 <body>
   <nav class="toolbar" aria-label="presentation controls">
     <a href="#slide-1">表紙</a>
-    <a href="#slide-3">ビジネスシナリオ</a>
-    <a href="#slide-6">収益</a>
+    <a href="#slide-2">ビジネスシナリオ</a>
+    <a href="#slide-5">収益</a>
     <a href="financial-model.html">試算</a>
     <button class="ghost" onclick="window.print()">PDF出力</button>
   </nav>
@@ -326,40 +333,26 @@
           <div class="brand"><span class="mark"></span><span>法人カード基盤</span></div>
         </div>
         <div class="cover-main">
-          <p class="statement">越境EC・貿易企業の高頻度支出を、<br>法人カードGMV（総取扱高）へ集約し、IRF・FX・チャージ手数料を継続収益化する。</p>
+          <div class="cover-copy">
+            <p class="statement">越境EC・貿易企業の高頻度支出を、法人カードGMV（総取扱高）へ集約し、IRF・FX・チャージ手数料を継続収益化する。</p>
+            <div class="card cover-definition">
+              <p class="quote">日本で売上を作る越境EC・貿易企業は、<b>中国サプライヤーへの調達</b>、<b>広告出稿</b>、<b>ECプラットフォーム費用</b>を高頻度で支払う。ここをカード化することで、単なる法人カードではなく、越境企業の「支出OS」を作る。</p>
+            </div>
+          </div>
           <div class="cover-visual" aria-hidden="true"></div>
         </div>
-        <div class="slide-no">01 / 06</div>
+        <div class="grid model-grid">
+          <div class="metric-card"><div class="metric-label">収益源 01</div><div class="metric-value">IRF</div><div class="metric-sub">カード利用に伴うインターチェンジ収益</div></div>
+          <div class="metric-card"><div class="metric-label">収益源 02</div><div class="metric-value">FX</div><div class="metric-sub">越境調達・外貨支払に伴う為替収益</div></div>
+          <div class="metric-card"><div class="metric-label">収益源 03</div><div class="metric-value">チャージ</div><div class="metric-sub">チャージ・残高管理・運用手数料</div></div>
+          <div class="metric-card"><div class="metric-label">収益源 04</div><div class="metric-value">データビジネス</div><div class="metric-sub">その他サービスによる収益</div></div>
+        </div>
+        <div class="slide-no">01 / 05</div>
       </div>
     </section>
 
     <!-- 02 -->
-    <section class="slide" id="slide-2">
-      <div class="canvas">
-        <div class="topbar">
-          <div>
-            <div class="eyebrow">要約</div>
-            <h2>単なる法人カードではなく、<br>越境企業の「支出OS」を作る</h2>
-          </div>
-          <div class="brand"><span class="mark"></span><span>事業定義</span></div>
-        </div>
-        <div class="grid">
-          <div class="card">
-            <p class="quote">日本で売上を作る越境EC・貿易企業は、<b>中国サプライヤーへの調達</b>、<b>広告出稿</b>、<b>ECプラットフォーム費用</b>を高頻度で支払う。ここをカード化することで、支払額そのものが収益源になる。</p>
-          </div>
-          <div class="grid model-grid">
-            <div class="metric-card"><div class="metric-label">収益源 01</div><div class="metric-value">IRF</div><div class="metric-sub">カード利用に伴うインターチェンジ収益</div></div>
-            <div class="metric-card"><div class="metric-label">収益源 02</div><div class="metric-value">FX</div><div class="metric-sub">越境調達・外貨支払に伴う為替収益</div></div>
-            <div class="metric-card"><div class="metric-label">収益源 03</div><div class="metric-value">チャージ</div><div class="metric-sub">チャージ・残高管理・運用手数料</div></div>
-            <div class="metric-card"><div class="metric-label">収益源 04</div><div class="metric-value">データビジネス</div><div class="metric-sub">その他サービスによる収益</div></div>
-          </div>
-        </div>
-        <div class="slide-no">02 / 06</div>
-      </div>
-    </section>
-
-    <!-- 03 -->
-    <section class="slide scenario-slide" id="slide-3">
+    <section class="slide scenario-slide" id="slide-2">
       <div class="canvas">
         <div class="topbar">
           <div>
@@ -399,11 +392,11 @@
           </div>
         </div>
         <div class="footnote">出典：経済産業省「令和6年度 電子商取引に関する市場調査」。SAM・SOMは対象顧客と事業計画に基づく想定。数値は億円ベースでJavaScript計算。</div>
-        <div class="slide-no">03 / 06</div>
+        <div class="slide-no">02 / 05</div>
       </div>
     </section>
-    <!-- 04 -->
-    <section class="slide scenario-slide" id="slide-4">
+    <!-- 03 -->
+    <section class="slide scenario-slide" id="slide-3">
       <div class="canvas">
         <div class="topbar">
           <div>
@@ -443,11 +436,11 @@
           </div>
         </div>
         <div class="footnote">出典：電通「2025年 日本の広告費」。SOMは事業計画上のGMV。</div>
-        <div class="slide-no">04 / 06</div>
+        <div class="slide-no">03 / 05</div>
       </div>
     </section>
-    <!-- 05 -->
-    <section class="slide scenario-slide" id="slide-5">
+    <!-- 04 -->
+    <section class="slide scenario-slide" id="slide-4">
       <div class="canvas">
         <div class="topbar">
           <div>
@@ -486,11 +479,11 @@
           </div>
         </div>
         <div class="footnote">出典：経済産業省「令和6年度 電子商取引に関する市場調査」／電通「2025年 日本の広告費」。SAMは公開統計で把握可能な下限値、SOMは統合GMVの内数。</div>
-        <div class="slide-no">05 / 06</div>
+        <div class="slide-no">04 / 05</div>
       </div>
     </section>
-    <!-- 06 -->
-    <section class="slide" id="slide-6">
+    <!-- 05 -->
+    <section class="slide" id="slide-5">
       <div class="canvas">
         <div class="topbar">
           <div>
@@ -527,7 +520,7 @@
         </div>
         <div class="slide-footer">
           <div class="footnote">注記：GMVはGross Merchandise Valueの略で、カードで処理する総取扱高を指す。重点試算は企業調達 + 広告投流・プラットフォームの初期重点用途のみ。</div>
-          <div class="slide-no">06 / 06</div>
+          <div class="slide-no">05 / 05</div>
         </div>
       </div>
     </section>
