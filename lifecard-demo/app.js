@@ -164,7 +164,7 @@ function renderHeader(){
 }
 function render(){
  stopTimers();const s=current(),flow=FLOWS[state.flow],last=state.index===flow.steps.length-1;
- $('phone-screen').dataset.screen=s.id;$('phone-screen').dataset.flow=state.flow;
+ $('app-content').dataset.screen=s.id;$('phone-screen').dataset.screen=s.id;$('phone-screen').dataset.flow=state.flow;
  renderHeader();$('app-content').innerHTML=(RENDERERS[s.id]||home)();$('app-content').scrollTop=0;
  $('app-content').classList.remove('screen-enter');void $('app-content').offsetWidth;$('app-content').classList.add('screen-enter');
  if($('otp'))$('otp').classList.add('otp-input');if($('new-pin'))$('new-pin').classList.add('pin-input');
