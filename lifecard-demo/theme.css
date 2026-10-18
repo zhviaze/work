@@ -1,0 +1,32 @@
+/* COLOR SOURCE OF TRUTH. Edit these base tokens, or DEFAULT_THEME in theme.js.
+   All UI component colors are derived from this palette. */
+:root {
+  --primary: #65449b;
+  --on-primary: #ffffff;
+  --background: #eeedf2;
+  --surface: #ffffff;
+  --text: #292a32;
+  --muted: #777883;
+  --success: #20a680;
+  --danger: #c84260;
+  --capture: #43acc0;
+  --shell: #f7f7f9;
+  --shell-ink: #34323c;
+  --shell-muted: #85818e;
+  --code-ink: #16151a;
+  --code-paper: #ffffff;
+  --unionpay-red: #d32f46;
+  --unionpay-blue: #153b68;
+  --unionpay-green: #008d8a;
+  --border: color-mix(in srgb, var(--text) 12%, var(--surface));
+  --primary-soft: color-mix(in srgb, var(--primary) 13%, var(--surface));
+  --primary-faint: color-mix(in srgb, var(--primary) 5%, var(--surface));
+  --primary-hover: color-mix(in srgb, var(--primary) 87%, var(--text));
+  --success-soft: color-mix(in srgb, var(--success) 11%, var(--surface));
+  --danger-soft: color-mix(in srgb, var(--danger) 9%, var(--surface));
+  --shadow: color-mix(in srgb, var(--text) 10%, transparent);
+  --shadow-strong: color-mix(in srgb, var(--text) 18%, transparent);
+  --overlay: color-mix(in srgb, var(--text) 36%, transparent);
+  --device-border: color-mix(in srgb, var(--text) 92%, var(--surface));
+  --focus: color-mix(in srgb, var(--primary) 38%, transparent);
+}

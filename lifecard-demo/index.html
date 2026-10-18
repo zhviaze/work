@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#65449b">
+  <meta name="description" content="Life Card向けのウォレット体験デモ。新規登録、本人確認、チャージ、CPM・MPM決済を操作できます。">
+  <meta name="robots" content="noindex,nofollow">
+  <title>Life Card | Wallet Experience Demo</title>
+  <link rel="icon" href="./assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="./theme.css">
+  <link rel="stylesheet" href="./styles.css">
+  <script src="./theme.js" defer></script>
+  <script src="./icons.js" defer></script>
+  <script src="./app.js" defer></script>
+</head>
+<body>
+<header class="studio-header">
+  <a href="../" class="studio-brand" aria-label="Work Pagesへ戻る"><span class="coshine-mark">C</span><span>COSHINE<span class="brand-caption">EXPERIENCE STUDIO</span></span></a>
+  <div class="header-title"><span class="eyebrow">LIFE CARD PRESENTATION</span><h1>ウォレット体験デモ</h1></div>
+  <div class="environment"><span class="status-dot"></span>DEMO ENVIRONMENT</div>
+  <button class="icon-button mobile-menu" id="mobile-menu" aria-label="シナリオと設定を開く" aria-expanded="false"></button>
+</header>
+<main class="studio-layout">
+  <aside class="scenario-panel" id="scenario-panel" aria-label="シナリオと配色">
+    <div class="panel-heading"><span class="eyebrow">01 — SCENARIOS</span><button id="close-menu" class="icon-button mobile-only" aria-label="メニューを閉じる"></button></div>
+    <h2>体験するシーン</h2>
+    <p class="panel-lead">5つのシナリオから、<br>ウォレットの体験をお試しください。</p>
+    <nav id="scenario-nav" class="scenario-nav" aria-label="演示シナリオ"></nav>
+    <div class="scenario-footnote"><span class="small-icon" data-icon="ShieldCheck"></span><p>デモ用のデータで操作できます。<br>実際の送金・本人確認は行いません。</p></div>
+    <details class="theme-editor" id="theme-editor">
+      <summary><span data-icon="Palette"></span>配色の調整<span class="theme-indicator"></span></summary>
+      <div class="theme-presets" aria-label="配色プリセット"><button data-preset="original" class="theme-preset" aria-label="オリジナルの紫" title="オリジナル">01</button><button data-preset="navy" class="theme-preset" aria-label="ネイビー" title="ネイビー">02</button><button data-preset="teal" class="theme-preset" aria-label="ティール" title="ティール">03</button></div>
+      <div id="theme-fields"></div>
+      <div class="theme-actions"><button class="text-button" id="theme-reset">初期配色に戻す</button><button class="text-button" id="theme-export">設定を保存 ↓</button></div>
+      <p class="tiny-note">変更はこのブラウザに保存されます。</p>
+    </details>
+  </aside>
+  <section class="device-stage" aria-label="ウォレットアプリ">
+    <div class="device-caption"><span>DEMO WALLET</span><span id="device-mode">INTERACTIVE</span></div>
+    <div class="phone-frame">
+      <div class="phone-screen" id="phone-screen">
+        <div class="status-bar"><span id="clock">9:41</span><span class="status-symbols"><span data-icon="Signal"></span><span data-icon="Wifi"></span><span data-icon="BatteryFull"></span></span></div>
+        <header class="app-header" id="app-header"></header>
+        <div class="app-content" id="app-content" tabindex="-1"></div>
+        <div class="home-indicator" aria-hidden="true"></div>
+        <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+      </div>
+    </div>
+    <div class="device-bottom"><span class="status-dot"></span>操作できるデモ<span class="device-bottom-separator">/</span><span>すべて架空のデータです</span></div>
+  </section>
+  <aside class="guide-panel" aria-label="演示ガイド">
+    <span class="eyebrow">02 — WALKTHROUGH</span>
+    <div class="guide-top"><span id="flow-label" class="flow-label"></span><span id="step-counter" class="step-counter"></span></div>
+    <h2 id="guide-title"></h2>
+    <p class="guide-description" id="guide-description"></p>
+    <div class="walkthrough-track"><span id="walkthrough-progress"></span></div>
+    <ol class="steps-list" id="steps-list"></ol>
+    <div class="guide-controls"><button class="button primary" id="next-step">次のステップ<span data-icon="ArrowRight"></span></button><div class="control-row"><button class="button secondary" id="auto-play"><span data-icon="Play"></span>自動で体験</button><button class="button icon-button secondary" id="restart" aria-label="このシナリオを最初から"><span data-icon="RotateCcw"></span></button></div></div>
+    <div class="guide-tip"><span data-icon="MousePointer2"></span><p>画面を直接タップしても進めます。<br>入力に迷ったら「デモ入力」をご利用ください。</p></div>
+  </aside>
+</main>
+<footer class="studio-footer"><span>Coshine · Life Card向け提案用</span><span>INTERACTIVE PROTOTYPE / v1.0</span></footer>
+<div id="drawer-backdrop" class="drawer-backdrop" hidden></div>
+<div class="mobile-controls"><button id="mobile-scenarios" class="button secondary"><span data-icon="PanelsTopLeft"></span>シナリオ</button><button id="mobile-auto" class="button secondary" aria-label="自動演示を開始"><span data-icon="Play"></span></button><button id="mobile-next" class="button primary">次へ<span data-icon="ArrowRight"></span></button></div>
+<noscript><p>このデモを操作するにはJavaScriptを有効にしてください。</p></noscript>
+</body>
+</html>
