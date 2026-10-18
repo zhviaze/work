@@ -162,10 +162,18 @@ function renderHeader(){
  $('app-header').innerHTML=brand?`<div class="app-wordmark">${icon('Wallet')}<span>DEMO</span></div><button class="help-button" data-header-action="help" aria-label="デモの操作方法">${icon('CircleHelp')}</button>`:`<button class="icon-button ${state.index===0&&!state.extra?'step-back-disabled':''}" data-header-action="back" aria-label="前の画面へ">${icon('ArrowLeft')}</button><h2>${escapeHtml(title)}</h2><button class="header-action" data-header-action="home">${s.id.endsWith('success')?'完了':'中止'}</button>`;
  const light=['welcome','intro'].includes(s.id);$('status-bar')?.classList?.remove('light');const bar=document.querySelector('.status-bar');bar.style.background=light?'var(--surface)':'';bar.style.color=light?'var(--text)':'';
 }
+// Keep each screen's primary actions together, above the mobile walkthrough bar.
+function groupScreenActions(){
+ const content=$('app-content'),actions=document.createElement('div');
+ actions.className='screen-actions';actions.setAttribute('role','group');actions.setAttribute('aria-label','画面の操作');
+ content.querySelectorAll(':scope > .app-btn, :scope > .sticky-actions > .app-btn, :scope > .success-page > .app-btn, :scope > .welcome-hero > .app-btn').forEach(button=>actions.append(button));
+ content.querySelectorAll(':scope > .sticky-actions').forEach(group=>group.remove());
+ if(actions.children.length)content.append(actions);
+}
 function render(){
- stopTimers();const s=current(),flow=FLOWS[state.flow],last=state.index===flow.steps.length-1;
+ stopTimers();clearTimeout(toastTimer);$('toast').hidden=true;const s=current(),flow=FLOWS[state.flow],last=state.index===flow.steps.length-1;
  $('app-content').dataset.screen=s.id;$('phone-screen').dataset.screen=s.id;$('phone-screen').dataset.flow=state.flow;
- renderHeader();$('app-content').innerHTML=(RENDERERS[s.id]||home)();$('app-content').scrollTop=0;
+ renderHeader();$('app-content').innerHTML=(RENDERERS[s.id]||home)();groupScreenActions();$('app-content').scrollTop=0;
  $('app-content').classList.remove('screen-enter');void $('app-content').offsetWidth;$('app-content').classList.add('screen-enter');
  if($('otp'))$('otp').classList.add('otp-input');if($('new-pin'))$('new-pin').classList.add('pin-input');
  document.querySelectorAll('.scenario-button[data-flow]').forEach(b=>{const selected=b.dataset.flow===state.flow;b.classList.toggle('active',selected);if(selected)b.setAttribute('aria-current','step');else b.removeAttribute('aria-current');});
