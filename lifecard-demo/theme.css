@@ -1,23 +1,25 @@
 /* COLOR SOURCE OF TRUTH. Edit these base tokens, or DEFAULT_THEME in theme.js.
    All UI component colors are derived from this palette. */
 :root {
-  --primary: #65449b;
-  --on-primary: #ffffff;
-  --background: #eeedf2;
+  --primary: #212644;
+  --accent: #0099ff;
+  --brand-red: #ed1c2e;
+  --background: #f0f3f8;
   --surface: #ffffff;
-  --text: #292a32;
-  --muted: #777883;
+  --text: #202e3c;
+  --muted: #617082;
   --success: #20a680;
   --danger: #c84260;
-  --capture: #43acc0;
-  --shell: #f7f7f9;
-  --shell-ink: #34323c;
-  --shell-muted: #85818e;
+  --capture: #0099ff;
+  --shell: #f8f9fc;
+  --shell-ink: #212644;
+  --shell-muted: #687587;
   --code-ink: #16151a;
   --code-paper: #ffffff;
-  --unionpay-red: #d32f46;
-  --unionpay-blue: #153b68;
-  --unionpay-green: #008d8a;
+  --on-primary: #ffffff;
+  --on-accent: #17202a;
+  --accent-soft: color-mix(in srgb, var(--accent) 12%, var(--surface));
+  --accent-hover: color-mix(in srgb, var(--accent) 88%, var(--surface));
   --border: color-mix(in srgb, var(--text) 12%, var(--surface));
   --primary-soft: color-mix(in srgb, var(--primary) 13%, var(--surface));
   --primary-faint: color-mix(in srgb, var(--primary) 5%, var(--surface));

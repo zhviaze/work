@@ -1,6 +1,8 @@
 # Life Card Wallet Demo
 
-基于五段参考视频制作的静态 HTML 交互演示，供 Coshine 向 Life Card 说明业务体验。
+基于五段参考视频制作的静态 HTML 交互演示，供 Coshine 与 Life Card、Travelex 的会议说明业务体验。
+
+2026-10-18 会議版：以 Life Card 的黑白排版和蓝色、Travelex 的海军蓝和红色为参考，保留原来的五个操作流程。银联标志已替换为官方配布图形。品牌来源见 `assets/BRAND-SOURCES.md`。
 
 ## 运行与发布
 
@@ -25,6 +27,7 @@
 | 字段 | 用途 |
 | --- | --- |
 | `primary` | 主色、App 顶栏、按钮、图标、重点文字 |
+| `accent` / `brand-red` | 蓝色操作强调 / 少量红色品牌装饰 |
 | `background` | App 页面背景 |
 | `surface` | 卡片、输入区域基础背景 |
 | `text` / `muted` | 正文 / 辅助文字 |
@@ -32,9 +35,9 @@
 | `capture` | 拍摄和扫描框 |
 | `shell` / `shell-ink` / `shell-muted` | 外层演示工作台 |
 | `code-ink` / `code-paper` | 演示码区域 |
-| `unionpay-*` | 视频中保留的支付网络标识颜色 |
+| 官方品牌图片 | 保留原始颜色，不随主题设置改变 |
 
-主色上的文字会自动选择深色或白色；浅色背景、边框、悬停和阴影通过 CSS 变量派生。favicon 同步主色。预览颜色仅保存到当前浏览器；当发布默认配色改变时，旧预览覆盖自动失效。
+主色和强调色上的文字会自动选择深色或白色；浅色背景、边框、悬停和阴影通过 CSS 变量派生。favicon 同步主色。预览颜色仅保存到当前浏览器；当发布默认配色改变时，旧预览覆盖自动失效。
 
 ## 演示内容与数据
 
@@ -57,6 +60,6 @@
 - `styles.css`：布局和组件，统一引用主题变量
 - `theme.js` / `theme.css`：颜色配置、派生色、预览与导出
 - `icons.js`：本地精选 Lucide 图标，无 CDN 依赖
-- `assets/`：本地演示二维码、favicon、Lucide ISC 许可
+- `assets/`：本地演示二维码、官方品牌素材、来源记录、favicon、Lucide ISC 许可
 
 `qa/` 为本地浏览器检查记录，不随网页发布。
